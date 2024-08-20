@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task Ninja 2.0</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+</resources>
