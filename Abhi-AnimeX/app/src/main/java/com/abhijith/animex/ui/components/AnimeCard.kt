@@ -18,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +44,7 @@ fun AnimeCard(name: String, isFavorite: Boolean = false, modifier: Modifier = Mo
                     .data("https://cdn.myanimelist.net/images/anime/1006/143302.jpg")
                     .crossfade(true).build(),
                 contentDescription = null,
+                placeholder = painterResource(android.R.drawable.ic_menu_report_image),
                 modifier = Modifier
                     .width(150.dp)
                     .fillMaxHeight()
