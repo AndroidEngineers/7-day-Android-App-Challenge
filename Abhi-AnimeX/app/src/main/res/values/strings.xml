@@ -3,4 +3,7 @@
     <string name="remove_favorite">Remove from Favorites</string>
     <string name="add_favorite">Add to Favorites</string>
     <string name="watch_trailer">Watch Trailer</string>
+    <string name="rank">Rank</string>
+    <string name="score">Score</string>
+    <string name="rating">Rating</string>
 </resources>

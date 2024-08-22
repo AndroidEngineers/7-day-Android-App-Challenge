@@ -18,7 +18,7 @@ import com.abhijith.animex.ui.theme.Black
 import com.abhijith.animex.ui.theme.OrangeBrown
 
 @Composable
-fun OrangeButton(text: String, onClick: () -> Unit) {
+fun WatchTrailerButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -28,11 +28,6 @@ fun OrangeButton(text: String, onClick: () -> Unit) {
             containerColor = OrangeBrown,
             contentColor = Black
         ),
-        /* elevation = ButtonDefaults.elevatedButtonElevation(
-             defaultElevation = 6.dp,
-             pressedElevation = 8.dp,
-             disabledElevation = 0.dp
-         ),*/
         shape = RoundedCornerShape(8.dp)
     ) {
         Text(

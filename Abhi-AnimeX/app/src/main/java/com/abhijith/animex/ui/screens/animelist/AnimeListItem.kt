@@ -32,8 +32,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
 import com.abhijith.animex.data.model.Anime
-import com.abhijith.animex.ui.components.OrangeButton
 import com.abhijith.animex.ui.components.RatingTag
+import com.abhijith.animex.ui.components.WatchTrailerButton
 
 @Composable
 fun AnimeListItem(
@@ -107,7 +107,7 @@ fun AnimeListItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    OrangeButton(
+                    WatchTrailerButton(
                         text = getString(
                             LocalContext.current, R.string.watch_trailer
                         ),

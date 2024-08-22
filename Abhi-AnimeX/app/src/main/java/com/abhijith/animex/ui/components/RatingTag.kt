@@ -11,11 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import com.abhijith.animex.R
 import com.abhijith.animex.ui.theme.OrangeBrown
 
@@ -28,17 +29,15 @@ fun RatingTag(rating: String) {
             text = rating,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
-            maxLines = 1,
             color = Color.Black,
             fontFamily = FontFamily(
                 Font(R.font.montserrat_regular)
             ),
-            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(end = 4.dp)
         )
         Icon(
             imageVector = Icons.Default.Star,
-            contentDescription = "Rating",
+            contentDescription = getString(LocalContext.current, R.string.rating),
             tint = OrangeBrown
         )
     }
