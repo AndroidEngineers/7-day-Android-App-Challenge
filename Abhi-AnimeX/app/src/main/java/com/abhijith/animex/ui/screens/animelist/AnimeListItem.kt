@@ -31,27 +31,29 @@ import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
+import com.abhijith.animex.data.model.Anime
 import com.abhijith.animex.ui.components.OrangeButton
 import com.abhijith.animex.ui.components.RatingTag
 
 @Composable
 fun AnimeListItem(
-    name: String, onItemClicked: (String) -> Unit,
+    anime: Anime, onItemClicked: (Anime) -> Unit,
     onButtonClicked: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onItemClicked(name) },
+            .clickable { onItemClicked(anime) },
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://cdn.myanimelist.net/images/anime/1006/143302.jpg")
+                    .data(anime.imageUrl)
                     .crossfade(true).build(),
                 contentDescription = null,
                 placeholder = painterResource(android.R.drawable.ic_menu_report_image),
+                error = painterResource(android.R.drawable.stat_notify_error),
                 modifier = Modifier
                     .width(150.dp)
                     .fillMaxHeight()
@@ -69,7 +71,7 @@ fun AnimeListItem(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Anime Title",
+                        text = anime.title,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -80,7 +82,7 @@ fun AnimeListItem(
                         ),
                     )
                     Text(
-                        text = "Anime category: $name",
+                        text = anime.source,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -91,10 +93,10 @@ fun AnimeListItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = "4.0")
+                    RatingTag(rating = anime.rating)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "This Japanese Lorem Ipsum is based on the kanji frequency count at tidraso.co.uk and includes about 50% kanji, 25% hiragana, 20% katakana and 5% roman numerals and punctuation. Katakana and hiragana cluster in strings between 1 to 4 chars at random points in each paragraph. Hiragana occurs more often at the end of sentences, rather in clumps of 1 to 4 chars rather than just single chars. Katakana is very unlikely to appear as a single character in Japanese text, but hiragana could. Exclamation and question marks are \"double-byte\", not standard ascii ones. Suggestions for improvements or alternatives are welcome.",
+                        text = anime.synopsis,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
                         maxLines = 4,
@@ -109,7 +111,7 @@ fun AnimeListItem(
                         text = getString(
                             LocalContext.current, R.string.watch_trailer
                         ),
-                        onClick = { onButtonClicked(name) })
+                        onClick = { onButtonClicked(anime.youtubeUrl) })
                 }
             }
         }

@@ -7,16 +7,16 @@ import com.abhijith.animex.ui.screens.animelist.viewmodel.AnimeListViewModel
 
 @Composable
 fun AnimeList(viewModel: AnimeListViewModel = viewModel()) {
-    val names = viewModel.items.collectAsState()
+    val animeItems = viewModel.items.collectAsState()
 
     LazyColumn {
-        items(names.value.count()) {
+        items(animeItems.value.count()) {
             AnimeListItem(
-                name = names.value[it],
+                anime = animeItems.value[it],
                 onItemClicked = viewModel::onItemClick,
                 onButtonClicked = viewModel::onButtonClick
             )
         }
     }
 }
-// to bring the click events outside the composable
+// to bring the click events outside the composable if possible

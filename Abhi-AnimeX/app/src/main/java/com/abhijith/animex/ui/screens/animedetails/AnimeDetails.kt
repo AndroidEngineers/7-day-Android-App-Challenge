@@ -17,11 +17,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,18 +34,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
 import com.abhijith.animex.ui.components.GenreTag
 import com.abhijith.animex.ui.components.RatingTag
 import com.abhijith.animex.ui.components.StatItem
-import com.abhijith.animex.ui.theme.OrangeBrown
+import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewModel
 
 @Composable
-fun AnimeDetails() {
-    val genreList = listOf("comedy", "gag humor", "school", "adventure")
-
+fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
+    val genreList = animeDetailsViewModel.genres.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -166,8 +165,8 @@ fun AnimeDetails() {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(genreList.count()) {
-                            GenreTag(genreList[it])
+                        items(genreList.value.count()) {
+                            GenreTag(genreList.value[it])
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
