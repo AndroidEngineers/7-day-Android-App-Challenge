@@ -1,5 +1,6 @@
 package com.abhijith.animex.ui.screens.animelist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,11 +35,15 @@ import com.abhijith.animex.ui.components.OrangeButton
 import com.abhijith.animex.ui.components.RatingTag
 
 @Composable
-fun AnimeListItem(name: String, isFavorite: Boolean = true, modifier: Modifier = Modifier) {
+fun AnimeListItem(
+    name: String, onItemClicked: (String) -> Unit,
+    onButtonClicked: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onItemClicked(name) },
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
@@ -104,7 +109,7 @@ fun AnimeListItem(name: String, isFavorite: Boolean = true, modifier: Modifier =
                         text = getString(
                             LocalContext.current, R.string.watch_trailer
                         ),
-                        onClick = {})
+                        onClick = { onButtonClicked(name) })
                 }
             }
         }
