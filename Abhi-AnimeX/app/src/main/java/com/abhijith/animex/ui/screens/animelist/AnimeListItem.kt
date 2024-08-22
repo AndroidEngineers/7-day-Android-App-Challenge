@@ -55,7 +55,7 @@ fun AnimeListItem(
                 placeholder = painterResource(android.R.drawable.ic_menu_report_image),
                 error = painterResource(android.R.drawable.stat_notify_error),
                 modifier = Modifier
-                    .width(150.dp)
+                    .width(125.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop,
@@ -72,9 +72,8 @@ fun AnimeListItem(
                 ) {
                     Text(
                         text = anime.title,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
                         color = Color.Black,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = FontFamily(
@@ -85,7 +84,6 @@ fun AnimeListItem(
                         text = anime.source,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
                         color = Color.Gray,
                         fontFamily = FontFamily(
                             Font(R.font.montserrat_regular)

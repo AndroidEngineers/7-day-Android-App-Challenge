@@ -27,7 +27,7 @@ fun RatingTag(rating: String) {
     ) {
         Text(
             text = rating,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             fontFamily = FontFamily(
