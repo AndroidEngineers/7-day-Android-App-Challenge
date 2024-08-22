@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -45,7 +46,8 @@ import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewMod
 
 @Composable
 fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
-    val genreList = animeDetailsViewModel.genres.collectAsState()
+    val anime = animeDetailsViewModel.animeItem.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +60,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://cdn.myanimelist.net/images/anime/1084/144617l.webp")
+                        .data(anime.value.imageUrl)
                         .crossfade(true).build(),
                     contentDescription = null,
                     placeholder = painterResource(android.R.drawable.ic_menu_report_image),
@@ -75,7 +77,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Anime Title",
+                        text = anime.value.title,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -120,7 +122,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = "4.7")
+                    RatingTag(rating = anime.value.rating)
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier
@@ -142,19 +144,19 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                             StatItem(
                                 imageVector = Icons.Default.PlayArrow,
                                 modifier = Modifier.rotate(270F),
-                                contentDesc = "Rank",
-                                count = "138"
+                                contentDesc = getString(LocalContext.current, R.string.rank),
+                                count = anime.value.rank
                             )
                             StatItem(
                                 imageVector = Icons.Default.Info,
-                                contentDesc = "Score",
-                                count = "23345"
+                                contentDesc = getString(LocalContext.current, R.string.score),
+                                count = anime.value.score
                             )
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "This Japanese Lorem Ipsum is based on the kanji frequency count at tidraso.co.uk and includes about 50% kanji, 25% hiragana, 20% katakana and 5% roman numerals and punctuation. Katakana and hiragana cluster in strings between 1 to 4 chars at random points in each paragraph. Hiragana occurs more often at the end of sentences, rather in clumps of 1 to 4 chars rather than just single chars. Katakana is very unlikely to appear as a single character in Japanese text, but hiragana could. Exclamation and question marks are \"double-byte\", not standard ascii ones. Suggestions for improvements or alternatives are welcome.",
+                        text = anime.value.synopsis,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray,
@@ -165,8 +167,8 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(genreList.value.count()) {
-                            GenreTag(genreList.value[it])
+                        items(anime.value.genres.count()) {
+                            GenreTag(anime.value.genres[it])
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))

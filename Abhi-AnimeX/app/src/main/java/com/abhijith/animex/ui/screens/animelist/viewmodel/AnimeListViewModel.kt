@@ -13,6 +13,9 @@ class AnimeListViewModel : ViewModel() {
     private val _items = MutableStateFlow<List<Anime>>(emptyList())
     val items: StateFlow<List<Anime>> = _items.asStateFlow()
 
+    private val _navigationEvent = MutableStateFlow<Anime?>(null)
+    val navigationEvent: StateFlow<Anime?> = _navigationEvent.asStateFlow()
+
     init {
         viewModelScope.launch {
             _items.value = List(10) { generateValidAnime() }
@@ -46,7 +49,11 @@ class AnimeListViewModel : ViewModel() {
     }
 
     fun onItemClick(item: Anime) {
-        Log.d("AnimeListViewModel", "Clicked on item: $item.title")
+        _navigationEvent.value = item
+    }
+
+    fun onResetNavigation() {
+        _navigationEvent.value = null
     }
 
     fun onButtonClick(item: String) {
