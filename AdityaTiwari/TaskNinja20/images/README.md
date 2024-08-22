@@ -8,10 +8,13 @@ Task Ninja 2.0 is an app that allows you to manage tasks efficiently.
 - Delete tasks
 - See a vertical list of tasks with a proper Kanban dashboard
 
+
 ## Screenshots
-![Task Ninja 2.0 Add Task](addtask_light.jpeg)
-![Task Ninja 2.0 Dashboard](dashboar_light.jpeg)
-![Task Ninja 2.0 Dashboard](dashboard_dark.jpeg)
+<img src="addtask_light.jpeg" alt="Task Ninja 2.0 Screenshot" width="400" height="600">
+<img src="dashboar_light.jpeg" alt="Task Ninja 2.0 Dashboard" width="400" height="600">
+<img src="dashboard_dark.jpeg" alt="Task Ninja 2.0 Dashboard" width="400" height="600">
+
+
 
 
 ## Splash FadeIn Animation Video
