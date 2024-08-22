@@ -39,7 +39,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
 import com.abhijith.animex.ui.components.GenreTag
+import com.abhijith.animex.ui.components.RatingTag
 import com.abhijith.animex.ui.components.StatItem
+import com.abhijith.animex.ui.theme.OrangeBrown
 
 @Composable
 fun AnimeDetails() {
@@ -119,27 +121,7 @@ fun AnimeDetails() {
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Rating",
-                            tint = Color(0xFFF9A825)
-                        )
-                        Text(
-                            text = "4.7",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Black,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
-                    }
+                    RatingTag(rating = "4.7")
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier

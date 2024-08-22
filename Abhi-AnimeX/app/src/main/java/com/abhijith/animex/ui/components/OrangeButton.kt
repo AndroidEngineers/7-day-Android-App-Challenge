@@ -9,29 +9,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.abhijith.animex.R
+import com.abhijith.animex.ui.theme.Black
+import com.abhijith.animex.ui.theme.OrangeBrown
 
 @Composable
-fun FavoriteButton(text: String, onClick: () -> Unit) {
+fun OrangeButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(32.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFF9A825),
-            contentColor = Color.Black
+            containerColor = OrangeBrown,
+            contentColor = Black
         ),
-       /* elevation = ButtonDefaults.elevatedButtonElevation(
-            defaultElevation = 6.dp,
-            pressedElevation = 8.dp,
-            disabledElevation = 0.dp
-        ),*/
+        /* elevation = ButtonDefaults.elevatedButtonElevation(
+             defaultElevation = 6.dp,
+             pressedElevation = 8.dp,
+             disabledElevation = 0.dp
+         ),*/
         shape = RoundedCornerShape(8.dp)
     ) {
         Text(

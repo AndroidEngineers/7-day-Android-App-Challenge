@@ -1,5 +1,6 @@
 package com.abhijith.animex
 
+import AnimeList
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                             .padding(it)
                             .background(color = androidx.compose.ui.graphics.Color.White)
                     ) {
-                        AnimeDetails()
+                        AnimeList()
                     }
                 }
             }

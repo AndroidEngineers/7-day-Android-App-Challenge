@@ -26,13 +26,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
-import com.abhijith.animex.ui.components.FavoriteButton
+import com.abhijith.animex.ui.components.OrangeButton
+import com.abhijith.animex.ui.components.RatingTag
 
 @Composable
-fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier = Modifier) {
+fun AnimeListItem(name: String, isFavorite: Boolean = true, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,17 +86,7 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Popularity: 4*",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        color = Color.Black,
-                        fontFamily = FontFamily(
-                            Font(R.font.montserrat_regular)
-                        ),
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    RatingTag(rating = "4.0")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "This Japanese Lorem Ipsum is based on the kanji frequency count at tidraso.co.uk and includes about 50% kanji, 25% hiragana, 20% katakana and 5% roman numerals and punctuation. Katakana and hiragana cluster in strings between 1 to 4 chars at random points in each paragraph. Hiragana occurs more often at the end of sentences, rather in clumps of 1 to 4 chars rather than just single chars. Katakana is very unlikely to appear as a single character in Japanese text, but hiragana could. Exclamation and question marks are \"double-byte\", not standard ascii ones. Suggestions for improvements or alternatives are welcome.",
@@ -107,11 +99,13 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                         ),
                         overflow = TextOverflow.Ellipsis,
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OrangeButton(
+                        text = getString(
+                            LocalContext.current, R.string.watch_trailer
+                        ),
+                        onClick = {})
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                FavoriteButton(
-                    text = if (isFavorite) "Remove from Favorites" else "Add to Favorites",
-                    onClick = {})
             }
         }
     }
