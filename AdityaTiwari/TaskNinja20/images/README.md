@@ -10,7 +10,7 @@ Task Ninja 2.0 is an app that allows you to manage tasks efficiently.
 
 ## Screenshots
 ![Task Ninja 2.0 Add Task](addtask_light.jpeg)
-![Task Ninja 2.0 Dashboard](dashboard_light.jpeg)
+![Task Ninja 2.0 Dashboard](dashboar_light.jpeg)
 ![Task Ninja 2.0 Dashboard](dashboard_dark.jpeg)
 
 
