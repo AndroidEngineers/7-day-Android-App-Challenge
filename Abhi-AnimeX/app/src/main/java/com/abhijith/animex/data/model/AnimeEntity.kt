@@ -2,7 +2,7 @@ package com.abhijith.animex.data.model
 
 // temporary implementation to pass data from viewmodel instead of hardcoding it in composable
 // to remove the default values once data is added
-data class Anime(
+data class AnimeEntity(
     val title: String = listOf(
         "\"\\\"Oshi no Ko\\\" 2nd Season\"",
         "Kami no Tou: Ouji no Kikan",
