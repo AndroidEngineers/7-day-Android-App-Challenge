@@ -1,10 +1,12 @@
 package com.android.engineer.mealmate.view.utils.custom_views
 
+import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
@@ -52,9 +54,19 @@ fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableS
             exit = slideOutVertically(targetOffsetY = { it }),
             content = {
                 BottomAppBar(
-                    modifier = Modifier
-                        .height(64.dp)
-                        .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp))),
+                    modifier =
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        Modifier
+                            .padding(28.dp)
+                            .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
+                            .height(64.dp)
+
+                    } else {
+                        Modifier
+                            .padding(bottom = 58.dp, start = 28.dp, end = 28.dp)
+                            .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
+                            .height(75.dp)
+                    },
                     containerColor = OrangePrimary,
                 ) {
                     screens.forEach { screen ->
