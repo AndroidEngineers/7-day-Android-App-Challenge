@@ -1,6 +1,5 @@
 package com.abhijith.animex.ui.screens.animelist.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -39,10 +38,6 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
 
     fun onResetNavigation() {
         _navigationEvent.value = null
-    }
-
-    fun onButtonClick(item: String) {
-        Log.d("AnimeListViewModel", "Youtube button clicked on item: $item")
     }
 }
 

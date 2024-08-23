@@ -10,7 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.domain.usecases.GetAnimeListUseCase
-import com.abhijith.animex.ui.screens.Screen
+import com.abhijith.animex.ui.navigation.Screen
 import com.abhijith.animex.ui.screens.animelist.viewmodel.AnimeListViewModel
 import com.abhijith.animex.ui.screens.animelist.viewmodel.AnimeListViewModelFactory
 import com.abhijith.animex.ui.screens.error.ErrorScreen
@@ -52,8 +52,7 @@ fun AnimeListInfo(animeItems: List<AnimeItem>, viewModel: AnimeListViewModel) {
         items(animeItems.count()) {
             AnimeListItem(
                 animeEntity = animeItems[it],
-                onItemClicked = viewModel::onItemClick,
-                onButtonClicked = viewModel::onButtonClick
+                onItemClicked = viewModel::onItemClick
             )
         }
     }

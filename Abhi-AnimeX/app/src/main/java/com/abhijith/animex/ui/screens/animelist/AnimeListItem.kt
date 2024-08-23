@@ -37,8 +37,7 @@ import com.abhijith.animex.ui.components.WatchTrailerButton
 
 @Composable
 fun AnimeListItem(
-    animeEntity: AnimeItem, onItemClicked: (AnimeItem) -> Unit,
-    onButtonClicked: (String) -> Unit
+    animeEntity: AnimeItem, onItemClicked: (AnimeItem) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -109,7 +108,8 @@ fun AnimeListItem(
                         text = getString(
                             LocalContext.current, R.string.watch_trailer
                         ),
-                        onClick = { onButtonClicked(animeEntity.youtubeId) })
+                        youtubeId = animeEntity.youtubeId
+                    )
                 }
             }
         }
