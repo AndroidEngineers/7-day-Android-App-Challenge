@@ -10,17 +10,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.abhijith.animex.ui.screens.Screen
-import com.abhijith.animex.ui.screens.animedetails.AnimeDetails
-import com.abhijith.animex.ui.screens.animelist.AnimeList
+import com.abhijith.animex.ui.screens.AppNavHost
 import com.abhijith.animex.ui.theme.AnimeXTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,22 +33,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-    }
-}
-
-
-@Composable
-fun AppNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = Screen.AnimeList.route) {
-        composable(Screen.AnimeList.route) {
-            AnimeList(navController)
-        }
-        composable(
-            route = Screen.AnimeDetails.route,
-            arguments = listOf(navArgument("selectedAnimeItem") { type = NavType.StringType })
-        ) {
-            AnimeDetails()
         }
     }
 }
