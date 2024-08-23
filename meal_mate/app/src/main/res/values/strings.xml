@@ -14,4 +14,13 @@
     <string name="missed_ingredient">Missed Ingredients</string>
     <string name="used_ingredient">Used Ingredients</string>
     <string name="unused_ingredient">Unused Ingredients</string>
+
+<!--    Buttons-->
+    <string name="sign_up">SIGN UP</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="today">Today</string>
+    <string name="weekly">Weekly</string>
+    <string name="food_preferences">Food Preferences</string>
+    <string name="login">LOGIN</string>
+    <string name="logout">Logout</string>
 </resources>
