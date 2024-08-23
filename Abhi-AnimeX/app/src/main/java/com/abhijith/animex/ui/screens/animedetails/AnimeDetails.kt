@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
@@ -39,15 +40,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
+import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.components.GenreTag
 import com.abhijith.animex.ui.components.RatingTag
 import com.abhijith.animex.ui.components.StatItem
 import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewModel
+import com.abhijith.animex.ui.screens.error.ErrorScreen
+import com.abhijith.animex.ui.screens.loading.LoadingScreen
 
 @Composable
 fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
-    val anime = animeDetailsViewModel.animeItem.collectAsState().value
+    when (val uiState = animeDetailsViewModel.uiState.collectAsState().value) {
+        is AnimeDetailsUiState.Error -> ErrorScreen(uiState.message)
+        is AnimeDetailsUiState.Loading -> LoadingScreen()
+        is AnimeDetailsUiState.Success -> AnimeDetailsInfo(uiState.item, animeDetailsViewModel)
+    }
+}
 
+@Composable
+fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsViewModel) {
+    val yearAndJapaneseName =
+        animeDetailsViewModel.formatYearAndJapaneseName(animeItem.year, animeItem.japaneseName)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +73,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(anime.imageUrl)
+                        .data(animeItem.imageUrl)
                         .crossfade(true).build(),
                     contentDescription = null,
                     placeholder = painterResource(android.R.drawable.ic_menu_report_image),
@@ -77,10 +90,11 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = anime.title,
-                        style = MaterialTheme.typography.headlineMedium,
+                        text = animeItem.title,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
+                        maxLines = 2,
+                        textAlign = TextAlign.Center,
                         color = Color.Black,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = FontFamily(
@@ -88,41 +102,19 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                         ),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(horizontalArrangement = Arrangement.SpaceAround) {
-                        Text(
-                            text = "Anime year",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        Text(
-                            text = "|",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ), modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                        Text(
-                            text = "Japanese name",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
+                    Text(
+                        text = yearAndJapaneseName,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        color = Color.Gray,
+                        fontFamily = FontFamily(
+                            Font(R.font.montserrat_regular)
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = anime.rating)
+                    RatingTag(rating = animeItem.rating)
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier
@@ -145,18 +137,18 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                                 imageVector = Icons.Default.PlayArrow,
                                 modifier = Modifier.rotate(270F),
                                 contentDesc = getString(LocalContext.current, R.string.rank),
-                                count = anime.rank
+                                count = animeItem.rank
                             )
                             StatItem(
                                 imageVector = Icons.Default.Info,
                                 contentDesc = getString(LocalContext.current, R.string.score),
-                                count = anime.score
+                                count = animeItem.score
                             )
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = anime.synopsis,
+                        text = animeItem.synopsis,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray,
@@ -167,8 +159,8 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(anime.genres.count()) {
-                            GenreTag(anime.genres[it])
+                        items(animeItem.genres.count()) {
+                            GenreTag(animeItem.genres[it])
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))

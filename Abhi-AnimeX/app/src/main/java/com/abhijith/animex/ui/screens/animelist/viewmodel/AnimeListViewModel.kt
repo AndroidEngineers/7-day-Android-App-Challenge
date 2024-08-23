@@ -2,53 +2,38 @@ package com.abhijith.animex.ui.screens.animelist.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.abhijith.animex.data.model.Anime
+import com.abhijith.animex.domain.model.AnimeItem
+import com.abhijith.animex.domain.usecases.GetAnimeListUseCase
+import com.abhijith.animex.ui.screens.animelist.AnimeListUiState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AnimeListViewModel : ViewModel() {
-    private val _items = MutableStateFlow<List<Anime>>(emptyList())
-    val items: StateFlow<List<Anime>> = _items.asStateFlow()
+class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+    private val _itemsUiState = MutableStateFlow<AnimeListUiState>(AnimeListUiState.Loading)
+    val itemsUiState: StateFlow<AnimeListUiState> = _itemsUiState.asStateFlow()
 
-    private val _navigationEvent = MutableStateFlow<Anime?>(null)
-    val navigationEvent: StateFlow<Anime?> = _navigationEvent.asStateFlow()
+    private val _navigationEvent = MutableStateFlow<AnimeItem?>(null)
+    val navigationEvent: StateFlow<AnimeItem?> = _navigationEvent.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _items.value = List(10) { generateValidAnime() }
+            _itemsUiState.value = AnimeListUiState.Loading
+            delay(2000)
+            try {
+                _itemsUiState.value = AnimeListUiState.Success(getAnimeListUseCase())
+            } catch (e: Exception) {
+                _itemsUiState.value =
+                    AnimeListUiState.Error("Something went wrong! \nPlease try again later...")
+            }
         }
     }
 
-    private fun generateValidAnime(): Anime {
-        val anime = Anime()
-
-        val cleanedTitle = anime.title.replace("\\", "").replace("\"", "")
-        val cleanedYear = anime.year.ifBlank {
-            "-"
-        }
-        val cleanedRating = anime.rating.ifBlank {
-            "-"
-        }
-        val cleanedRank = anime.rank.ifBlank {
-            "-"
-        }
-        val cleanedScore = anime.score.ifBlank {
-            "-"
-        }
-
-        return anime.copy(
-            title = cleanedTitle,
-            year = cleanedYear,
-            rating = cleanedRating,
-            rank = cleanedRank,
-            score = cleanedScore,
-        )
-    }
-
-    fun onItemClick(item: Anime) {
+    fun onItemClick(item: AnimeItem) {
         _navigationEvent.value = item
     }
 
@@ -58,5 +43,18 @@ class AnimeListViewModel : ViewModel() {
 
     fun onButtonClick(item: String) {
         Log.d("AnimeListViewModel", "Youtube button clicked on item: $item")
+    }
+}
+
+
+// TODO to remove this once i add DI to the project
+class AnimeListViewModelFactory(private val getAnimeListUseCase: GetAnimeListUseCase) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AnimeListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AnimeListViewModel(getAnimeListUseCase) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
