@@ -5,12 +5,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.android.engineer.mealmate.view.features.auth.LoginScreen
-import com.android.engineer.mealmate.view.utils.constants.Graph
+import com.android.engineer.mealmate.view.utils.constants.AUTHENTICATION
 import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
 
 fun NavGraphBuilder.authNavGraph(navHostController: NavHostController) {
     navigation(
-        route = Graph.AUTHENTICATION,
+        route = AUTHENTICATION,
         startDestination = AuthScreen.Login.route
     ) {
         composable(route = AuthScreen.Login.route) {

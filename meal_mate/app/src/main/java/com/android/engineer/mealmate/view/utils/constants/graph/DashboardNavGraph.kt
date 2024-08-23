@@ -6,11 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.android.engineer.mealmate.view.features.home.HomeScreen
+import com.android.engineer.mealmate.view.features.home.RecipeDetailsScreen
 import com.android.engineer.mealmate.view.features.meal_plan.MealPlanScreen
 import com.android.engineer.mealmate.view.features.profile.ProfileScreen
 import com.android.engineer.mealmate.view.features.report.ReportScreen
 import com.android.engineer.mealmate.view.features.shop_list.ShopListScreen
-import com.android.engineer.mealmate.view.utils.constants.Graph
+import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
+import com.android.engineer.mealmate.view.utils.constants.RECIPE_DETAILS
+import com.android.engineer.mealmate.view.utils.constants.STATIC_URL1
 import com.android.engineer.mealmate.view.utils.constants.sealed_constants.BottomBarScreen
 
 @Composable
@@ -21,13 +24,14 @@ fun DashboardNavGraph(
 ) {
     NavHost(
         navController = navHostController,
-        route = Graph.DASHBOARD,
+        route = DASHBOARD,
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
             HomeScreen(
-                title = BottomBarScreen.Home.title,
-                navHostController = navHostController
+                navHostController = navHostController,
+                userName = "",
+                paddingValues = paddingValues
             )
         }
         composable(route = BottomBarScreen.MealPlan.route) {
@@ -52,6 +56,14 @@ fun DashboardNavGraph(
             ProfileScreen(
                 title = BottomBarScreen.Profile.title,
                 navHostController = navHostController
+            )
+        }
+        composable(route = RECIPE_DETAILS) {
+            RecipeDetailsScreen(
+                title = "Web View",
+                webUrl = STATIC_URL1,
+                navHostController = navHostController,
+
             )
         }
     }

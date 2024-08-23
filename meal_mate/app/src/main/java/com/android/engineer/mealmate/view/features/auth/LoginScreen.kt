@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.android.engineer.mealmate.view.utils.constants.Graph
+import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
 import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
 
 @Composable
@@ -22,7 +22,7 @@ fun LoginScreen(title: String, navHostController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .clickable {
-                navHostController.navigate(route = Graph.DASHBOARD)
+                navHostController.navigate(route = DASHBOARD)
             }
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -70,4 +70,15 @@ dependencies {
     // Navigation Compose
     implementation(libs.androidx.navigation.compose)
 
+    // Image Caching - Coil
+    implementation(libs.coil.compose)
+
+    // Lottie Animation
+    implementation(libs.lottie.compose)
+
+    // Lifecycle Viewmodel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Extended Icons
+    implementation(libs.androidx.material.icons.extended)
 }

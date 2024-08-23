@@ -10,23 +10,25 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.android.engineer.mealmate.view.features.DashboardScreen
-import com.android.engineer.mealmate.view.utils.constants.Graph
+import com.android.engineer.mealmate.view.utils.constants.AUTHENTICATION
+import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
+import com.android.engineer.mealmate.view.utils.constants.ROOT
 import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
 
 @Composable
 fun RootNavGraph(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        route = Graph.ROOT,
-        startDestination = Graph.AUTHENTICATION
+        route = ROOT,
+        startDestination = AUTHENTICATION
     ) {
 
         authNavGraph(navHostController = navHostController)
-        composable(route = Graph.DASHBOARD) {
+        composable(route = DASHBOARD) {
             DashboardScreen(
                 logout = {
                     navHostController.navigate(AuthScreen.Login.route) {
-                        popUpTo(0){}
+                        popUpTo(0) {}
                     }
                 }
             )
@@ -36,7 +38,7 @@ fun RootNavGraph(navHostController: NavHostController) {
 
 // For the single viewModel, use this function to get the back stack entry
 @Composable
-inline fun <reified T: ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
     val navGraphRoute = destination.parent?.route ?: return viewModel()
     val parentEntry = remember(this) {
         navController.getBackStackEntry(navGraphRoute)
