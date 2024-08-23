@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AniFetch</string>
+    <string name="anifetch">AniFetch</string>
+    <string name="splash_screen_logo">Splash Screen Logo</string>
+    <string name="genres_action_drama">Genres: Action, Drama</string>
+    <string name="main_characters">Main Characters</string>
+    <string name="episodes_24">Episodes: 24</string>
+    <string name="rating_8_5_10">Rating: 8.5/10</string>
+    <string name="description">Description: %1$s</string>
+    <string name="title">Title: %1$s</string>
 </resources>
