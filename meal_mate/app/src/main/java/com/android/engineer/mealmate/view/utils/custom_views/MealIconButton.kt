@@ -52,9 +52,6 @@ fun MealIconButton(
     }
 }
 
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun MealIconButtonPreview() {

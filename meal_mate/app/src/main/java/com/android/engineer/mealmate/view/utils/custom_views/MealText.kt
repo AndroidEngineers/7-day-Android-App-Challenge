@@ -34,7 +34,6 @@ fun MealText(
 
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun MealTextPreview() {
