@@ -57,7 +57,7 @@ fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableS
                     modifier =
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         Modifier
-                            .padding(28.dp)
+                            .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
                             .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
                             .height(64.dp)
 
