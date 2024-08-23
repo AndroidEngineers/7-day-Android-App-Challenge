@@ -1,4 +1,4 @@
-package com.abhijith.animex.ui.screens
+package com.abhijith.animex.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
