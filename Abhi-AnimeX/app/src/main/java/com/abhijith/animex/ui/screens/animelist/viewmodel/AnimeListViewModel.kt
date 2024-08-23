@@ -23,7 +23,7 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
     init {
         viewModelScope.launch {
             _itemsUiState.value = AnimeListUiState.Loading
-            delay(2000)
+            delay(3000)
             try {
                 _itemsUiState.value = AnimeListUiState.Success(getAnimeListUseCase())
             } catch (e: Exception) {

@@ -16,7 +16,7 @@ object AnimeMapper {
             synopsis = synopsis,
             genres = genres,
             imageUrl = imageUrl,
-            youtubeUrl = youtubeUrl
+            youtubeId = youtubeId
         )
     }
 }

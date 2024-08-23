@@ -39,9 +39,11 @@ data class AnimeEntity(
         "https://cdn.myanimelist.net/images/anime/1332/143513l.webp",
         "https://cdn.myanimelist.net/images/anime/1607/143547l.webp"
     ).random(),
-    val youtubeUrl: String = listOf(
-        "https://www.youtube.com/watch?v=JHUeY2QwBi0",
-        "https://www.youtube.com/watch?v=Bf4XTzeUBHo",
-        "https://www.youtube.com/watch?v=uytJ6_KTCZI"
+    val youtubeId: String = listOf(
+        "QMuajQlx64c",
+        "Bf4XTzeUBHo",
+        "441v-JXm0CE",
+        "SjYlGEvG2Go",
+        "uytJ6_KTCZI"
     ).random()
 )

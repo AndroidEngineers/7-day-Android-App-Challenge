@@ -11,5 +11,5 @@ data class AnimeItem(
     val synopsis: String,
     val genres: List<String>,
     val imageUrl: String,
-    val youtubeUrl: String
+    val youtubeId: String
 )

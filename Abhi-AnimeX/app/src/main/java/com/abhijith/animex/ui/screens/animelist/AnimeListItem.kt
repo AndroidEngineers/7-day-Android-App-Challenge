@@ -109,7 +109,7 @@ fun AnimeListItem(
                         text = getString(
                             LocalContext.current, R.string.watch_trailer
                         ),
-                        onClick = { onButtonClicked(animeEntity.youtubeUrl) })
+                        onClick = { onButtonClicked(animeEntity.youtubeId) })
                 }
             }
         }

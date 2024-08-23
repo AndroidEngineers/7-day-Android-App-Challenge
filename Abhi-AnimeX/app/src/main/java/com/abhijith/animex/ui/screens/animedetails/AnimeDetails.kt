@@ -44,6 +44,7 @@ import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.components.GenreTag
 import com.abhijith.animex.ui.components.RatingTag
 import com.abhijith.animex.ui.components.StatItem
+import com.abhijith.animex.ui.components.YoutubeVideoTile
 import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewModel
 import com.abhijith.animex.ui.screens.error.ErrorScreen
 import com.abhijith.animex.ui.screens.loading.LoadingScreen
@@ -164,6 +165,7 @@ fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsVi
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
+                    YoutubeVideoTile(animeItem.youtubeId)
                 }
             }
         }
