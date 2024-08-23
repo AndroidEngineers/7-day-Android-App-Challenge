@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -16,11 +17,15 @@ import androidx.compose.ui.unit.dp
 import com.abhijith.animex.R
 import com.abhijith.animex.ui.theme.Black
 import com.abhijith.animex.ui.theme.OrangeBrown
+import com.abhijith.animex.ui.utils.openYouTubeVideo
 
 @Composable
-fun WatchTrailerButton(text: String, onClick: () -> Unit) {
+fun WatchTrailerButton(text: String, youtubeId: String) {
+    val context = LocalContext.current
     Button(
-        onClick = onClick,
+        onClick = {
+            openYouTubeVideo(context, youtubeId)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(32.dp),
