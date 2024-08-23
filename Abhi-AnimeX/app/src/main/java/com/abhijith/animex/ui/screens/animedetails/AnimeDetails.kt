@@ -46,7 +46,7 @@ import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewMod
 
 @Composable
 fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
-    val anime = animeDetailsViewModel.animeItem.collectAsState()
+    val anime = animeDetailsViewModel.animeItem.collectAsState().value
 
     Box(
         modifier = Modifier
@@ -60,7 +60,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(anime.value.imageUrl)
+                        .data(anime.imageUrl)
                         .crossfade(true).build(),
                     contentDescription = null,
                     placeholder = painterResource(android.R.drawable.ic_menu_report_image),
@@ -77,7 +77,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = anime.value.title,
+                        text = anime.title,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -122,7 +122,7 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = anime.value.rating)
+                    RatingTag(rating = anime.rating)
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier
@@ -145,18 +145,18 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                                 imageVector = Icons.Default.PlayArrow,
                                 modifier = Modifier.rotate(270F),
                                 contentDesc = getString(LocalContext.current, R.string.rank),
-                                count = anime.value.rank
+                                count = anime.rank
                             )
                             StatItem(
                                 imageVector = Icons.Default.Info,
                                 contentDesc = getString(LocalContext.current, R.string.score),
-                                count = anime.value.score
+                                count = anime.score
                             )
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = anime.value.synopsis,
+                        text = anime.synopsis,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray,
@@ -167,8 +167,8 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(anime.value.genres.count()) {
-                            GenreTag(anime.value.genres[it])
+                        items(anime.genres.count()) {
+                            GenreTag(anime.genres[it])
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
