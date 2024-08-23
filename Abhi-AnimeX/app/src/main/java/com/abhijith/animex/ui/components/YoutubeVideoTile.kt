@@ -1,9 +1,6 @@
 package com.abhijith.animex.ui.components
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,22 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.abhijith.animex.ui.utils.youtubeVideoClickable
 
 @Composable
 fun YoutubeVideoTile(videoId: String, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    val videoUrl = "https://www.youtube.com/watch?v=$videoId"
     val thumbnailUrl = "https://img.youtube.com/vi/$videoId/0.jpg"
 
     Box(
         modifier = modifier
-            .clickable {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
-                context.startActivity(intent)
-            }
+            .youtubeVideoClickable(videoId)
             .padding(8.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surface)
