@@ -13,12 +13,7 @@
         android:theme="@style/Theme.RecipeRoulette"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.recipedetail.RecipeDetailActivity"
-            android:exported="false"
-            android:label="@string/title_activity_recipe_detail"
-            android:theme="@style/Theme.RecipeRoulette" />
-        <activity
-            android:name=".presentation.recipelist.MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RecipeRoulette">

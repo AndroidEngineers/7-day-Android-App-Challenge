@@ -1,4 +1,4 @@
-package com.example.reciperoulette.presentation.recipelist.ui.theme
+package com.example.reciperoulette.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

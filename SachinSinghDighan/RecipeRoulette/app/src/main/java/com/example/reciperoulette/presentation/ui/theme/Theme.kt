@@ -1,4 +1,4 @@
-package com.example.reciperoulette.presentation.recipedetail.ui.theme
+package com.example.reciperoulette.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
