@@ -104,18 +104,19 @@ fun LoginScreen(navHostController: NavHostController) {
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            MealText(
-                                text = stringResource(id = R.string.forgot_password),
-                                fontSize = 12.sp,
-                                modifier = Modifier.clickable { /* TODO */ }
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(26.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
+                        // This will be uncommented when Forgot password feature is enabled
+//                        Row(
+//                            modifier = Modifier.fillMaxWidth(),
+//                            horizontalArrangement = Arrangement.End
+//                        ) {
+//                            MealText(
+//                                text = stringResource(id = R.string.forgot_password),
+//                                fontSize = 12.sp,
+//                                modifier = Modifier.clickable { }
+//                            )
+//                        }
+//                        Spacer(modifier = Modifier.height(26.dp))
                         MealFilledButton(
                             onClick = { navHostController.navigate(route = DASHBOARD) },
                             text = stringResource(id = R.string.login),
