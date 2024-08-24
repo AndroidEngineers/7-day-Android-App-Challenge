@@ -14,8 +14,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,7 +33,7 @@ import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
-fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableState<Boolean>) {
+fun MealBottomBar(navHostController: NavHostController) {
     val screens = mutableListOf(
         BottomBarScreen.Home,
         BottomBarScreen.MealPlan,
@@ -42,6 +43,8 @@ fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableS
     )
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    // State of bottomBar, set state to false, if current page route is not contains in the screens list.
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
     val bottomBarDestination = screens.any {
         bottomBarState.value = it.route == currentDestination?.route
