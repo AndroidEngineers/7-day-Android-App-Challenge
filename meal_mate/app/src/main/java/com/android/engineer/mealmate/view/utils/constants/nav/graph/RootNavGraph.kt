@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.view.utils.constants.graph
+package com.android.engineer.mealmate.view.utils.constants.nav.graph
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -10,10 +10,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.android.engineer.mealmate.view.features.DashboardScreen
-import com.android.engineer.mealmate.view.utils.constants.AUTHENTICATION
-import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.ROOT
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.AUTHENTICATION
+import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
+import com.android.engineer.mealmate.view.utils.constants.nav.ROOT
+import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
 
 @Composable
 fun RootNavGraph(navHostController: NavHostController) {

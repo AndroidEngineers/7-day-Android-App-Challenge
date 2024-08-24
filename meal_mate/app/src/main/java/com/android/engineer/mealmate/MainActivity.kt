@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.ui.theme.MealMateTheme
-import com.android.engineer.mealmate.view.utils.constants.graph.RootNavGraph
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.RootNavGraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

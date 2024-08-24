@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
-import com.android.engineer.mealmate.view.utils.constants.STATIC_BREAK_FAST_IMAGE
+import com.android.engineer.mealmate.data.utils.STATIC_BREAK_FAST_IMAGE
 import com.android.engineer.mealmate.view.utils.custom_views.MealIconButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealImageLoading
 import com.android.engineer.mealmate.view.utils.custom_views.MealSearchView

@@ -46,12 +46,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
-import com.android.engineer.mealmate.model.data.response.SearchByIngredients
-import com.android.engineer.mealmate.model.data.response.SearchByNutrients
+import com.android.engineer.mealmate.data.model.response.SearchByIngredients
+import com.android.engineer.mealmate.data.model.response.SearchByNutrients
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
+import com.android.engineer.mealmate.view.features.home.FORWARD_SLASH
 import com.android.engineer.mealmate.view.features.home.RecipeViewModel
-import com.android.engineer.mealmate.view.utils.constants.RECIPE_DETAILS
+import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,10 +88,13 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
             )
         },
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(id = R.string.search_icon))
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = stringResource(id = R.string.search_icon)
+            )
         },
         trailingIcon = {
-            if(isActive) {
+            if (isActive) {
                 Icon(
                     modifier = Modifier.clickable {
                         viewModel.onCloseIconClicked()
@@ -129,7 +133,7 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
         }
     }
     Spacer(modifier = Modifier.height(30.dp))
-    if(historyItem.size > 2){
+    if (historyItem.size > 2) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -137,21 +141,22 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
             if (isSearchByNutrients) {
                 items(items = searchByNutrients) { item ->
                     RowItemByNutrients(item = item) {
-                        navHostController.navigate(RECIPE_DETAILS)
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
                     }
                 }
             } else {
                 items(items = searchByIngredients) { item ->
-                        RowItemByIngredients(item = item) {
-                            navHostController.navigate(RECIPE_DETAILS)
-                        }
+                    RowItemByIngredients(item = item) {
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
                     }
+                }
             }
         }
-    }  else {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .padding(14.dp),
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -165,6 +170,7 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
     }
     Spacer(modifier = Modifier.height(30.dp))
 }
+
 @Composable
 fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
     ElevatedCard(
@@ -174,7 +180,7 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
         colors = CardDefaults.elevatedCardColors(
             containerColor = Color.White
         ),
-        onClick = { onItemSelected(item.id)},
+        onClick = { onItemSelected(item.id) },
     ) {
         Row(
             modifier = Modifier
@@ -206,7 +212,8 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
                         painter = painterResource(id = R.drawable.ic_kcal),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
-                        tint = LocalContentColor.current)
+                        tint = LocalContentColor.current
+                    )
                     Text(
                         text = item.calories.toString(),
                         color = OrangePrimary,
@@ -217,7 +224,8 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
                         painter = painterResource(id = R.drawable.ic_carbo),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
-                        tint = LocalContentColor.current)
+                        tint = LocalContentColor.current
+                    )
                     Text(
                         text = item.carbs,
                         color = OrangePrimary,
@@ -228,7 +236,8 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
                         painter = painterResource(id = R.drawable.ic_protein),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
-                        tint = LocalContentColor.current)
+                        tint = LocalContentColor.current
+                    )
                     Text(
                         text = item.protein,
                         color = OrangePrimary,
@@ -239,7 +248,8 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
                         painter = painterResource(id = R.drawable.ic_fats),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
-                        tint = LocalContentColor.current)
+                        tint = LocalContentColor.current
+                    )
                     Text(
                         text = item.fat,
                         color = OrangePrimary,
@@ -261,7 +271,7 @@ fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Uni
         colors = CardDefaults.elevatedCardColors(
             containerColor = Color.White
         ),
-        onClick = { onItemSelected(item.id)},
+        onClick = { onItemSelected(item.id) },
     ) {
         Row(
             modifier = Modifier
@@ -295,14 +305,14 @@ fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Uni
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = if(item.likes == 0) Icons.Default.SentimentVeryDissatisfied else Icons.Default.SentimentVerySatisfied,
+                    imageVector = if (item.likes == 0) Icons.Default.SentimentVeryDissatisfied else Icons.Default.SentimentVerySatisfied,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
-                    tint = if(item.likes == 0) Color.Red else Color.Black
+                    tint = if (item.likes == 0) Color.Red else Color.Black
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = if(item.likes == 0) "" else item.likes.toString(),
+                    text = if (item.likes == 0) "" else item.likes.toString(),
                     color = OrangePrimary,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
@@ -316,16 +326,25 @@ fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Uni
 
 @Composable
 fun ShowIngredientsCountView(item: SearchByIngredients) {
-    if(item.missedIngredientCount > 0) {
-        ShowCountView(countTitle = stringResource(id = R.string.missed_ingredient) , count = item.missedIngredientCount.toString())
+    if (item.missedIngredientCount > 0) {
+        ShowCountView(
+            countTitle = stringResource(id = R.string.missed_ingredient),
+            count = item.missedIngredientCount.toString()
+        )
     }
 
-    if(item.usedIngredientCount > 0) {
-        ShowCountView(countTitle = stringResource(id = R.string.used_ingredient) , count = item.usedIngredientCount.toString())
+    if (item.usedIngredientCount > 0) {
+        ShowCountView(
+            countTitle = stringResource(id = R.string.used_ingredient),
+            count = item.usedIngredientCount.toString()
+        )
     }
 
-    if(item.unusedIngredients.isNotEmpty()) {
-        ShowCountView(countTitle = stringResource(id = R.string.unused_ingredient) , count = item.unusedIngredients.size.toString())
+    if (item.unusedIngredients.isNotEmpty()) {
+        ShowCountView(
+            countTitle = stringResource(id = R.string.unused_ingredient),
+            count = item.unusedIngredients.size.toString()
+        )
     }
 }
 
@@ -362,6 +381,6 @@ fun MealSearchItemPreview() {
             .background(OrangeOnPrimary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-       MealSearchView(viewModel = RecipeViewModel(), navHostController = rememberNavController())
+        MealSearchView(viewModel = RecipeViewModel(), navHostController = rememberNavController())
     }
 }

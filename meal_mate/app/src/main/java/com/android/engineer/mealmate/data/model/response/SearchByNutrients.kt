@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.model.data.response
+package com.android.engineer.mealmate.data.model.response
 
 data class SearchByNutrients(
     val id: Int,

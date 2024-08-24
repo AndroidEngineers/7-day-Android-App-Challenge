@@ -29,7 +29,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.BottomBarScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
 fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableState<Boolean>) {

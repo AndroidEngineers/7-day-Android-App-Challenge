@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.view.utils.constants
+package com.android.engineer.mealmate.data.utils
 
 // Temporary constants - Once API integrated these static images will be removed.
 const val STATIC_BREAK_FAST_IMAGE = "https://www.foodiesfeed.com/wp-content/uploads/2023/09/salad-of-pumpkin-arugula-and-blue-cheese.jpg"

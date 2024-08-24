@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.model.data.response
+package com.android.engineer.mealmate.data.model.response
 
 data class SearchByIngredients(
     val id: Int,
@@ -11,12 +11,4 @@ data class SearchByIngredients(
     val usedIngredients: List<MissedUnUsedIngredients>,
     val unusedIngredients: List<MissedUnUsedIngredients>,
     val spoonacularSourceUrl: String
-)
-
-data class MissedUnUsedIngredients (
-    val id: Int,
-    val image: String,
-    val name: String,
-    val original: String,
-    val amount: Double
 )

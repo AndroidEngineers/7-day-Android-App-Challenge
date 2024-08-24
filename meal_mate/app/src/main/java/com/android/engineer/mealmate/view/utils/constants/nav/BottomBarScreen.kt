@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.view.utils.constants.sealed_constants
+package com.android.engineer.mealmate.view.utils.constants.nav
 
 import com.android.engineer.mealmate.R
 
