@@ -3,32 +3,32 @@ package com.android.engineer.mealmate.view.features.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.engineer.mealmate.model.data.response.MissedUnUsedIngredients
-import com.android.engineer.mealmate.model.data.response.SearchByIngredients
-import com.android.engineer.mealmate.model.data.response.SearchByNutrients
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE1
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE2
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE3
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE4
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE5
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE6
-import com.android.engineer.mealmate.view.utils.constants.STATIC_INGREDIENTS_IMAGE7
-import com.android.engineer.mealmate.view.utils.constants.STATIC_URL1
-import com.android.engineer.mealmate.view.utils.constants.STATIC_URL_IMAGE1
-import com.android.engineer.mealmate.view.utils.constants.STATIC_URL_IMAGE2
+import com.android.engineer.mealmate.data.model.response.MissedUnUsedIngredients
+import com.android.engineer.mealmate.data.model.response.SearchByIngredients
+import com.android.engineer.mealmate.data.model.response.SearchByNutrients
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE1
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE2
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE3
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE4
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE5
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE6
+import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE7
+import com.android.engineer.mealmate.data.utils.STATIC_URL1
+import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE1
+import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE2
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class RecipeViewModel() : ViewModel() {
+class RecipeViewModel : ViewModel() {
 
     val isShowNextMealView = mutableStateOf(true)
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
-    private val _historyItem = MutableStateFlow<MutableList<String>>(
+    private val _historyItem = MutableStateFlow(
         mutableListOf(
             "apples, flour, sugar",
             "apple"

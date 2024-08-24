@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,12 +24,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.android.engineer.mealmate.R
-import com.android.engineer.mealmate.ui.theme.OrangeOnBackground
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
-import com.android.engineer.mealmate.view.utils.constants.STATIC_BREAK_FAST_IMAGE
+import com.android.engineer.mealmate.data.utils.STATIC_BREAK_FAST_IMAGE
+import com.android.engineer.mealmate.view.utils.custom_views.MealIconButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealImageLoading
 import com.android.engineer.mealmate.view.utils.custom_views.MealSearchView
+import com.android.engineer.mealmate.view.utils.custom_views.MealText
 
 @Composable
 fun HomeScreen(navHostController: NavHostController, userName: String, paddingValues: PaddingValues) {
@@ -40,15 +39,21 @@ fun HomeScreen(navHostController: NavHostController, userName: String, paddingVa
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(OrangeOnPrimary).padding(paddingValues = paddingValues).padding(all = 28.dp),
+            .background(OrangeOnPrimary)
+            .padding(paddingValues = paddingValues)
+            .padding(all = 28.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ShowTopView(userName = userName)
-        Spacer(modifier = Modifier.fillMaxWidth().height(15.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(15.dp))
         if(viewModel.isShowNextMealView.value) {
             ShowNextMeal()
         }
-        Spacer(modifier = Modifier.fillMaxWidth().height(15.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(15.dp))
         MealSearchView(
             viewModel = viewModel,
             navHostController = navHostController
@@ -64,19 +69,13 @@ fun ShowTopView(userName: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = stringResource(id = R.string.hello).plus(", ").plus(userName), fontSize = 30.sp)
-        FilledTonalButton(
-            colors = ButtonColors(
-                containerColor = OrangeOnBackground,
-                contentColor = Color.White,
-                disabledContentColor = Color.Transparent, // Need to change this color
-                disabledContainerColor = Color.Transparent // Need to change this color
-            ),
-            onClick = { }) {
-            Text(
-                text = stringResource(id = R.string.meal_card)
-            )
-        }
+        MealText(text = stringResource(id = R.string.hello).plus(", ").plus(userName), fontSize = 30.sp)
+        MealIconButton(
+            onClick = {},
+            text = stringResource(id = R.string.meal_card),
+            icon = R.drawable.ic_meal_card,
+            horizontalPadding = 0.dp
+        )
     }
 }
 
@@ -129,24 +128,9 @@ fun ShowNextMeal() {
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Text(
-                    text = "Fruits",
-                    color = Color.Black,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-                Text(
-                    text = "Duration: 15 mins",
-                    color = Color.Black,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
-                )
-                Text(
-                    text = "Serves: 1",
-                    color = Color.Black,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
-                )
+                MealText(text = "Fruits", fontSize = 14.sp)
+                MealText(text = "Duration: 15 mins", fontSize = 12.sp)
+                MealText(text = "Serves: 1", fontSize = 12.sp)
             }
         }
     }

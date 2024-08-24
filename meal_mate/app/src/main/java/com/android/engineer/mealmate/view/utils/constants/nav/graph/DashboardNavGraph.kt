@@ -1,20 +1,24 @@
-package com.android.engineer.mealmate.view.utils.constants.graph
+package com.android.engineer.mealmate.view.utils.constants.nav.graph
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.android.engineer.mealmate.data.utils.STATIC_URL1
 import com.android.engineer.mealmate.view.features.home.HomeScreen
+import com.android.engineer.mealmate.view.features.home.RECIPE_TITLE
+import com.android.engineer.mealmate.view.features.home.RECIPE_TITLE_START_END
 import com.android.engineer.mealmate.view.features.home.RecipeDetailsScreen
 import com.android.engineer.mealmate.view.features.meal_plan.MealPlanScreen
 import com.android.engineer.mealmate.view.features.profile.ProfileScreen
 import com.android.engineer.mealmate.view.features.report.ReportScreen
 import com.android.engineer.mealmate.view.features.shop_list.ShopListScreen
-import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.RECIPE_DETAILS
-import com.android.engineer.mealmate.view.utils.constants.STATIC_URL1
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.BottomBarScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
+import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
+import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
 fun DashboardNavGraph(
@@ -58,12 +62,18 @@ fun DashboardNavGraph(
                 navHostController = navHostController
             )
         }
-        composable(route = RECIPE_DETAILS) {
-            RecipeDetailsScreen(
-                title = "Web View",
-                webUrl = STATIC_URL1,
-                navHostController = navHostController,
+        composable(
+            route = RECIPE_DETAILS.plus(RECIPE_TITLE_START_END),
+            arguments = listOf(
+                navArgument(RECIPE_TITLE) { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val recipeTitle = backStackEntry.arguments?.getString(RECIPE_TITLE) ?: ""
 
+            RecipeDetailsScreen(
+                recipeTitle = recipeTitle,
+                recipeSourceUrl = STATIC_URL1,
+                navHostController = navHostController
             )
         }
     }

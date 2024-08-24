@@ -14,8 +14,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -29,10 +30,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.BottomBarScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
-fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableState<Boolean>) {
+fun MealBottomBar(navHostController: NavHostController) {
     val screens = mutableListOf(
         BottomBarScreen.Home,
         BottomBarScreen.MealPlan,
@@ -42,6 +43,8 @@ fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableS
     )
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    // State of bottomBar, set state to false, if current page route is not contains in the screens list.
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
     val bottomBarDestination = screens.any {
         bottomBarState.value = it.route == currentDestination?.route
@@ -57,7 +60,7 @@ fun MealBottomBar(navHostController: NavHostController, bottomBarState: MutableS
                     modifier =
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         Modifier
-                            .padding(28.dp)
+                            .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
                             .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
                             .height(64.dp)
 

@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.BottomBarScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
 fun ShopListScreen(title: String, navHostController: NavHostController) {
