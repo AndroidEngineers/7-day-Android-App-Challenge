@@ -8,7 +8,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.features.home.RecipeViewModel
 import com.android.engineer.mealmate.view.utils.constants.nav.graph.DashboardNavGraph
 import com.android.engineer.mealmate.view.utils.custom_views.MealBottomBar
 
