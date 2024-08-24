@@ -21,9 +21,9 @@ Meal Mate is a user-friendly mobile app designed to help you discover, organize,
 
 ## Screenshots
 
-[<img src="/readme/launch_icon.png" align="left"
+[<img src="/readme/launcher_icon.png" align="left"
 width="200"
-hspace="10" vspace="10">](/readme/launch_icon.png)
+hspace="10" vspace="10">](/readme/launcher_icon.png)
 [<img src="/readme/splash.png" align="left"
 width="200"
 hspace="10" vspace="10">](/readme/splash.png)
