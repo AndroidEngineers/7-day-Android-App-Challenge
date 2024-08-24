@@ -1,18 +1,16 @@
 package com.abhijith.animex.domain.usecases
 
 import com.abhijith.animex.data.model.AnimeEntity
-import com.abhijith.animex.domain.mapper.AnimeMapper.toDomain
 import com.abhijith.animex.domain.model.AnimeItem
+import com.abhijith.animex.domain.model.toDomain
 
-class GetAnimeListUseCase() {
+class GetAnimeListUseCase {
     private val animeEntityList = List(10) { generateValidAnime() }
 
     suspend operator fun invoke(): List<AnimeItem> {
         // map to repository later
 
-        return animeEntityList.map {
-            it.toDomain()
-        }
+        return animeEntityList.map { it.toDomain() }
     }
 
     private fun generateValidAnime(): AnimeEntity {
