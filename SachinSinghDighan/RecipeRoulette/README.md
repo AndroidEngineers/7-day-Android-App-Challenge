@@ -13,4 +13,4 @@ Day1 -
     ![Recipe_detail_screen1](https://github.com/user-attachments/assets/6db65b9f-48a6-4a16-8ea0-8af53f11facb)
     ![Recipe_detail_screen2](https://github.com/user-attachments/assets/8c777acf-eec0-482d-a1ee-3618ce04b027)
 
-4)Added navigation
+4) Added navigation
