@@ -20,14 +20,14 @@ import com.google.gson.Gson
 @Composable
 fun AnimeList(navController: NavController) {
 
-    // TODO to update this once DI is added to the project
+    // TODO (issue 11)
     val getAnimeListUseCase = GetAnimeListUseCase()
     val factory = AnimeListViewModelFactory(getAnimeListUseCase)
     val viewModel: AnimeListViewModel = viewModel(factory = factory)
 
     val navigationEvent by viewModel.navigationEvent.collectAsState()
 
-    // TODO to move this out of this composable
+    // TODO (issue 12)
     LaunchedEffect(navigationEvent) {
         navigationEvent?.let { anime ->
             val animeJson = Uri.encode(Gson().toJson(anime))
@@ -57,5 +57,3 @@ fun AnimeListInfo(animeItems: List<AnimeItem>, viewModel: AnimeListViewModel) {
         }
     }
 }
-
-// TODO to bring the click events outside the composable if possible

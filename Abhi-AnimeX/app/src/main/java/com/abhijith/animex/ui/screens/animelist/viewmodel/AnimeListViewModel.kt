@@ -42,7 +42,7 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
 }
 
 
-// TODO to remove this once i add DI to the project
+// TODO (issue 11)
 class AnimeListViewModelFactory(private val getAnimeListUseCase: GetAnimeListUseCase) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
