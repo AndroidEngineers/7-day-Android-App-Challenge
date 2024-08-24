@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Meal Mate</string>
+
+    <!-- Home Screen -->
+    <string name="hello">Hello</string>
+    <string name="meal_card">Meal Card</string>
+    <string name="next_meal_for">Next Meal for</string>
+    <string name="break_fast">BREAKFAST</string>
+    <string name="search">Search Recipe by Nutrients or Ingredients</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="close_icon">Close Icon</string>
+    <string name="history_icon">History Icon</string>
+    <string name="empty_search_list">No Recipe Found</string>
+    <string name="missed_ingredient">Missed Ingredients</string>
+    <string name="used_ingredient">Used Ingredients</string>
+    <string name="unused_ingredient">Unused Ingredients</string>
+
+<!--    Buttons-->
+    <string name="sign_up">SIGN UP</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="today">Today</string>
+    <string name="weekly">Weekly</string>
+    <string name="food_preferences">Food Preferences</string>
+    <string name="login">LOGIN</string>
+    <string name="logout">Logout</string>
+</resources>
