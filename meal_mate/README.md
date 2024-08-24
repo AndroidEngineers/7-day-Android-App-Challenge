@@ -41,4 +41,4 @@ Meal Mate is a user-friendly mobile app designed to help you discover, organize,
 ### List of contributors:
 1. <a href="https://www.linkedin.com/in/sindhu-s-90461321/"> Sindhu S </a>
 2. <a href="https://www.linkedin.com/in/mohammedarbaazali/"> Mohammed Arbaaz Ali </a>
-3. <a href=""> Sanket </a>
+3. <a href="https://www.linkedin.com/in/sanketzade/"> Sanket Zade </a>
