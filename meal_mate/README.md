@@ -21,19 +21,20 @@ Meal Mate is a user-friendly mobile app designed to help you discover, organize,
 
 ## Screenshots
 
-[<img src="/readme/launcher_icon.png" align="left"
-width="200"
-hspace="10" vspace="10">](/readme/launcher_icon.png)
-[<img src="/readme/splash.png" align="left"
-width="200"
-hspace="10" vspace="10">](/readme/splash.png)
-[<img src="/readme/home_screen.png" align="left"
-width="200"
-hspace="10" vspace="10">](/readme/home_screen.png)
-[<img src="/readme/details_screen.png" align="left"
-width="200"
-hspace="10" vspace="10">](/readme/details_screen.png)
+<p>
+   <img src="./readme/launcher_icon.png" width="200" height="400"  alt="Launcher Icon"/>
+   <img src="./readme/splash.png" width="200" height="400" alt="Splash Screen" />
+   <img src="./readme/home_screen.png" width="200" height="400" alt="Home Screen" />
+   <img src="./readme/details_screen.png" width="200" height="400" alt="Recipe Detail Screen"/>
+</p>
 
+## Technology used
+* Programming Language: Kotlin
+* UI Development: Jetpack Compose
+* Architecture: MVVM (Model-View-ViewModel)
+* Dependency Injection: Hilt
+* Networking: Retrofit
+* Design Principles: SOLID principles, Design Patterns
 
 ## Credits
 
