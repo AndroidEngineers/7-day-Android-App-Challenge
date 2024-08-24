@@ -6,4 +6,5 @@
     <string name="rank">Rank</string>
     <string name="score">Score</string>
     <string name="rating">Rating</string>
+    <string name="error_message">"Something went wrong! \nPlease try again later…"</string>
 </resources>
