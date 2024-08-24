@@ -3,7 +3,6 @@ package com.android.engineer.mealmate.view.features.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.engineer.mealmate.data.model.DetailsData
 import com.android.engineer.mealmate.data.model.response.MissedUnUsedIngredients
 import com.android.engineer.mealmate.data.model.response.SearchByIngredients
 import com.android.engineer.mealmate.data.model.response.SearchByNutrients

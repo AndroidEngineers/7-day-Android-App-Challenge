@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
 fun MealPlanScreen(title: String, navHostController: NavHostController) {

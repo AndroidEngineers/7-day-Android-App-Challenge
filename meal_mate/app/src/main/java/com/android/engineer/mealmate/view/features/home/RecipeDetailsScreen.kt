@@ -19,11 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.android.engineer.mealmate.data.utils.STATIC_URL1
 import com.android.engineer.mealmate.ui.theme.OrangeOnBackground
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 
