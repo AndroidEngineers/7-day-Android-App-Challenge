@@ -5,8 +5,7 @@ import com.abhijith.animex.data.model.AnimeEntity
 data class AnimeItem(
     val title: String,
     val source: String,
-    val year: String,
-    val japaneseName: String,
+    val yearAndJapaneseName: String,
     val rating: String,
     val rank: String,
     val score: String,
@@ -21,8 +20,12 @@ fun AnimeEntity.toDomain(): AnimeItem {
     return AnimeItem(
         title = title,
         source = source,
-        year = year,
-        japaneseName = japaneseName,
+        yearAndJapaneseName = when {
+            year.isNotBlank() && japaneseName.isNotBlank() -> "$year | $japaneseName"
+            year.isNotBlank() -> year
+            japaneseName.isNotBlank() -> japaneseName
+            else -> "-"
+        },
         rating = rating,
         rank = rank,
         score = score,

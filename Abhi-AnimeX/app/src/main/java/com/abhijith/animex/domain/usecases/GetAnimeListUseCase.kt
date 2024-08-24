@@ -9,7 +9,6 @@ class GetAnimeListUseCase {
 
     suspend operator fun invoke(): List<AnimeItem> {
         // map to repository later
-
         return animeEntityList.map { it.toDomain() }
     }
 
@@ -17,9 +16,6 @@ class GetAnimeListUseCase {
         val animeEntity = AnimeEntity()
 
         val cleanedTitle = animeEntity.title.replace("\\", "").replace("\"", "")
-        val cleanedYear = animeEntity.year.ifBlank {
-            "-"
-        }
         val cleanedRating = animeEntity.rating.ifBlank {
             "-"
         }
@@ -32,7 +28,6 @@ class GetAnimeListUseCase {
 
         return animeEntity.copy(
             title = cleanedTitle,
-            year = cleanedYear,
             rating = cleanedRating,
             rank = cleanedRank,
             score = cleanedScore,

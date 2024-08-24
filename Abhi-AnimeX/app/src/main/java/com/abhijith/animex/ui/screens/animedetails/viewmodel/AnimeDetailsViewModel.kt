@@ -34,14 +34,5 @@ class AnimeDetailsViewModel(private val savedStateHandle: SavedStateHandle) : Vi
             }
         }
     }
-
-    fun formatYearAndJapaneseName(year: String, japaneseName: String): String {
-        return when {
-            year.isNotBlank() && japaneseName.isNotBlank() -> "$year | $japaneseName"
-            year.isNotBlank() && japaneseName.isBlank() -> year
-            japaneseName.isNotBlank() && year.isBlank() -> japaneseName
-            else -> "-"
-        }
-    }
 }
 

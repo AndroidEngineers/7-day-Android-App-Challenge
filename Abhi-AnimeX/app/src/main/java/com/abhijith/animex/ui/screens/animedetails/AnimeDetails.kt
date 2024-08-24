@@ -60,8 +60,6 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
 
 @Composable
 fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsViewModel) {
-    val yearAndJapaneseName =
-        animeDetailsViewModel.formatYearAndJapaneseName(animeItem.year, animeItem.japaneseName)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -104,7 +102,7 @@ fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsVi
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = yearAndJapaneseName,
+                        text = animeItem.yearAndJapaneseName,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
