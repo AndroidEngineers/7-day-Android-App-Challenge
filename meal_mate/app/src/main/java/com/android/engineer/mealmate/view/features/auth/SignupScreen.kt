@@ -35,8 +35,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.utils.constants.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
 import com.android.engineer.mealmate.view.utils.custom_views.MealTextField
@@ -130,7 +130,8 @@ fun SignupScreen(navHostController: NavHostController) {
                             MealText(
                                 text = stringResource(id = R.string.sign_in_lower),
                                 fontSize = 12.sp,
-                                modifier = Modifier.clickable { navHostController.navigate(AuthScreen.Login.route) }
+                                modifier = Modifier.clickable { navHostController.navigate(
+                                    AuthScreen.Login.route) }
                             )
 
                         }

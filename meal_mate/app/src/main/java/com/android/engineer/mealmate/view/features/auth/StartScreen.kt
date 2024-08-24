@@ -20,7 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.utils.constants.sealed_constants.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
 import com.android.engineer.mealmate.view.utils.custom_views.MealTextButton
