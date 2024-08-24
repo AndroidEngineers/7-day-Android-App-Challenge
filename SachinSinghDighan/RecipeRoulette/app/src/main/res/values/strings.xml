@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RecipeRoulette</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
+    <string name="title_activity_recipe_detail">RecipeDetailActivity</string>
+    <string name="recipe_list">RecipeList</string>
+    <string name="recipe_detail">RecipeDetail</string>
+    <string name="demo_content_text">"Composem ipsum color sit lazy, \n padding theme elit, sed do bouncy. "</string>
+
+
+</resources>
