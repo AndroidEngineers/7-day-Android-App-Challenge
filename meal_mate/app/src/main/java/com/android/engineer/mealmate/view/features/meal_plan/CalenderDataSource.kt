@@ -13,7 +13,6 @@ class CalendarDataSource {
             return LocalDate.now()
         }
 
-
     fun getData(startDate: LocalDate = today, lastSelectedDate: LocalDate): CalendarUiModel {
         val firstDayOfWeek = startDate.with(DayOfWeek.MONDAY)
         val endDayOfWeek = firstDayOfWeek.plusDays(7)
