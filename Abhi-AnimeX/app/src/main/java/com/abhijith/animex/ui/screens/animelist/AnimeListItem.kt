@@ -32,7 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
 import com.abhijith.animex.domain.model.AnimeItem
-import com.abhijith.animex.ui.components.RatingTag
+import com.abhijith.animex.ui.components.ScoreTag
 import com.abhijith.animex.ui.components.WatchTrailerButton
 
 @Composable
@@ -90,7 +90,7 @@ fun AnimeListItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = animeEntity.rating)
+                    ScoreTag(rating = animeEntity.score)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = animeEntity.synopsis,
