@@ -16,8 +16,6 @@ import com.android.engineer.mealmate.view.features.meal_plan.MealPlanScreen
 import com.android.engineer.mealmate.view.features.profile.ProfileScreen
 import com.android.engineer.mealmate.view.features.report.ReportScreen
 import com.android.engineer.mealmate.view.features.shop_list.ShopListScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
 import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable

@@ -3,6 +3,7 @@ package com.android.engineer.mealmate.view.features.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.data.model.response.MissedUnUsedIngredients
 import com.android.engineer.mealmate.data.model.response.SearchByIngredients
 import com.android.engineer.mealmate.data.model.response.SearchByNutrients
@@ -16,13 +17,17 @@ import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE7
 import com.android.engineer.mealmate.data.utils.STATIC_URL1
 import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE1
 import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE2
+import com.android.engineer.mealmate.view.features.home.model.MealChipList
+import com.android.engineer.mealmate.view.utils.constants.MinMaxRangeEnum
+import com.android.engineer.mealmate.view.utils.constants.NutrientsEnum
+import com.android.engineer.mealmate.view.utils.constants.SearchByEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel: ViewModel() {
 
     val isShowNextMealView = mutableStateOf(true)
     private val _searchText = MutableStateFlow("")
@@ -73,6 +78,35 @@ class RecipeViewModel : ViewModel() {
 
         )
 
+    private val _isBottomSheetShowing = MutableStateFlow(false)
+    val isBottomSheetShowing = _isBottomSheetShowing.asStateFlow()
+
+    private val _selectedSearchBy = MutableStateFlow(SearchByEnum.NUTRIENTS.name)
+    val selectedSearchBy = _selectedSearchBy.asStateFlow()
+
+    private val _dailyKcal = MutableStateFlow(DAILY_KCAL)
+    val dailyKcal = _dailyKcal.asStateFlow()
+
+    private val getSearchItems = listOf(
+        MealChipList(name = SearchByEnum.NUTRIENTS.name, isSelected = true, unSelectedIcon = R.drawable.ic_nutrients_icon),
+        MealChipList(name = SearchByEnum.INGREDIENTS.name, isSelected = false, unSelectedIcon = R.drawable.ic_ingredient_icon)
+    )
+
+    private val _searchByItems = MutableStateFlow(getSearchItems)
+    val searchByItems = _searchByItems.asStateFlow()
+
+    private val _minMaxCarbs = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_CARBS.minMaxRange)
+    val minMaxCarbs = _minMaxCarbs.asStateFlow()
+
+    private val _minMaxProtein = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_PROTEIN.minMaxRange)
+    val minMaxProtein = _minMaxProtein.asStateFlow()
+
+    private val _minMaxKCal = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_KCAL.minMaxRange)
+    val minMaxKCal = _minMaxKCal.asStateFlow()
+
+    private val _minMaxFat = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_FAT.minMaxRange)
+    val minMaxFat = _minMaxFat.asStateFlow()
+
     fun onQueryChange(text: String) {
         _searchText.value = text
     }
@@ -91,6 +125,53 @@ class RecipeViewModel : ViewModel() {
 
     fun onCloseIconClicked() {
         if (_searchText.value.isNotEmpty()) _searchText.value = "" else _isActive.value = false
+    }
+    fun onFilterIconClicked() {
+        if(!_isBottomSheetShowing.value) {
+            showHideBottomSheet(true)
+        }
+    }
+
+    fun showHideBottomSheet(isShow: Boolean) {
+        _isBottomSheetShowing.value = isShow
+    }
+
+    fun onDailyKCalValueChange(newText: String) {
+        _dailyKcal.value = newText
+    }
+
+    fun onSelectedChipView(selectedChip: String) {
+        _searchByItems.value.forEach { item ->
+            item.isSelected = selectedChip == item.name
+            if(item.isSelected) {
+                _selectedSearchBy.value = item.name
+            }
+        }
+    }
+
+    fun onResetAllClicked() {
+        _dailyKcal.value = DAILY_KCAL
+        _selectedSearchBy.value = SearchByEnum.NUTRIENTS.name
+        _searchByItems.value.forEach { item ->
+            item.isSelected = _selectedSearchBy.value == item.name
+        }
+        _minMaxCarbs.value = MinMaxRangeEnum.MIN_MAX_CARBS.minMaxRange
+        _minMaxProtein.value = MinMaxRangeEnum.MIN_MAX_PROTEIN.minMaxRange
+        _minMaxKCal.value = MinMaxRangeEnum.MIN_MAX_KCAL.minMaxRange
+        _minMaxFat.value = MinMaxRangeEnum.MIN_MAX_FAT.minMaxRange
+    }
+
+    fun onApplyClicked() {
+        _isBottomSheetShowing.value = false
+    }
+
+    fun onNutrientsRangeChanged(getNutrientsEnum: NutrientsEnum, minMaxRange: ClosedFloatingPointRange<Float>) {
+        when (getNutrientsEnum) {
+            NutrientsEnum.CARBOHYDRATES -> _minMaxCarbs.value = minMaxRange
+            NutrientsEnum.PROTEIN -> _minMaxProtein.value = minMaxRange
+            NutrientsEnum.CALORIES -> _minMaxKCal.value = minMaxRange
+            NutrientsEnum.FAT -> _minMaxFat.value = minMaxRange
+        }
     }
 }
 

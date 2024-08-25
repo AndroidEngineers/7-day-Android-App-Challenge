@@ -15,7 +15,7 @@
     <string name="used_ingredient">Used Ingredients</string>
     <string name="unused_ingredient">Unused Ingredients</string>
 
-<!--    Buttons-->
+    <!-- Buttons-->
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in">SIGN IN</string>
     <string name="today">Today</string>
@@ -23,4 +23,21 @@
     <string name="food_preferences">Food Preferences</string>
     <string name="login">LOGIN</string>
     <string name="logout">Logout</string>
+
+    <!-- Food Preferences -->
+    <string name="daily_kcal">Daily Calorie Goal</string>
+    <string name="set_daily_kcal">Set your total daily kcal</string>
+    <string name="search_by">Search by</string>
+    <string name="set_min_max_value">Set Min..Max values</string>
+    <string name="min_carbs">Min Carbs</string>
+    <string name="max_carbs">Max Carbs</string>
+    <string name="min_protein">Min Protein</string>
+    <string name="max_protein">Max Protein</string>
+    <string name="min_calories">Min Calories</string>
+    <string name="max_calories">Max Calories</string>
+    <string name="min_fat">Min Fat</string>
+    <string name="max_fat">Max Fat</string>
+
+    <string name="apply">Apply</string>
+    <string name="reset_all">Reset All</string>
 </resources>

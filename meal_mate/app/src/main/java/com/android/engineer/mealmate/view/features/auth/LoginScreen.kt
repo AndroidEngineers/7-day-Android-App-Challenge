@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.DASHBOARD
 
 @Composable
 fun LoginScreen(title: String, navHostController: NavHostController) {
