@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -60,7 +62,50 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.navigation)
+    implementation(libs.androidx.viewmodel.compose)
+    implementation(libs.material3.html.text)
+
+
+    implementation(libs.androidx.coroutines.core)
+    implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.lifecycle.runtime)
+
+    //Glide
+    implementation(libs.github.glide)
+    //coil
+    implementation(libs.io.coil)
+
+
+    //Retrofit
+    implementation(libs.squareup.retrofit)
+    implementation(libs.square.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    //Dagger dependency
+    implementation(libs.google.dagger)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.test.monitor)
+    implementation(libs.core.ktx)
+    implementation libs.androidx.lifecycle.runtime.compose.android
+    ksp(libs.dagger.compiler)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.room.compiler)
+    //plugin kapt
+
+    implementation(libs.mockito.core.version)
+    implementation(libs.arch.core.testing)
+
+    implementation(libs.coroutines.test)
+    implementation(libs.cash.turbine)
+
+
     testImplementation libs.junit
+    testImplementation libs.mockito
+    testImplementation libs.core.testing
+
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation platform(libs.androidx.compose.bom)

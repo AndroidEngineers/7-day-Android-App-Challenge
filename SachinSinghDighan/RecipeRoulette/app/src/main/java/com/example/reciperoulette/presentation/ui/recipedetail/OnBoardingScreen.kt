@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.make_food.ui.commonui.ScreenContentText
+import com.example.reciperoulette.presentation.ui.commonui.ScreenContentText
 import com.example.reciperoulette.R
 
 @Composable
