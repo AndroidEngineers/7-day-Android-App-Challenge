@@ -44,7 +44,7 @@ class RecipeViewModel: ViewModel() {
     private var _isActive = MutableStateFlow(false)
     val isActive = _isActive.asStateFlow()
 
-    private var _isSearchByNutrients = MutableStateFlow(true)
+    private var _isSearchByNutrients = MutableStateFlow(false)
     val isSearchByNutrients = _isSearchByNutrients.asStateFlow()
 
     private val _searchByNutrients = MutableStateFlow(getByNutrientsItems)
@@ -145,6 +145,11 @@ class RecipeViewModel: ViewModel() {
             item.isSelected = selectedChip == item.name
             if(item.isSelected) {
                 _selectedSearchBy.value = item.name
+                if(item.name == SearchByEnum.NUTRIENTS.name) {
+                    _isSearchByNutrients.value = true
+                } else {
+                    _isSearchByNutrients.value = false
+                }
             }
         }
     }

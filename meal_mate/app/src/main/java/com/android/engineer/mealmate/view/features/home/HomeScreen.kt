@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.android.engineer.mealmate.R
+import com.android.engineer.mealmate.data.utils.DURATION
+import com.android.engineer.mealmate.data.utils.FRUITS
+import com.android.engineer.mealmate.data.utils.SERVES
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.data.utils.STATIC_BREAK_FAST_IMAGE
@@ -105,7 +108,7 @@ fun ShowNextMeal() {
             )
 
             Text(
-                text = "1 hr",
+                text = "1 hr", // Need to calculate
                 color = OrangePrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
@@ -128,9 +131,24 @@ fun ShowNextMeal() {
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )
-                MealText(text = "Fruits", fontSize = 14.sp)
-                MealText(text = "Duration: 15 mins", fontSize = 12.sp)
-                MealText(text = "Serves: 1", fontSize = 12.sp)
+                Text(
+                    text = FRUITS,
+                    color = Color.Black,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = DURATION,
+                    color = Color.Black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = SERVES,
+                    color = Color.Black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
             }
         }
     }

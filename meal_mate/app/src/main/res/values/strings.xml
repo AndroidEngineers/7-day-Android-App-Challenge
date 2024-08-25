@@ -15,7 +15,6 @@
     <string name="used_ingredient">Used Ingredients</string>
     <string name="unused_ingredient">Unused Ingredients</string>
 
-    <!-- Buttons -->
     <!-- Buttons-->
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in">SIGN IN</string>
@@ -47,7 +46,6 @@
     <string name="welcome_to_meal_mate">Welcome to \nMeal Mate</string>
     <string name="organize_your_day">Organize \nyour day \nfor a \nhealthier \nlifestyle</string>
 
-
     <!-- Food Preferences -->
     <string name="daily_kcal">Daily Calorie Goal</string>
     <string name="set_daily_kcal">Set your total daily kcal</string>
@@ -61,7 +59,6 @@
     <string name="max_calories">Max Calories</string>
     <string name="min_fat">Min Fat</string>
     <string name="max_fat">Max Fat</string>
-
     <string name="apply">Apply</string>
     <string name="reset_all">Reset All</string>
 </resources>

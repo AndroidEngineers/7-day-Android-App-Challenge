@@ -14,8 +14,6 @@ import com.android.engineer.mealmate.view.features.home.RECIPE_TITLE_START_END
 import com.android.engineer.mealmate.view.features.home.RecipeDetailsScreen
 import com.android.engineer.mealmate.view.features.meal_plan.MealPlanScreen
 import com.android.engineer.mealmate.view.features.profile.ProfileScreen
-import com.android.engineer.mealmate.view.features.report.ReportScreen
-import com.android.engineer.mealmate.view.features.shop_list.ShopListScreen
 import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
@@ -42,7 +40,7 @@ fun DashboardNavGraph(
                 navHostController = navHostController
             )
         }
-        composable(route = BottomBarScreen.ShopList.route) {
+        /*composable(route = BottomBarScreen.ShopList.route) {
             ShopListScreen(
                 title = BottomBarScreen.ShopList.title,
                 navHostController = navHostController
@@ -53,7 +51,7 @@ fun DashboardNavGraph(
                 title = BottomBarScreen.Report.title,
                 navHostController = navHostController
             )
-        }
+        }*/
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(
                 title = BottomBarScreen.Profile.title,

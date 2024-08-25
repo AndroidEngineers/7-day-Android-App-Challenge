@@ -12,3 +12,7 @@ const val STATIC_INGREDIENTS_IMAGE5 = "https://img.spoonacular.com/ingredients_1
 const val STATIC_INGREDIENTS_IMAGE6 = "https://img.spoonacular.com/ingredients_100x100/red-delicious-apples.png"
 const val STATIC_INGREDIENTS_IMAGE7 = "https://img.spoonacular.com/ingredients_100x100/apricot-jam.jpg"
 const val STATIC_URL1 = "http://fullbellysisters.blogspot.com/2012/06/pasta-with-garlic-scallions-cauliflower.html"
+
+const val FRUITS = "Fruits"
+const val DURATION = "Duration: 15 mins"
+const val SERVES = "Serves: 1"
