@@ -16,3 +16,8 @@ const val STATIC_URL1 = "http://fullbellysisters.blogspot.com/2012/06/pasta-with
 const val FRUITS = "Fruits"
 const val DURATION = "Duration: 15 mins"
 const val SERVES = "Serves: 1"
+
+const val CONTENT_HEADER_KEY = "Content-Type"
+const val CONTENT_HEADER_VALUE = "application/json"
+const val API_KEY = "apiKey"
+const val API_KEY_VALUE = "7a36c50e0e72420eb8515d694a2b2af4" // Currently placing the API key here.

@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
@@ -56,7 +57,9 @@ import com.android.engineer.mealmate.view.utils.constants.nav.graph.RECIPE_DETAI
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostController) {
+fun MealSearchView(navHostController: NavHostController) {
+    val viewModel = hiltViewModel<RecipeViewModel>()
+
     val searchText by viewModel.searchText.collectAsState()
     val searchByNutrients by viewModel.searchByNutrients.collectAsState()
     val searchByIngredients by viewModel.searchByIngredients.collectAsState()
@@ -390,6 +393,6 @@ fun MealSearchItemPreview() {
             .background(OrangeOnPrimary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MealSearchView(viewModel = RecipeViewModel(), navHostController = rememberNavController())
+        MealSearchView(navHostController = rememberNavController())
     }
 }

@@ -17,18 +17,23 @@ import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE7
 import com.android.engineer.mealmate.data.utils.STATIC_URL1
 import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE1
 import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE2
+import com.android.engineer.mealmate.domain.repository.RecipeSearchRepository
 import com.android.engineer.mealmate.view.features.home.model.MealChipList
 import com.android.engineer.mealmate.view.utils.constants.MinMaxRangeEnum
 import com.android.engineer.mealmate.view.utils.constants.NutrientsEnum
 import com.android.engineer.mealmate.view.utils.constants.SearchByEnum
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class RecipeViewModel: ViewModel() {
-
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
+    private val repository: RecipeSearchRepository
+): ViewModel() {
     val isShowNextMealView = mutableStateOf(true)
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()

@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.data.utils.DURATION
@@ -37,8 +37,7 @@ import com.android.engineer.mealmate.view.utils.custom_views.MealText
 
 @Composable
 fun HomeScreen(navHostController: NavHostController, userName: String, paddingValues: PaddingValues) {
-    val viewModel = viewModel<RecipeViewModel>()
-
+    val viewModel = hiltViewModel<RecipeViewModel>()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +57,6 @@ fun HomeScreen(navHostController: NavHostController, userName: String, paddingVa
             .fillMaxWidth()
             .height(15.dp))
         MealSearchView(
-            viewModel = viewModel,
             navHostController = navHostController
         )
     }

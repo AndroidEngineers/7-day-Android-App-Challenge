@@ -6,8 +6,10 @@ import coil.ImageLoaderFactory
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.util.DebugLogger
+import dagger.hilt.android.HiltAndroidApp
 
-class MyApp: Application(), ImageLoaderFactory {
+@HiltAndroidApp
+class MealApp: Application(), ImageLoaderFactory {
 
     // Enabled and configured the memory cache.
     override fun newImageLoader(): ImageLoader {
