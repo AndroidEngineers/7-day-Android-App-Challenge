@@ -30,6 +30,11 @@
     <string name="login_to_account">Login to your existing accounts</string>
     <string name="do_not_have_account">Don\'t have an account?</string>
     <string name="sign_up_lower">Sign up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
 
     <!-- Signup texts -->
     <string name="lets_get_started">Let\'s Get Started</string>

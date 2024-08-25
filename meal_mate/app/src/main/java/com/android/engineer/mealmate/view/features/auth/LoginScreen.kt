@@ -92,19 +92,19 @@ fun LoginScreen(navHostController: NavHostController) {
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "Username",
+                            label = stringResource(id = R.string.username),
                             icon = Icons.Filled.Person
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "Password",
+                            label = stringResource(id = R.string.password),
                             icon = Icons.Filled.Lock,
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         // This will be uncommented when Forgot password feature is enabled
 //                        Row(
 //                            modifier = Modifier.fillMaxWidth(),

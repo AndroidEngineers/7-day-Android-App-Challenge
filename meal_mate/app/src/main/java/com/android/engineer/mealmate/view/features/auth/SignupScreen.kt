@@ -89,31 +89,31 @@ fun SignupScreen(navHostController: NavHostController) {
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "Username",
+                            label = stringResource(id = R.string.username),
                             icon = Icons.Filled.Person
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "First Name",
+                            label = stringResource(id = R.string.first_name),
                             icon = Icons.Filled.PersonOutline
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "Last Name",
+                            label = stringResource(id = R.string.last_name),
                             icon = Icons.Filled.PersonOutline
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         MealTextField(
                             value = "",
                             onValueChange = {},
-                            label = "Email",
+                            label = stringResource(id = R.string.email),
                             icon = Icons.Filled.Email
                         )
-                        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
                         MealFilledButton(
                             onClick = { navHostController.navigate(route = DASHBOARD) },
                             text = stringResource(id = R.string.sign_up),
