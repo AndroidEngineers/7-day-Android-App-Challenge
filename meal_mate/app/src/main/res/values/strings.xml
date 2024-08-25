@@ -15,6 +15,7 @@
     <string name="used_ingredient">Used Ingredients</string>
     <string name="unused_ingredient">Unused Ingredients</string>
 
+    <!-- Buttons -->
     <!-- Buttons-->
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in">SIGN IN</string>
@@ -23,6 +24,29 @@
     <string name="food_preferences">Food Preferences</string>
     <string name="login">LOGIN</string>
     <string name="logout">Logout</string>
+
+    <!-- Login texts -->
+    <string name="welcome_back">Welcome back!</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login_to_account">Login to your existing accounts</string>
+    <string name="do_not_have_account">Don\'t have an account?</string>
+    <string name="sign_up_lower">Sign up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+
+    <!-- Signup texts -->
+    <string name="lets_get_started">Let\'s Get Started</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in_lower">Sign in</string>
+
+    <!-- Start screen -->
+    <string name="welcome_to_meal_mate">Welcome to \nMeal Mate</string>
+    <string name="organize_your_day">Organize \nyour day \nfor a \nhealthier \nlifestyle</string>
+
 
     <!-- Food Preferences -->
     <string name="daily_kcal">Daily Calorie Goal</string>
