@@ -3,6 +3,7 @@ package com.android.engineer.mealmate.view.utils.custom_views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,84 +24,51 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.engineer.mealmate.ui.theme.MealMateTheme
 import com.android.engineer.mealmate.ui.theme.OrangeDark
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.ui.theme.White
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.time.temporal.ChronoUnit
-import java.util.stream.Collectors
-import java.util.stream.Stream
+import com.android.engineer.mealmate.view.features.meal_plan.MealCalendarViewModel
+import com.android.engineer.mealmate.view.features.meal_plan.model.CalendarUiModel
+
 
 @Composable
 fun MealCalender(
 	modifier: Modifier = Modifier,
+	viewModel: MealCalendarViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-	val dataSource = CalendarDataSource()
-	var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
+	val data by viewModel.data.collectAsState()
+	val headingText = viewModel.getHeadingText(data)
+
 	Column(modifier = modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(10.dp))
 		CalenderHeader(
-			data = data,
-			onPrevClickListener = { startDate ->
-				val finalStartDate = startDate.minusDays(1)
-				data = dataSource.getData(
-					startDate = finalStartDate,
-					lastSelectedDate = data.selectedDate.date
-				)
-			},
-			onNextClickListener = { endDate ->
-				val finalStartDate = endDate.plusDays(2)
-				data = dataSource.getData(
-					startDate = finalStartDate,
-					lastSelectedDate = data.selectedDate.date
-				)
-			}
+			headingText = headingText,
+			onPrevClickListener = { viewModel.onPrevClick(data.startDate.date) },
+			onNextClickListener = { viewModel.onNextClick(data.endDate.date) }
 		)
 		Spacer(modifier = Modifier.height(20.dp))
-		CalContent(data = data) { date ->
-			data = data.copy(
-				selectedDate = date,
-				visibleDates = data.visibleDates.map {
-					it.copy(
-						isSelected = it.date.isEqual(date.date)
-					)
-				}
-			)
-		}
+		CalContent(data = data, onDateSelected =  { date -> viewModel.onDateSelected(date) })
 	}
 }
 
-
 @Composable
 fun CalenderHeader(
-	data: CalendarUiModel,
-	onPrevClickListener: (LocalDate) -> Unit,
-	onNextClickListener: (LocalDate) -> Unit,
+	headingText: String,
+	onPrevClickListener: () -> Unit,
+	onNextClickListener: () -> Unit,
 ) {
-	val headingText = if (data.selectedDate.isToday) {
-		"Today"
-	} else {
-		data.selectedDate.date.format(
-			DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
-		)
-	}
-	
 	Row {
 		Text(
 			text = headingText,
@@ -112,80 +80,91 @@ fun CalenderHeader(
 			color = OrangeDark,
 			fontWeight = FontWeight.ExtraBold
 		)
-		IconButton(onClick = {
-			onPrevClickListener(data.startDate.date)
-		}) {
-			Icon(
-				imageVector = Icons.Filled.ChevronLeft,
-				contentDescription = "Back",
-				tint = OrangeDark
-			)
-		}
-		IconButton(onClick = {
-			onNextClickListener(data.endDate.date)
-		}) {
-			Icon(
-				imageVector = Icons.Filled.ChevronRight,
-				contentDescription = "Next",
-				tint = OrangeDark
-			)
-		}
+		NavigationIconButton(
+			imageVector = Icons.Filled.ChevronLeft,
+			contentDescription = "Back",
+			onClick = onPrevClickListener
+		)
+		NavigationIconButton(
+			imageVector = Icons.Filled.ChevronRight,
+			contentDescription = "Next",
+			onClick = onNextClickListener
+		)
+	}
+}
+
+@Composable
+fun NavigationIconButton(
+	imageVector: ImageVector,
+	contentDescription: String,
+	onClick: () -> Unit,
+	tint: Color = OrangeDark
+) {
+	IconButton(onClick = onClick) {
+		Icon(
+			imageVector = imageVector,
+			contentDescription = contentDescription,
+			tint = tint
+		)
 	}
 }
 
 @Composable
 fun CalContent(
 	data: CalendarUiModel,
-	onDateClickListener: (CalendarUiModel.Date) -> Unit,
+	onDateSelected: (CalendarUiModel.Date) -> Unit,
+	columns: GridCells = GridCells.Fixed(7)
 ) {
-	LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 48.dp)) {
+	LazyVerticalGrid(columns = columns) {
 		items(data.visibleDates.size) { index ->
 			CalContentItem(
 				date = data.visibleDates[index],
-				onDateClickListener
+				onDateSelected = onDateSelected
 			)
 		}
 	}
 }
 
+
+
 @Composable
 fun CalContentItem(
 	date: CalendarUiModel.Date,
-	onClickListener: (CalendarUiModel.Date) -> Unit,
+	onDateSelected: (CalendarUiModel.Date) -> Unit,
+	modifier: Modifier = Modifier,
+	shape: Shape = RoundedCornerShape(20.dp),
+	paddingValues: PaddingValues = PaddingValues(vertical = 16.dp),
+	selectedColor: Color = OrangePrimary,
+	unselectedColor: Color = Color.Transparent,
+	fontColor: Color = if (date.isSelected) White else OrangePrimary
 ) {
-	val fontColor = if (date.isSelected) White else OrangePrimary
 	Card(
-		modifier = Modifier
-			.padding(vertical = 1.dp, horizontal = 1.dp)
-			.clickable {
-				onClickListener(date)
-			},
-		shape = RoundedCornerShape(20.dp),
+		modifier = modifier
+			.padding(1.dp)
+			.clickable { onDateSelected(date) },
+		shape = shape,
 		colors = CardDefaults.cardColors(
-			containerColor = if (date.isSelected) {
-				OrangePrimary
-			} else {
-				Color.Transparent
-			}
-		),
+			containerColor = if (date.isSelected) selectedColor else unselectedColor
+		)
 	) {
 		Column(
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(top = 16.dp, bottom = 16.dp),
+				.padding(paddingValues),
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			CalContentText(text = date.day.uppercase(), color = fontColor)
 			Icon(
 				imageVector = Icons.Filled.Add,
-				contentDescription = "",
+				contentDescription = null,
 				tint = fontColor,
-				modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+				modifier = Modifier.padding(vertical = 10.dp)
 			)
-			CalContentText(date.date.dayOfMonth.toString(), fontColor)
+			CalContentText(date.date.dayOfMonth.toString(), color = fontColor)
 		}
 	}
 }
+
 
 @Composable
 fun CalContentText(text: String, color: Color) {
@@ -196,7 +175,7 @@ fun CalContentText(text: String, color: Color) {
 	)
 }
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, widthDp = 800)
 @Composable
 fun CalendarAppPreview() {
 	Column(
@@ -206,67 +185,7 @@ fun CalendarAppPreview() {
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		MealCalender(
-			modifier = Modifier.padding(10.dp).padding(top = 20.dp)
+			modifier = Modifier.padding(top = 30.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
 		)
 	}
-}
-
-data class CalendarUiModel(
-	val selectedDate: Date,
-	val visibleDates: List<Date>
-) {
-	
-	val startDate: Date = visibleDates.first()
-	val endDate: Date = visibleDates.last()
-	
-	data class Date(
-		val date: LocalDate,
-		val isSelected: Boolean,
-		val isToday: Boolean
-	) {
-		val day: String =
-			date.format(DateTimeFormatter.ofPattern("E"))
-	}
-}
-
-class CalendarDataSource {
-	val today: LocalDate
-		get() {
-			return LocalDate.now()
-		}
-	
-	
-	fun getData(startDate: LocalDate = today, lastSelectedDate: LocalDate): CalendarUiModel {
-		val firstDayOfWeek = startDate.with(DayOfWeek.MONDAY)
-		val endDayOfWeek = firstDayOfWeek.plusDays(7)
-		val visibleDates = getDatesBetween(firstDayOfWeek, endDayOfWeek)
-		return toUiModel(visibleDates, lastSelectedDate)
-	}
-	
-	private fun getDatesBetween(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
-		val numOfDays = ChronoUnit.DAYS.between(startDate, endDate)
-		return Stream.iterate(startDate) { date ->
-			date.plusDays( 1)
-		}
-			.limit(numOfDays)
-			.collect(Collectors.toList())
-	}
-	
-	private fun toUiModel(
-		dateList: List<LocalDate>,
-		lastSelectedDate: LocalDate
-	): CalendarUiModel {
-		return CalendarUiModel(
-			selectedDate = toItemUiModel(lastSelectedDate, true),
-			visibleDates = dateList.map {
-				toItemUiModel(it, it.isEqual(lastSelectedDate))
-			},
-		)
-	}
-	
-	private fun toItemUiModel(date: LocalDate, isSelectedDate: Boolean) = CalendarUiModel.Date(
-		isSelected = isSelectedDate,
-		isToday = date.isEqual(today),
-		date = date,
-	)
 }

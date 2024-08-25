@@ -24,7 +24,7 @@ fun MealPlanScreen(title: String, navHostController: NavHostController) {
        horizontalAlignment = Alignment.CenterHorizontally,
    ) {
 	   MealCalender(
-		   modifier = Modifier.padding(10.dp).padding(top = 20.dp)
+		   modifier = Modifier.padding(top = 30.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
 	   )
    }
 }
