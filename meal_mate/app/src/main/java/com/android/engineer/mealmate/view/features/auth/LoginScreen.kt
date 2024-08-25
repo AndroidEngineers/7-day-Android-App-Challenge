@@ -43,6 +43,7 @@ import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
 import com.android.engineer.mealmate.view.utils.custom_views.MealTextField
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.DASHBOARD
 
 @Composable
 fun LoginScreen(navHostController: NavHostController) {

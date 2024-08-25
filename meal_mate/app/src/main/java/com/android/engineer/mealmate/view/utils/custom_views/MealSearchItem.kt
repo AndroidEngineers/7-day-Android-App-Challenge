@@ -52,7 +52,7 @@ import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.view.features.home.FORWARD_SLASH
 import com.android.engineer.mealmate.view.features.home.RecipeViewModel
-import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.RECIPE_DETAILS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +63,7 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
     val isActive by viewModel.isActive.collectAsState()
     val historyItem by viewModel.historyItem.collectAsState()
     val isSearchByNutrients by viewModel.isSearchByNutrients.collectAsState()
+    val isBottomSheetShowing by viewModel.isBottomSheetShowing.collectAsState()
 
     DockedSearchBar(
         modifier = Modifier
@@ -104,7 +105,11 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
                 )
             } else {
                 Icon(
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            viewModel.onFilterIconClicked()
+                        },
                     imageVector = Icons.Default.FilterList,
                     contentDescription = stringResource(id = R.string.search_icon)
                 )
@@ -167,6 +172,10 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
                 textAlign = TextAlign.Center
             )
         }
+    }
+
+    if (isBottomSheetShowing) {
+       MealModelBottomSheet(onDismiss = { viewModel.showHideBottomSheet(isShow = false) }, skipPartiallyExpanded = true)
     }
     Spacer(modifier = Modifier.height(30.dp))
 }

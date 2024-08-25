@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.view.utils.constants.nav
+package com.android.engineer.mealmate.view.utils.constants.nav.graph
 
 const val ROOT = "root_graph"
 const val AUTHENTICATION = "auth_graph"
