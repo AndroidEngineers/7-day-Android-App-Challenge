@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
