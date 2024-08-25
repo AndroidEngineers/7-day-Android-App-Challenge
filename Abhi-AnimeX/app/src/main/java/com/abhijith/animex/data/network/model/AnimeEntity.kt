@@ -1,4 +1,4 @@
-package com.abhijith.animex.data.model
+package com.abhijith.animex.data.network.model
 
 // temporary implementation to pass data from viewmodel instead of hardcoding it in composable
 // to remove the default values once data is added

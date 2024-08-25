@@ -1,6 +1,6 @@
 package com.abhijith.animex.domain.model
 
-import com.abhijith.animex.data.model.AnimeEntity
+import com.abhijith.animex.data.network.model.AnimeEntity
 
 data class AnimeItem(
     val title: String,

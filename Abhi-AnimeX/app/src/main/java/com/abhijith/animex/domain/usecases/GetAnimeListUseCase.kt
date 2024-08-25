@@ -1,6 +1,6 @@
 package com.abhijith.animex.domain.usecases
 
-import com.abhijith.animex.data.model.AnimeEntity
+import com.abhijith.animex.data.network.model.AnimeEntity
 import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.domain.model.toDomain
 
