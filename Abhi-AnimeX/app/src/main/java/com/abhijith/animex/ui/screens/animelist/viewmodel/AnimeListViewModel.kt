@@ -1,34 +1,55 @@
 package com.abhijith.animex.ui.screens.animelist.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.abhijith.animex.domain.model.AnimeItem
-import com.abhijith.animex.domain.usecases.GetAnimeListUseCase
+import com.abhijith.animex.domain.models.AnimeItem
+import com.abhijith.animex.domain.usecases.GetSeasonalAnimeListUseCase
 import com.abhijith.animex.ui.screens.animelist.AnimeListUiState
-import kotlinx.coroutines.delay
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import javax.inject.Inject
 
-class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+@HiltViewModel
+class AnimeListViewModel @Inject constructor(
+    private val seasonalAnimeListUseCase: GetSeasonalAnimeListUseCase
+) :
+    ViewModel() {
+
+    private val tag = AnimeListViewModel::class.java.simpleName
+
     private val _itemsUiState = MutableStateFlow<AnimeListUiState>(AnimeListUiState.Loading)
     val itemsUiState: StateFlow<AnimeListUiState> = _itemsUiState.asStateFlow()
 
     private val _navigationEvent = MutableStateFlow<AnimeItem?>(null)
     val navigationEvent: StateFlow<AnimeItem?> = _navigationEvent.asStateFlow()
 
+    private val job = SupervisorJob()
+    private val scope = viewModelScope + job
+
     init {
-        viewModelScope.launch {
+        loadAnimeList()
+    }
+
+    private fun loadAnimeList() {
+        scope.launch {
             _itemsUiState.value = AnimeListUiState.Loading
-            delay(3000)
-            try {
-                _itemsUiState.value = AnimeListUiState.Success(getAnimeListUseCase())
-            } catch (e: Exception) {
-                _itemsUiState.value =
-                    AnimeListUiState.Error("Something went wrong! \nPlease try again later...")
-            }
+            seasonalAnimeListUseCase.invoke()
+                .catch { e ->
+                    Log.e(tag, "Error loading anime list", e)
+                    _itemsUiState.value =
+                        AnimeListUiState.Error("Something went wrong! Please try again later...")
+                }
+                .collectLatest { animeList ->
+                    _itemsUiState.value = AnimeListUiState.Success(animeList)
+                }
         }
     }
 
@@ -39,17 +60,9 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
     fun onResetNavigation() {
         _navigationEvent.value = null
     }
-}
 
-
-// TODO (issue 11)
-class AnimeListViewModelFactory(private val getAnimeListUseCase: GetAnimeListUseCase) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AnimeListViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AnimeListViewModel(getAnimeListUseCase) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }

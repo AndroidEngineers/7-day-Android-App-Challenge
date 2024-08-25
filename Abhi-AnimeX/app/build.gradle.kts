@@ -9,9 +9,9 @@ val localProperties = Properties().apply {
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    kotlin("kapt")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android.gradle.plugin)
+    kotlin("kapt")
 }
 
 android {
@@ -62,9 +62,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    kapt {
-        correctErrorTypes = true
-    }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {

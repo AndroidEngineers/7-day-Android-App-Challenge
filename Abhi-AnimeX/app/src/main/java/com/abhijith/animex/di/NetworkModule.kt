@@ -32,7 +32,7 @@ object NetworkModule {
         Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.jikan.moe/v4/seasons/now")
+            .baseUrl("https://api.jikan.moe/v4/")
             .build()
 
     @Singleton

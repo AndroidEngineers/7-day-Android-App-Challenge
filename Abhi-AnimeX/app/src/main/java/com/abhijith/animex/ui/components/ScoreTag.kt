@@ -1,5 +1,6 @@
 package com.abhijith.animex.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -21,9 +22,10 @@ import com.abhijith.animex.R
 import com.abhijith.animex.ui.theme.OrangeBrown
 
 @Composable
-fun RatingTag(rating: String) {
+fun ScoreTag(rating: String) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Text(
             text = rating,

@@ -3,7 +3,7 @@ package com.abhijith.animex.ui.screens.animedetails.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.abhijith.animex.domain.model.AnimeItem
+import com.abhijith.animex.domain.models.AnimeItem
 import com.abhijith.animex.ui.screens.animedetails.AnimeDetailsUiState
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
