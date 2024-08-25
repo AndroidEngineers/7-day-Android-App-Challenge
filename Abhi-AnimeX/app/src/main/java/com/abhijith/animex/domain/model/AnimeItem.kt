@@ -1,4 +1,4 @@
-package com.abhijith.animex.domain.models
+package com.abhijith.animex.domain.model
 
 import com.abhijith.animex.data.network.model.AnimeDto
 

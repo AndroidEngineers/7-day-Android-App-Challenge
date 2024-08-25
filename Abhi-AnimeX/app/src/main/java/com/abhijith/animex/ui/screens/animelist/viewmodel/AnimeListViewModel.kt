@@ -3,7 +3,7 @@ package com.abhijith.animex.ui.screens.animelist.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.abhijith.animex.domain.models.AnimeItem
+import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.domain.usecases.GetSeasonalAnimeListUseCase
 import com.abhijith.animex.ui.screens.animelist.AnimeListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

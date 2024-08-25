@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.abhijith.animex.domain.models.AnimeItem
+import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.navigation.Screen
 import com.abhijith.animex.ui.screens.animelist.viewmodel.AnimeListViewModel
 import com.abhijith.animex.ui.screens.error.ErrorScreen

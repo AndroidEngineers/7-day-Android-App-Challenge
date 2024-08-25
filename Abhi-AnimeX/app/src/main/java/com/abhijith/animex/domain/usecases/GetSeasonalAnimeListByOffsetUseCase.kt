@@ -1,7 +1,7 @@
 package com.abhijith.animex.domain.usecases
 
-import com.abhijith.animex.domain.models.AnimeItem
-import com.abhijith.animex.domain.models.toDomain
+import com.abhijith.animex.domain.model.AnimeItem
+import com.abhijith.animex.domain.model.toDomain
 import com.abhijith.animex.domain.repository.ISeasonalAnimeListRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

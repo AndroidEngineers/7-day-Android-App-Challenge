@@ -31,7 +31,7 @@ import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
-import com.abhijith.animex.domain.models.AnimeItem
+import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.components.ScoreTag
 import com.abhijith.animex.ui.components.WatchTrailerButton
 

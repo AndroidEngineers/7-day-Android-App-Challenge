@@ -1,6 +1,6 @@
 package com.abhijith.animex.ui.screens.animedetails
 
-import com.abhijith.animex.domain.models.AnimeItem
+import com.abhijith.animex.domain.model.AnimeItem
 
 sealed class AnimeDetailsUiState {
     data object Loading : AnimeDetailsUiState()
