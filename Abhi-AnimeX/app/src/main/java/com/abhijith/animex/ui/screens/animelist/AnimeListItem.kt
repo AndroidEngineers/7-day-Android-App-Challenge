@@ -1,5 +1,6 @@
 package com.abhijith.animex.ui.screens.animelist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,27 +27,34 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
-import com.abhijith.animex.ui.components.FavoriteButton
+import com.abhijith.animex.domain.model.AnimeItem
+import com.abhijith.animex.ui.components.RatingTag
+import com.abhijith.animex.ui.components.WatchTrailerButton
 
 @Composable
-fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier = Modifier) {
+fun AnimeListItem(
+    animeEntity: AnimeItem, onItemClicked: (AnimeItem) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onItemClicked(animeEntity) },
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://cdn.myanimelist.net/images/anime/1006/143302.jpg")
+                    .data(animeEntity.imageUrl)
                     .crossfade(true).build(),
                 contentDescription = null,
                 placeholder = painterResource(android.R.drawable.ic_menu_report_image),
+                error = painterResource(android.R.drawable.stat_notify_error),
                 modifier = Modifier
-                    .width(150.dp)
+                    .width(125.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop,
@@ -62,10 +70,9 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Anime Title",
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = animeEntity.title,
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
                         color = Color.Black,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = FontFamily(
@@ -73,10 +80,9 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                         ),
                     )
                     Text(
-                        text = "Anime category: $name",
+                        text = animeEntity.source,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
                         color = Color.Gray,
                         fontFamily = FontFamily(
                             Font(R.font.montserrat_regular)
@@ -84,20 +90,10 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Popularity: 4*",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        color = Color.Black,
-                        fontFamily = FontFamily(
-                            Font(R.font.montserrat_regular)
-                        ),
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    RatingTag(rating = animeEntity.rating)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "This Japanese Lorem Ipsum is based on the kanji frequency count at tidraso.co.uk and includes about 50% kanji, 25% hiragana, 20% katakana and 5% roman numerals and punctuation. Katakana and hiragana cluster in strings between 1 to 4 chars at random points in each paragraph. Hiragana occurs more often at the end of sentences, rather in clumps of 1 to 4 chars rather than just single chars. Katakana is very unlikely to appear as a single character in Japanese text, but hiragana could. Exclamation and question marks are \"double-byte\", not standard ascii ones. Suggestions for improvements or alternatives are welcome.",
+                        text = animeEntity.synopsis,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
                         maxLines = 4,
@@ -107,11 +103,14 @@ fun AnimeListItem(name: String, isFavorite: Boolean = false, modifier: Modifier 
                         ),
                         overflow = TextOverflow.Ellipsis,
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    WatchTrailerButton(
+                        text = getString(
+                            LocalContext.current, R.string.watch_trailer
+                        ),
+                        youtubeId = animeEntity.youtubeId
+                    )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                FavoriteButton(
-                    text = if (isFavorite) "Remove from Favorites" else "Add to Favorites",
-                    onClick = {})
             }
         }
     }

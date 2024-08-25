@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.abhijith.animex.ui.screens.animedetails.AnimeDetails
+import com.abhijith.animex.ui.navigation.AppNavHost
 import com.abhijith.animex.ui.theme.AnimeXTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,13 +23,13 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             AnimeXTheme {
-                Scaffold() {
+                Scaffold {
                     Box(
                         modifier = Modifier
                             .padding(it)
                             .background(color = androidx.compose.ui.graphics.Color.White)
                     ) {
-                        AnimeDetails()
+                        AppNavHost()
                     }
                 }
             }
