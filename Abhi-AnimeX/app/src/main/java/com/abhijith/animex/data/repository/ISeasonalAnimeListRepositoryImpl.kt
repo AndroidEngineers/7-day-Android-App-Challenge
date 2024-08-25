@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class ISeasonalAnimeListRepositoryImpl @Inject constructor(private val apiService: AnimeXApiService) :
     ISeasonalAnimeListRepository {
     override suspend fun getSeasonalAnime(): Flow<AnimeListResponse> {

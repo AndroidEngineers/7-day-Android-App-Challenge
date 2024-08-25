@@ -16,9 +16,7 @@ import com.abhijith.animex.ui.screens.loading.LoadingScreen
 import com.google.gson.Gson
 
 @Composable
-fun AnimeList(navController: NavController) {
-
-    val viewModel: AnimeListViewModel = hiltViewModel()
+fun AnimeList(navController: NavController, viewModel: AnimeListViewModel = hiltViewModel()) {
     val uiState by viewModel.itemsUiState.collectAsState()
     val navigationEvent by viewModel.navigationEvent.collectAsState()
 

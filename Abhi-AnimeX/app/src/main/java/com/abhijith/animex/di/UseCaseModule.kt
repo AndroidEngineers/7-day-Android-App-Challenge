@@ -10,7 +10,7 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object ViewModelModule {
+object UseCaseModule {
     @Provides
     fun provideGetSeasonalAnimeListUseCase(repository: ISeasonalAnimeListRepository): GetSeasonalAnimeListUseCase {
         return GetSeasonalAnimeListUseCase(repository)
