@@ -5,38 +5,66 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.make_food.ui.commonui.HorizontalListImage
-import com.example.make_food.ui.commonui.HorizontalListTitleText
-import com.example.reciperoulette.R
-import com.example.reciperoulette.presentation.ui.theme.RecipeRouletteTheme
+import com.example.reciperoulette.presentation.ui.commonui.HorizontalListImage
+import com.example.reciperoulette.presentation.ui.commonui.HorizontalListTitleText
+import com.example.reciperoulette.domain.model.Equipment
+import com.example.reciperoulette.domain.model.ExtendedIngredients
+import com.example.reciperoulette.domain.model.Ingredient
+import com.example.reciperoulette.presentation.util.AppConstant
 
 @Composable
-fun Intgradientelement(
+fun IngredientElement(
+    ingredients: ExtendedIngredients,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HorizontalListImage()
+        HorizontalListImage("${AppConstant.IMAGE_URL}/${ingredients.image}")
         HorizontalListTitleText(
-            stringResource(R.string.app_name),
+            ingredients.name,
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
         )
     }
 }
 
 
-@Preview(showBackground = true)
 @Composable
-fun IntgradientelementPreview() {
-    RecipeRouletteTheme {
-        Intgradientelement(Modifier)
+fun StepIngredientElement(
+    ingredients: Ingredient,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        HorizontalListImage("${AppConstant.IMAGE_URL}/${ingredients.image}")
+        HorizontalListTitleText(
+            ingredients.name,
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+        )
     }
 }
+
+@Composable
+fun StepEquipmentElement(
+    ingredients: Equipment,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        HorizontalListImage(ingredients.image)
+        HorizontalListTitleText(
+            ingredients.name,
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+        )
+    }
+}
+
 
 
 

@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,19 +24,25 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.make_food.ui.commonui.ScreenContentText
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.example.reciperoulette.presentation.ui.commonui.ScreenContentText
+import com.example.reciperoulette.presentation.ui.commonui.ScreenTitleText
 import com.example.reciperoulette.R
-import com.example.reciperoulette.presentation.navigation.Screen
-import com.example.reciperoulette.presentation.ui.theme.RecipeRouletteTheme
+import com.example.reciperoulette.domain.model.Recipe
+import com.example.reciperoulette.presentation.ui.navigation.Route
+import de.charlex.compose.material3.HtmlText
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CardContent(navController: NavHostController, name: String) {
+fun CardContent(
+    recipe: Recipe,
+    navController: NavHostController,
+    onRecipeClick: (recipeId: Int) -> Unit,
+) {
 
     val expanded = rememberSaveable {
         mutableStateOf(false)
@@ -48,7 +53,8 @@ fun CardContent(navController: NavHostController, name: String) {
             2.dp,
             MaterialTheme.colorScheme.outline
         ),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
     ) {
 
         Column {
@@ -62,7 +68,8 @@ fun CardContent(navController: NavHostController, name: String) {
                         )
                     )
                     .clickable(onClick = {
-                        navController.navigate(Screen.RecipeDetail.route)
+                        onRecipeClick(recipe.id)
+                        navController.navigate(Route.RecipeDetailScreen.route)
                     })
             )
             {
@@ -72,20 +79,20 @@ fun CardContent(navController: NavHostController, name: String) {
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
                     elevation = CardDefaults.cardElevation(
-                        defaultElevation = 2.dp
+                        defaultElevation = 8.dp
                     )
                 ) {
-                    Image(
-                        painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(80.dp)
+                    GlideImage(
+                        model = recipe.image,
+                        contentDescription = stringResource(id = R.string.app_name),
+                        modifier = Modifier.size(80.dp),
+                        contentScale = ContentScale.FillBounds
                     )
 
                 }
 
                 ScreenContentText(
-                    text = name,
+                    text = recipe.title,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(24.dp)
@@ -104,26 +111,17 @@ fun CardContent(navController: NavHostController, name: String) {
                     )
                 }
             }
-            Column {
-                if (expanded.value) {
+
+            if (expanded.value) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    ScreenTitleText(stringResource(id = R.string.analyzed_instructions), modifier = Modifier.padding(bottom = 18.dp))
                     ScreenContentText(
                         modifier = Modifier
-                            .padding(12.dp),
-                        text = (stringResource(id = R.string.demo_content_text)).repeat(4),
+                            .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                        text = HtmlText(text = recipe.instructions).toString(),
                     )
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardContentPreview() {
-    RecipeRouletteTheme {
-        CardContent(
-            navController = rememberNavController(),
-            stringResource(id = R.string.recipe_list)
-        )
     }
 }

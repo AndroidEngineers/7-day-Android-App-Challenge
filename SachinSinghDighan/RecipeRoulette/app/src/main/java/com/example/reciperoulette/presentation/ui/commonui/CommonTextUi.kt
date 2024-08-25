@@ -1,10 +1,12 @@
-package com.example.make_food.ui.commonui
+package com.example.reciperoulette.presentation.ui.commonui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.reciperoulette.presentation.ui.theme.RecipeRouletteTheme
 
@@ -13,7 +15,7 @@ fun ScreenTitleText(text: String, modifier: Modifier = Modifier){
     Text(text = text,
         fontSize = 18.sp,
         fontWeight = FontWeight.Black,
-        modifier = modifier
+        modifier = modifier.padding(top = 24.dp, bottom = 12.dp)
     )
 
 }
