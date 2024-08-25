@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.engineer.mealmate.view.features.meal_plan.model.CalendarUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -15,7 +16,7 @@ class MealCalendarViewModel : ViewModel() {
     private val dataSource = CalendarDataSource()
 
     private val _data = MutableStateFlow(dataSource.getData(lastSelectedDate = dataSource.today))
-    val data: StateFlow<CalendarUiModel> = _data
+    val data = _data.asStateFlow()
 
     fun onPrevClick(startDate: LocalDate) {
         viewModelScope.launch {
