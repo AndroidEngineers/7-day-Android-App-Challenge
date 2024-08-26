@@ -1,9 +1,9 @@
 # 7-day-Android-App-Challenge
 
 ## Season 1
-| Project | Author | Screenshots | Tech Stack |
-|---|---|---|---|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+|       Project       |                Author                      |       Screenshots          | Tech Stack            |
+|---------------------|--------------------------------------------|----------------------------|-----------------------|
+| Recipe - Meal Mate  | Sindhu S, Mohammed Arbaaz Ali, Sanket Zade | <img src="./meal_mate/readme/launcher_icon.png" width="50" height="100"  alt="Launcher Icon"/> <img src="./meal_mate/readme/splash.png" width="50" height="100" alt="Splash Screen" /> <img src="./meal_mate/readme/start.png" width="50" height="100" alt="Start Screen" /> <br> <img src="./meal_mate/readme/login.png" width="50" height="100" alt="Login Screen" /> <img src="./meal_mate/readme/signup.png" width="50" height="100" alt="Signup Screen" /> <img src="./meal_mate/readme/home_screen.png" width="50" height="100" alt="Home Screen" /> <br> <img src="./meal_mate/readme/food_prefs_nutrients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/searched_by_nutrients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/ingredients.png" width="50" height="100" alt="Recipe Detail Screen"/> <br> <img src="./meal_mate/readme/searched_by_ingredients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/home_details_web_view.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/meal_plan.png" width="50" height="100" alt="Recipe Detail Screen"/> <br> <img src="./meal_mate/readme/profile_tab.png" width="50" height="100" alt="Recipe Detail Screen"/>    | * Programming Language: Kotlin <br> * UI Development: Jetpack Compose <br> * Architecture: MVVM (Model-View-ViewModel) <br> * Dependency Injection: Hilt <br> * Networking: Retrofit <br> * Design Principles: SOLID principles, Design Patterns                       |
+|                     |                                            |                             |                        |
+|                     |                                            |                             |                        |
 
