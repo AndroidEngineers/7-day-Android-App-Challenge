@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +34,7 @@ import com.abhijith.animex.R
 fun ErrorScreen(errorMessage: String) {
     Box(
         modifier = Modifier
+            .testTag("ErrorScreen")
             .fillMaxSize()
             .background(color = Color.White),
         contentAlignment = Alignment.Center

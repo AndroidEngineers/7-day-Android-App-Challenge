@@ -60,6 +60,8 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+espresso-intents = {group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espressoCore" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

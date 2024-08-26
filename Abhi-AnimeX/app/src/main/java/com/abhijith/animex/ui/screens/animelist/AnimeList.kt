@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abhijith.animex.domain.model.AnimeItem
@@ -44,7 +46,7 @@ fun AnimeList(navController: NavController, viewModel: AnimeListViewModel = hilt
 
 @Composable
 fun AnimeListInfo(animeItems: List<AnimeItem>, onItemClick: (AnimeItem) -> Unit) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.testTag("AnimeListInfo")) {
         items(animeItems.count()) { i ->
             AnimeListItem(
                 animeEntity = animeItems[i],

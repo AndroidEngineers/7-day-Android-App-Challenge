@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.abhijith.animex.R
@@ -21,6 +22,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 fun LoadingScreen() {
     Box(
         modifier = Modifier
+            .testTag("LoadingScreen")
             .fillMaxSize()
             .background(color = Color.White),
         contentAlignment = Alignment.Center
