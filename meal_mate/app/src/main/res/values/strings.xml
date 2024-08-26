@@ -61,4 +61,6 @@
     <string name="max_fat">Max Fat</string>
     <string name="apply">Apply</string>
     <string name="reset_all">Reset All</string>
+
+    <string name="share_app">Share this App</string>
 </resources>

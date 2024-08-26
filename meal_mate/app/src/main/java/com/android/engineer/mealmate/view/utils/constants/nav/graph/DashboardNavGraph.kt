@@ -51,8 +51,8 @@ fun DashboardNavGraph(
         }*/
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(
-                title = BottomBarScreen.Profile.title,
-                navHostController = navHostController
+                navHostController = navHostController,
+                logout = logout
             )
         }
         composable(
