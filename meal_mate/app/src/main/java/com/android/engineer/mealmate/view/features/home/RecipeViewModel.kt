@@ -1,30 +1,49 @@
 package com.android.engineer.mealmate.view.features.home
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.engineer.mealmate.data.model.response.MissedUnUsedIngredients
-import com.android.engineer.mealmate.data.model.response.SearchByIngredients
-import com.android.engineer.mealmate.data.model.response.SearchByNutrients
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE1
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE2
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE3
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE4
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE5
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE6
-import com.android.engineer.mealmate.data.utils.STATIC_INGREDIENTS_IMAGE7
-import com.android.engineer.mealmate.data.utils.STATIC_URL1
-import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE1
-import com.android.engineer.mealmate.data.utils.STATIC_URL_IMAGE2
+import com.android.engineer.mealmate.R
+import com.android.engineer.mealmate.data.local.datastore.MealDataStore
+import com.android.engineer.mealmate.data.remote.model.response.IngredientsResponseItem
+import com.android.engineer.mealmate.data.remote.model.response.NutrientsResponseItem
+import com.android.engineer.mealmate.data.utils.API_KEY
+import com.android.engineer.mealmate.data.utils.API_KEY_VALUE
+import com.android.engineer.mealmate.data.utils.INGREDIENTS_KEY
+import com.android.engineer.mealmate.data.utils.MAX_CARBS_KEY
+import com.android.engineer.mealmate.data.utils.MIN_CARBS_KEY
+import com.android.engineer.mealmate.data.utils.NUMBER_KEY
+import com.android.engineer.mealmate.data.utils.NUMBER_KEY_VALUE
+import com.android.engineer.mealmate.data.utils.USERNAME
+import com.android.engineer.mealmate.domain.repository.RecipeSearchRepository
+import com.android.engineer.mealmate.view.features.home.model.MealChipList
+import com.android.engineer.mealmate.view.utils.constants.MinMaxRangeEnum
+import com.android.engineer.mealmate.view.utils.constants.NutrientsEnum
+import com.android.engineer.mealmate.view.utils.constants.SearchByEnum
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel : ViewModel() {
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
+    private val repository: RecipeSearchRepository,
+    private val dataStore: MealDataStore
+): ViewModel() {
+    val loggedInUserName = mutableStateOf("")
 
-    val isShowNextMealView = mutableStateOf(true)
+    init {
+        viewModelScope.launch {
+            loggedInUserName.value = dataStore.getString(USERNAME) ?: ""
+        }
+    }
+    val isShowNextMealView = mutableStateOf(false)
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
@@ -42,7 +61,7 @@ class RecipeViewModel : ViewModel() {
     private var _isSearchByNutrients = MutableStateFlow(true)
     val isSearchByNutrients = _isSearchByNutrients.asStateFlow()
 
-    private val _searchByNutrients = MutableStateFlow(getByNutrientsItems)
+    private val _searchByNutrients = MutableStateFlow(listOf(NutrientsResponseItem(0, "", "", 0, "", "", "", "")))
     val searchByNutrients = searchText
         .combine(_searchByNutrients) { text, searchByNutrients ->
             if (text.isBlank()) {
@@ -57,7 +76,7 @@ class RecipeViewModel : ViewModel() {
             _searchByNutrients.value
 
         )
-    private val _searchByIngredients = MutableStateFlow(getByIngredientsItems)
+    private val _searchByIngredients = MutableStateFlow(listOf(IngredientsResponseItem(0, "", "", 0, 0, listOf(), "", listOf(),0, listOf())))
     val searchByIngredients = searchText
         .combine(_searchByIngredients) { text, searchByIngredients ->
             if (text.isBlank()) {
@@ -73,6 +92,37 @@ class RecipeViewModel : ViewModel() {
 
         )
 
+    private val _isBottomSheetShowing = MutableStateFlow(false)
+    val isBottomSheetShowing = _isBottomSheetShowing.asStateFlow()
+
+    private val _selectedSearchBy = MutableStateFlow(SearchByEnum.NUTRIENTS.name)
+    val selectedSearchBy = _selectedSearchBy.asStateFlow()
+
+    private val _dailyKcal = MutableStateFlow(DAILY_KCAL)
+    val dailyKcal = _dailyKcal.asStateFlow()
+
+    private val getSearchItems = listOf(
+        MealChipList(name = SearchByEnum.NUTRIENTS.name, isSelected = true, unSelectedIcon = R.drawable.ic_nutrients_icon),
+        MealChipList(name = SearchByEnum.INGREDIENTS.name, isSelected = false, unSelectedIcon = R.drawable.ic_ingredient_icon)
+    )
+
+    private val _searchByItems = MutableStateFlow(getSearchItems)
+    val searchByItems = _searchByItems.asStateFlow()
+
+    private val _minMaxCarbs = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_CARBS.minMaxRange)
+    val minMaxCarbs = _minMaxCarbs.asStateFlow()
+
+    private val _minMaxProtein = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_PROTEIN.minMaxRange)
+    val minMaxProtein = _minMaxProtein.asStateFlow()
+
+    private val _minMaxKCal = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_KCAL.minMaxRange)
+    val minMaxKCal = _minMaxKCal.asStateFlow()
+
+    private val _minMaxFat = MutableStateFlow(MinMaxRangeEnum.MIN_MAX_FAT.minMaxRange)
+    val minMaxFat = _minMaxFat.asStateFlow()
+
+    val isScreenLoading = mutableStateOf(false)
+
     fun onQueryChange(text: String) {
         _searchText.value = text
     }
@@ -83,6 +133,9 @@ class RecipeViewModel : ViewModel() {
         }
         _isActive.value = false
         _searchText.value = ""
+        if(!_isSearchByNutrients.value) {
+            searchByApi(searchedText = text)
+        }
     }
 
     fun onActiveChange(isActive: Boolean) {
@@ -92,400 +145,103 @@ class RecipeViewModel : ViewModel() {
     fun onCloseIconClicked() {
         if (_searchText.value.isNotEmpty()) _searchText.value = "" else _isActive.value = false
     }
+    fun onFilterIconClicked() {
+        if(!_isBottomSheetShowing.value) {
+            showHideBottomSheet(true)
+        }
+    }
+
+    fun showHideBottomSheet(isShow: Boolean) {
+        _isBottomSheetShowing.value = isShow
+    }
+
+    fun onDailyKCalValueChange(newText: String) {
+        _dailyKcal.value = newText
+    }
+
+    fun onSelectedChipView(selectedChip: String) {
+        _searchByItems.value.forEach { item ->
+            item.isSelected = selectedChip == item.name
+            if(item.isSelected) {
+                _selectedSearchBy.value = item.name
+                _isSearchByNutrients.value = item.name == SearchByEnum.NUTRIENTS.name
+            }
+        }
+    }
+
+    fun onResetAllClicked() {
+        _dailyKcal.value = DAILY_KCAL
+        _selectedSearchBy.value = SearchByEnum.NUTRIENTS.name
+        _searchByItems.value.forEach { item ->
+            item.isSelected = _selectedSearchBy.value == item.name
+        }
+        _minMaxCarbs.value = MinMaxRangeEnum.MIN_MAX_CARBS.minMaxRange
+        _minMaxProtein.value = MinMaxRangeEnum.MIN_MAX_PROTEIN.minMaxRange
+        _minMaxKCal.value = MinMaxRangeEnum.MIN_MAX_KCAL.minMaxRange
+        _minMaxFat.value = MinMaxRangeEnum.MIN_MAX_FAT.minMaxRange
+    }
+
+    fun onApplyClicked() {
+        _isBottomSheetShowing.value = false
+        viewModelScope.launch {
+            if(_isSearchByNutrients.value) {
+                isScreenLoading.value = true
+                val filter = hashMapOf<String, String>()
+                filter[API_KEY] = API_KEY_VALUE
+                filter[MIN_CARBS_KEY] = _minMaxCarbs.value.start.toInt().toString()
+                filter[MAX_CARBS_KEY] = _minMaxCarbs.value.endInclusive.toInt().toString()
+                filter[NUMBER_KEY] = NUMBER_KEY_VALUE
+
+                try{
+                    val nutrientsResponseList = repository.searchByNutrients(filter)
+                    nutrientsResponseList.collectLatest {
+                        _searchByNutrients.value = it
+                        isScreenLoading.value = false
+                    }
+                } catch (e: Exception) {
+                    Log.d("onResponse", "There is an error")
+                    isScreenLoading.value = false
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    fun onNutrientsRangeChanged(getNutrientsEnum: NutrientsEnum, minMaxRange: ClosedFloatingPointRange<Float>) {
+        when (getNutrientsEnum) {
+            NutrientsEnum.CARBOHYDRATES -> _minMaxCarbs.value = minMaxRange
+            NutrientsEnum.PROTEIN -> _minMaxProtein.value = minMaxRange
+            NutrientsEnum.CALORIES -> _minMaxKCal.value = minMaxRange
+            NutrientsEnum.FAT -> _minMaxFat.value = minMaxRange
+        }
+    }
+
+    private fun searchByApi(searchedText: String) {
+        viewModelScope.launch {
+            isScreenLoading.value = true
+            val values = searchedText.split("\\s+".toRegex())
+            var ingredientValues = ""
+            for(item in values) {
+                ingredientValues = ingredientValues.plus(item).plus(",+")
+            }
+            ingredientValues = ingredientValues.substring(0, ingredientValues.length-2)
+
+            val filter = hashMapOf<String, String>()
+            filter[API_KEY] = API_KEY_VALUE
+            filter[INGREDIENTS_KEY] = ingredientValues
+            filter[NUMBER_KEY] = NUMBER_KEY_VALUE
+
+            try {
+                val ingredientsResponseList = repository.searchByIngredients(filter)
+                ingredientsResponseList.collectLatest {
+                    _searchByIngredients.value = it
+                    isScreenLoading.value = false
+                }
+            } catch (e: Exception) {
+                Log.d("onResponse", "There is an error")
+                isScreenLoading.value = false
+                e.printStackTrace()
+            }
+        }
+    }
 }
-
-// Pre-defined list items. These values will be removed once API integration is complete.
-val getByNutrientsItems = listOf(
-    SearchByNutrients(
-        id = 1,
-        title = "Baked Apples in White Wine",
-        image = STATIC_URL_IMAGE1,
-        calories = 210,
-        carbs = "43g",
-        fat = "3g",
-        protein = "1g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 2,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE2,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 3,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE1,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 4,
-        title = "Baked Apples in White Wine",
-        image = STATIC_URL_IMAGE2,
-        calories = 210,
-        carbs = "43g",
-        fat = "3g",
-        protein = "1g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 5,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE1,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 6,
-        title = "Baked Apples in White Wine",
-        image = STATIC_URL_IMAGE2,
-        calories = 210,
-        carbs = "43g",
-        fat = "3g",
-        protein = "1g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 7,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE1,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 8,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE2,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 9,
-        title = "Baked Apples in White Wine",
-        image = STATIC_URL_IMAGE1,
-        calories = 210,
-        carbs = "43g",
-        fat = "3g",
-        protein = "1g",
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByNutrients(
-        id = 10,
-        title = "Chocolate Silk Pie with Marshmallow Meringue",
-        image = STATIC_URL_IMAGE2,
-        calories = 210,
-        carbs = "33g",
-        fat = "10g",
-        protein = "2g",
-        spoonacularSourceUrl = STATIC_URL1
-    )
-
-)
-
-val getByIngredientsItems = listOf(
-    SearchByIngredients(
-        id = 1,
-        image = STATIC_URL_IMAGE1,
-        title = "Apple Or Peach Strudel",
-        likes = 0,
-        missedIngredientCount = 3,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 18371,
-                image = STATIC_INGREDIENTS_IMAGE1,
-                name = "baking powder",
-                original = "1 tsp baking powder",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "1 tsp cinnamon",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 1123,
-                image = STATIC_INGREDIENTS_IMAGE3,
-                name = "egg",
-                original = "1 egg",
-                amount = 1.0,
-            )
-        ),
-        usedIngredientCount = 1,
-        usedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "6 large baking apples",
-                amount = 6.0,
-            )
-        ),
-        unusedIngredients = listOf(),
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByIngredients(
-        id = 2,
-        image = STATIC_URL_IMAGE2,
-        title = "Apricot Glazed Apple Tart",
-        likes = 3,
-        missedIngredientCount = 4,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 1001,
-                image = STATIC_INGREDIENTS_IMAGE5,
-                name = "butter",
-                original = "1 1/2 sticks cold unsalted butter cold unsalted butter<",
-                amount = 1.5,
-            ),
-            MissedUnUsedIngredients(
-                id = 1079003,
-                image = STATIC_INGREDIENTS_IMAGE6,
-                name = "red apples",
-                original = "4 larges red apples, such as Golden Delicious, peeled, cored and cut into 1/4-inch-thick slices",
-                amount = 4.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "2 teaspoons cinnamon",
-                amount = 2.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 19719,
-                image = STATIC_INGREDIENTS_IMAGE7,
-                name = "apricot preserves",
-                original = "2 tablespoons apricot preserves, melted and strained",
-                amount = 2.0,
-            )
-        ),
-        usedIngredientCount = 0,
-        usedIngredients = listOf(),
-        unusedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "apples",
-                amount = 1.0,
-            )
-        ),
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByIngredients(
-        id = 3,
-        image = STATIC_URL_IMAGE1,
-        title = "Apple Or Peach Strudel",
-        likes = 0,
-        missedIngredientCount = 3,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 18371,
-                image = STATIC_INGREDIENTS_IMAGE1,
-                name = "baking powder",
-                original = "1 tsp baking powder",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "1 tsp cinnamon",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 1123,
-                image = STATIC_INGREDIENTS_IMAGE3,
-                name = "egg",
-                original = "1 egg",
-                amount = 1.0,
-            )
-        ),
-        usedIngredientCount = 1,
-        usedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "6 large baking apples",
-                amount = 6.0,
-            )
-        ),
-        unusedIngredients = listOf(),
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByIngredients(
-        id = 4,
-        image = STATIC_URL_IMAGE2,
-        title = "Apricot Glazed Apple Tart",
-        likes = 3,
-        missedIngredientCount = 4,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 1001,
-                image = STATIC_INGREDIENTS_IMAGE5,
-                name = "butter",
-                original = "1 1/2 sticks cold unsalted butter cold unsalted butter<",
-                amount = 1.5,
-            ),
-            MissedUnUsedIngredients(
-                id = 1079003,
-                image = STATIC_INGREDIENTS_IMAGE6,
-                name = "red apples",
-                original = "4 larges red apples, such as Golden Delicious, peeled, cored and cut into 1/4-inch-thick slices",
-                amount = 4.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "2 teaspoons cinnamon",
-                amount = 2.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 19719,
-                image = STATIC_INGREDIENTS_IMAGE7,
-                name = "apricot preserves",
-                original = "2 tablespoons apricot preserves, melted and strained",
-                amount = 2.0,
-            )
-        ),
-        usedIngredientCount = 2,
-        usedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "6 large baking apples",
-                amount = 6.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "6 large baking apples",
-                amount = 6.0,
-            )
-        ),
-        unusedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "apples",
-                amount = 1.0,
-            )
-        ),
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByIngredients(
-        id = 5,
-        image = STATIC_URL_IMAGE1,
-        title = "Apple Or Peach Strudel",
-        likes = 0,
-        missedIngredientCount = 3,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 18371,
-                image = STATIC_INGREDIENTS_IMAGE1,
-                name = "baking powder",
-                original = "1 tsp baking powder",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "1 tsp cinnamon",
-                amount = 1.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 1123,
-                image = STATIC_INGREDIENTS_IMAGE3,
-                name = "egg",
-                original = "1 egg",
-                amount = 1.0,
-            )
-        ),
-        usedIngredientCount = 1,
-        usedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "6 large baking apples",
-                amount = 6.0,
-            )
-        ),
-        unusedIngredients = listOf(),
-        spoonacularSourceUrl = STATIC_URL1
-    ),
-    SearchByIngredients(
-        id = 6,
-        image = STATIC_URL_IMAGE2,
-        title = "Apricot Glazed Apple Tart",
-        likes = 3,
-        missedIngredientCount = 4,
-        missedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 1001,
-                image = STATIC_INGREDIENTS_IMAGE5,
-                name = "butter",
-                original = "1 1/2 sticks cold unsalted butter cold unsalted butter<",
-                amount = 1.5,
-            ),
-            MissedUnUsedIngredients(
-                id = 1079003,
-                image = STATIC_INGREDIENTS_IMAGE6,
-                name = "red apples",
-                original = "4 larges red apples, such as Golden Delicious, peeled, cored and cut into 1/4-inch-thick slices",
-                amount = 4.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 2010,
-                image = STATIC_INGREDIENTS_IMAGE2,
-                name = "cinnamon",
-                original = "2 teaspoons cinnamon",
-                amount = 2.0,
-            ),
-            MissedUnUsedIngredients(
-                id = 19719,
-                image = STATIC_INGREDIENTS_IMAGE7,
-                name = "apricot preserves",
-                original = "2 tablespoons apricot preserves, melted and strained",
-                amount = 2.0,
-            )
-        ),
-        usedIngredientCount = 0,
-        usedIngredients = listOf(),
-        unusedIngredients = listOf(
-            MissedUnUsedIngredients(
-                id = 9003,
-                image = STATIC_INGREDIENTS_IMAGE4,
-                name = "apples",
-                original = "apples",
-                amount = 1.0,
-            )
-        ),
-        spoonacularSourceUrl = STATIC_URL1
-    )
-)

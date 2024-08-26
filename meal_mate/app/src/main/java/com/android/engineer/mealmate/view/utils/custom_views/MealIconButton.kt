@@ -55,5 +55,5 @@ fun MealIconButton(
 @Preview(showBackground = true)
 @Composable
 fun MealIconButtonPreview() {
-    MealIconButton(onClick = {  }, text = stringResource(id = R.string.meal_card), icon = R.drawable.ic_meal_card,)
+    MealIconButton(onClick = {  }, text = stringResource(id = R.string.meal_card), icon = R.drawable.ic_meal_card)
 }

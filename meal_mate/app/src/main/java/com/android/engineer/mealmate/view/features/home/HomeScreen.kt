@@ -21,21 +21,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.android.engineer.mealmate.R
+import com.android.engineer.mealmate.data.utils.DURATION
+import com.android.engineer.mealmate.data.utils.FRUITS
+import com.android.engineer.mealmate.data.utils.SERVES
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.data.utils.STATIC_BREAK_FAST_IMAGE
-import com.android.engineer.mealmate.view.utils.custom_views.MealIconButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealImageLoading
+import com.android.engineer.mealmate.view.utils.custom_views.MealLottieAnimation
 import com.android.engineer.mealmate.view.utils.custom_views.MealSearchView
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
 
 @Composable
-fun HomeScreen(navHostController: NavHostController, userName: String, paddingValues: PaddingValues) {
-    val viewModel = viewModel<RecipeViewModel>()
-
+fun HomeScreen(navHostController: NavHostController, paddingValues: PaddingValues) {
+    val viewModel = hiltViewModel<RecipeViewModel>()
+    val loggedInUserName = viewModel.loggedInUserName.value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,20 +47,24 @@ fun HomeScreen(navHostController: NavHostController, userName: String, paddingVa
             .padding(all = 28.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ShowTopView(userName = userName)
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(15.dp))
-        if(viewModel.isShowNextMealView.value) {
-            ShowNextMeal()
+
+        if (viewModel.isScreenLoading.value) {
+            MealLottieAnimation(rawResId = R.raw.api_progress, imageSize = 200.dp)
+        } else {
+            ShowTopView(userName = loggedInUserName)
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(15.dp))
+            if(viewModel.isShowNextMealView.value) {
+                ShowNextMeal()
+            }
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(15.dp))
+            MealSearchView(
+                navHostController = navHostController
+            )
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(15.dp))
-        MealSearchView(
-            viewModel = viewModel,
-            navHostController = navHostController
-        )
     }
 }
 
@@ -70,12 +77,13 @@ fun ShowTopView(userName: String) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         MealText(text = stringResource(id = R.string.hello).plus(", ").plus(userName), fontSize = 30.sp)
-        MealIconButton(
+        // This feature is disabled.
+        /*MealIconButton(
             onClick = {},
             text = stringResource(id = R.string.meal_card),
             icon = R.drawable.ic_meal_card,
             horizontalPadding = 0.dp
-        )
+        )*/
     }
 }
 
@@ -105,7 +113,7 @@ fun ShowNextMeal() {
             )
 
             Text(
-                text = "1 hr",
+                text = "1 hr", // Need to calculate
                 color = OrangePrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
@@ -128,9 +136,24 @@ fun ShowNextMeal() {
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )
-                MealText(text = "Fruits", fontSize = 14.sp)
-                MealText(text = "Duration: 15 mins", fontSize = 12.sp)
-                MealText(text = "Serves: 1", fontSize = 12.sp)
+                Text(
+                    text = FRUITS,
+                    color = Color.Black,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = DURATION,
+                    color = Color.Black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = SERVES,
+                    color = Color.Black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
             }
         }
     }
