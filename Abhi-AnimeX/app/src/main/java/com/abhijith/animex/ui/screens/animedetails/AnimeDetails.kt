@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -54,14 +55,15 @@ fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
     when (val uiState = animeDetailsViewModel.uiState.collectAsState().value) {
         is AnimeDetailsUiState.Error -> ErrorScreen(uiState.message)
         is AnimeDetailsUiState.Loading -> LoadingScreen()
-        is AnimeDetailsUiState.Success -> AnimeDetailsInfo(uiState.item, animeDetailsViewModel)
+        is AnimeDetailsUiState.Success -> AnimeDetailsInfo(uiState.item)
     }
 }
 
 @Composable
-fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsViewModel) {
+fun AnimeDetailsInfo(animeItem: AnimeItem) {
     Box(
         modifier = Modifier
+            .testTag("AnimeDetailsInfo")
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {

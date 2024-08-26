@@ -7,14 +7,12 @@ import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.domain.usecases.GetSeasonalAnimeListUseCase
 import com.abhijith.animex.ui.screens.animelist.AnimeListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,15 +29,12 @@ class AnimeListViewModel @Inject constructor(
     private val _navigationEvent = MutableStateFlow<AnimeItem?>(null)
     val navigationEvent: StateFlow<AnimeItem?> = _navigationEvent.asStateFlow()
 
-    private val job = SupervisorJob()
-    private val scope = viewModelScope + job
-
     init {
         loadAnimeList()
     }
 
     private fun loadAnimeList() {
-        scope.launch {
+        viewModelScope.launch {
             _itemsUiState.value = AnimeListUiState.Loading
             seasonalAnimeListUseCase.invoke()
                 .catch { e ->
@@ -59,10 +54,5 @@ class AnimeListViewModel @Inject constructor(
 
     fun onResetNavigation() {
         _navigationEvent.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 }
