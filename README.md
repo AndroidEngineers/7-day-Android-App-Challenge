@@ -1,9 +1,6 @@
 # 7-day-Android-App-Challenge
 
 ## Season 1
-| Project | Author | Screenshots | Tech Stack |
-|---|---|---|---|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
-
+| Project  | Author                           | Screenshots                                                                                                                                                                                                                                      | Tech Stack                                                                                                                            |
+|----------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| Anime X  | [Abhijith Sreekar](@nasreekar)   | <img src="https://github.com/user-attachments/assets/033079e5-4c3a-483d-ac88-74c3c616ad48" width="125" height="125" /><br><img src="https://github.com/user-attachments/assets/4b5f8d00-cdb1-4c84-aa0d-4d41c1f61e75" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/8364a81a-1625-40ae-8fb3-add3fd9a67fa" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/bba0d8a5-f98f-480f-8b7b-cae5fce7abb8" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/e0d45f88-ddce-45ba-9732-b4ae98339328" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/2bfb54b6-37eb-4af7-940f-ce7849a24f94" width="250" height="500" /> | - Jetpack Compose + Kotlin<br>- MVVM + Clean Arch (data, domain (usecases) and UI)<br>- Kotlin flows + coroutines<br>- Compose Navigation<br>- Hilt<br>- Retrofit<br>- UI testing |
