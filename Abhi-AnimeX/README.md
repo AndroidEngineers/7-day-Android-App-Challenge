@@ -60,7 +60,8 @@ project from Android Studio following the steps
 [here](https://developer.android.com/jetpack/compose/setup#sample).
 
 ## Additional Info
-This project is started as a part of 7 Day Challenge organised by [Android Engineers](https://www.linkedin.com/company/android-engineers/posts/?feedView=all)
+- This project is started as a part of 7 Day Challenge organised by [Android Engineers](https://www.linkedin.com/company/android-engineers/posts/?feedView=all)
+- App icon is created and edited using [Microsoft Designer](https://designer.microsoft.com/image-creator) tool.
 
 ## Contribution
 
