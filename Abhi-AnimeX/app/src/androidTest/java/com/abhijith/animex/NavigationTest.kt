@@ -32,36 +32,30 @@ class NavigationTest {
 
     @Before
     fun setUp() {
-        Intents.init()  // Initialize Intents before running tests
+        Intents.init()
     }
 
     @After
     fun tearDown() {
-        Intents.release()  // Release Intents after tests
+        Intents.release()
     }
 
     @Test
     fun app_launches_and_navigates() {
-        // Wait for the initial composition
         composeTestRule.waitForIdle()
 
-        // Verify the start state is loading
         composeTestRule.onNodeWithTag("LoadingScreen").assertIsDisplayed()
 
-        // Wait for the loading to finish and AnimeListInfo to be displayed
         composeTestRule.waitUntil(timeoutMillis = 5000) {
             composeTestRule
                 .onAllNodesWithTag("AnimeListInfo")
                 .fetchSemanticsNodes().isNotEmpty()
         }
 
-        // Verify that AnimeListInfo is now displayed
         composeTestRule.onNodeWithTag("AnimeListInfo").assertIsDisplayed()
 
-        // Find and click the first anime item
         composeTestRule.onAllNodesWithTag("AnimeListItem").onFirst().performClick()
 
-        // Verify that AnimeDetailsInfo is now displayed
         composeTestRule.onNodeWithTag("AnimeDetailsInfo").assertIsDisplayed()
 
         Espresso.pressBack()
@@ -71,31 +65,26 @@ class NavigationTest {
 
     @Test
     fun click_trailer_button_opens_external_app() {
-        // Wait for the AnimeListInfo to be displayed
         composeTestRule.waitUntil(timeoutMillis = 5000) {
             composeTestRule
                 .onAllNodesWithTag("AnimeListItem")
                 .fetchSemanticsNodes().isNotEmpty()
         }
 
-        // Find the first AnimeListItem
         val firstListItem = composeTestRule
             .onAllNodesWithTag("AnimeListItem")
             .onFirst()
 
-        // Verify the "Watch Trailer" button exists within the first list item
         firstListItem
             .onChildren()
             .filterToOne(hasText(composeTestRule.activity.getString(R.string.watch_trailer)))
             .assertExists()
 
-        // Click the "Watch Trailer" button within the first list item
         firstListItem
             .onChildren()
             .filterToOne(hasText(composeTestRule.activity.getString(R.string.watch_trailer)))
             .performClick()
 
-        // Verify that the correct intent was sent to open the YouTube app
         intended(
             allOf(
                 hasAction(Intent.ACTION_VIEW),
