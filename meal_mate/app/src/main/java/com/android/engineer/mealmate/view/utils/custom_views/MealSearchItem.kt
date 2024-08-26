@@ -47,8 +47,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
-import com.android.engineer.mealmate.data.model.response.SearchByIngredients
-import com.android.engineer.mealmate.data.model.response.SearchByNutrients
+import com.android.engineer.mealmate.data.remote.model.response.IngredientsResponseItem
+import com.android.engineer.mealmate.data.remote.model.response.NutrientsResponseItem
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.view.features.home.FORWARD_SLASH
@@ -141,7 +141,7 @@ fun MealSearchView(navHostController: NavHostController) {
         }
     }
     Spacer(modifier = Modifier.height(30.dp))
-    if (historyItem.size > 2) {
+    if (historyItem.size > 1) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -149,13 +149,13 @@ fun MealSearchView(navHostController: NavHostController) {
             if (isSearchByNutrients) {
                 items(items = searchByNutrients) { item ->
                     RowItemByNutrients(item = item) {
-                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.id))
                     }
                 }
             } else {
-                items(items = searchByIngredients) { item ->
+                items(items = searchByIngredients){ item ->
                     RowItemByIngredients(item = item) {
-                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.id))
                     }
                 }
             }
@@ -184,7 +184,7 @@ fun MealSearchView(navHostController: NavHostController) {
 }
 
 @Composable
-fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
+fun RowItemByNutrients(item: NutrientsResponseItem, onItemSelected: (Int) -> Unit) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -275,7 +275,7 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
 }
 
 @Composable
-fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Unit) {
+fun RowItemByIngredients(item: IngredientsResponseItem, onItemSelected: (Int) -> Unit) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -337,7 +337,7 @@ fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Uni
 
 
 @Composable
-fun ShowIngredientsCountView(item: SearchByIngredients) {
+fun ShowIngredientsCountView(item: IngredientsResponseItem) {
     if (item.missedIngredientCount > 0) {
         ShowCountView(
             countTitle = stringResource(id = R.string.missed_ingredient),

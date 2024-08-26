@@ -98,9 +98,13 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.okhttp)
 
+    // Moshi
+    implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
-    kapt(libs.moshi.kotlin.codegen)
+
+    // Data Store
+    implementation(libs.androidx.datastore.preferences)
 }
 
 kapt {

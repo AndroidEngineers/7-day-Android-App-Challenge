@@ -12,11 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
-import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 import com.android.engineer.mealmate.view.utils.custom_views.MealCalender
 
 @Composable
-fun MealPlanScreen(title: String, navHostController: NavHostController) {
+fun MealPlanScreen(navHostController: NavHostController) {
    Column(
        modifier = Modifier
            .fillMaxSize()
@@ -33,5 +32,5 @@ fun MealPlanScreen(title: String, navHostController: NavHostController) {
 @Composable
 @Preview()
 fun MealPlanScreenPreview() {
-    MealPlanScreen(title = BottomBarScreen.MealPlan.title, navHostController = rememberNavController())
+    MealPlanScreen(navHostController = rememberNavController())
 }

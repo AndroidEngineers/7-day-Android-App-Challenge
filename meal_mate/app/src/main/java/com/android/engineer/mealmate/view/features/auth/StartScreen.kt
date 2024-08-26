@@ -16,59 +16,67 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.DASHBOARD
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
 import com.android.engineer.mealmate.view.utils.custom_views.MealTextButton
 
 @Composable
 fun StartScreen(navHostController: NavHostController) {
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .background(OrangeOnPrimary)
-            .padding(top = 64.dp, bottom = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        MealText(
-            text = stringResource(id = R.string.welcome_to_meal_mate),
-            fontSize = 42.sp,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Box (
+
+    val viewModel = hiltViewModel<AuthViewModel>()
+    if(viewModel.isLoggedIn.value) {
+        navHostController.navigate(DASHBOARD)
+    } else {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .fillMaxSize()
+                .background(OrangeOnPrimary)
+                .padding(top = 64.dp, bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             MealText(
-                text = stringResource(id = R.string.organize_your_day),
-                fontSize = 32.sp,
-                textAlign = TextAlign.Start,
+                text = stringResource(id = R.string.welcome_to_meal_mate),
+                fontSize = 42.sp,
+                textAlign = TextAlign.Center
             )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceEvenly
+            Spacer(modifier = Modifier.weight(1f))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                MealText(
+                    text = stringResource(id = R.string.organize_your_day),
+                    fontSize = 32.sp,
+                    textAlign = TextAlign.Start,
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.SpaceEvenly
 
-        ) {
-            MealFilledButton(
-                onClick = { navHostController.navigate(AuthScreen.Login.route) },
-                text = stringResource(id = R.string.login),
-                modifier = Modifier.fillMaxWidth()
-            )
-            MealTextButton(
-                onClick = { navHostController.navigate(AuthScreen.Signup.route)},
-                text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.fillMaxWidth()
-            )
+            ) {
+                MealFilledButton(
+                    onClick = { navHostController.navigate(AuthScreen.Login.route) },
+                    text = stringResource(id = R.string.login),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                MealTextButton(
+                    onClick = { navHostController.navigate(AuthScreen.Signup.route) },
+                    text = stringResource(id = R.string.sign_up),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

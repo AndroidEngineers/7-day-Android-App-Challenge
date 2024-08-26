@@ -3,8 +3,10 @@ package com.android.engineer.mealmate.view.utils.custom_views
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -25,7 +27,9 @@ fun MealTextField(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isError: Boolean = false,
+    errorMsg: String = ""
 ) {
     TextField(
         value = value,
@@ -43,7 +47,21 @@ fun MealTextField(
         },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        isError = isError,
+        supportingText = {
+            if(isError) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = errorMsg,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        },
+        trailingIcon = {
+            if (isError)
+                Icon(Icons.Filled.Error,"error", tint = MaterialTheme.colorScheme.error)
+        },
     )
 }
 

@@ -1,7 +1,6 @@
 package com.android.engineer.mealmate.di
 
 import com.android.engineer.mealmate.data.remote.MealAPI
-import com.android.engineer.mealmate.di.utils.API_BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -18,6 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private const val API_BASE_URL = "https://api.spoonacular.com/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -35,7 +35,7 @@ object NetworkModule {
     fun providesRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl(API_BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .client(okHttpBuilder.build())
     }
 
