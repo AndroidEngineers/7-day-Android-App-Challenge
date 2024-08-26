@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +18,7 @@ fun MealText(
     text: String,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = 16.sp,
+    fontWeight: FontWeight = FontWeight.Normal,
     textAlign: TextAlign = TextAlign.Start
 ) {
     Text(
@@ -27,8 +27,8 @@ fun MealText(
         color = Black,
         textAlign = textAlign,
         fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-        fontStyle = FontStyle.Normal,
-        fontWeight = FontWeight.Bold,
+        fontWeight = fontWeight,
+        lineHeight = 50.sp,
         modifier = modifier
     )
 
@@ -37,5 +37,5 @@ fun MealText(
 @Preview(showBackground = true)
 @Composable
 fun MealTextPreview() {
-    MealText("Welcome to MealMate", modifier = Modifier, 36.sp, TextAlign.Center)
+    MealText("Welcome to MealMate", modifier = Modifier, 36.sp, textAlign = TextAlign.Center)
 }

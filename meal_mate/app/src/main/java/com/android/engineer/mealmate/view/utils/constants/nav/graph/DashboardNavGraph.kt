@@ -7,17 +7,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.android.engineer.mealmate.data.utils.STATIC_URL1
 import com.android.engineer.mealmate.view.features.home.HomeScreen
-import com.android.engineer.mealmate.view.features.home.RECIPE_TITLE
-import com.android.engineer.mealmate.view.features.home.RECIPE_TITLE_START_END
+import com.android.engineer.mealmate.view.features.home.RECIPE_ID
+import com.android.engineer.mealmate.view.features.home.RECIPE_ID_START_END
 import com.android.engineer.mealmate.view.features.home.RecipeDetailsScreen
 import com.android.engineer.mealmate.view.features.meal_plan.MealPlanScreen
 import com.android.engineer.mealmate.view.features.profile.ProfileScreen
-import com.android.engineer.mealmate.view.features.report.ReportScreen
-import com.android.engineer.mealmate.view.features.shop_list.ShopListScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
 import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
@@ -34,17 +29,15 @@ fun DashboardNavGraph(
         composable(route = BottomBarScreen.Home.route) {
             HomeScreen(
                 navHostController = navHostController,
-                userName = "",
                 paddingValues = paddingValues
             )
         }
         composable(route = BottomBarScreen.MealPlan.route) {
             MealPlanScreen(
-                title = BottomBarScreen.MealPlan.title,
                 navHostController = navHostController
             )
         }
-        composable(route = BottomBarScreen.ShopList.route) {
+        /*composable(route = BottomBarScreen.ShopList.route) {
             ShopListScreen(
                 title = BottomBarScreen.ShopList.title,
                 navHostController = navHostController
@@ -55,24 +48,23 @@ fun DashboardNavGraph(
                 title = BottomBarScreen.Report.title,
                 navHostController = navHostController
             )
-        }
+        }*/
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(
-                title = BottomBarScreen.Profile.title,
-                navHostController = navHostController
+                navHostController = navHostController,
+                logout = logout
             )
         }
         composable(
-            route = RECIPE_DETAILS.plus(RECIPE_TITLE_START_END),
+            route = RECIPE_DETAILS.plus(RECIPE_ID_START_END),
             arguments = listOf(
-                navArgument(RECIPE_TITLE) { type = NavType.StringType }
+                navArgument(RECIPE_ID) { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val recipeTitle = backStackEntry.arguments?.getString(RECIPE_TITLE) ?: ""
+            val recipeId = backStackEntry.arguments?.getInt(RECIPE_ID) ?: 0
 
             RecipeDetailsScreen(
-                recipeTitle = recipeTitle,
-                recipeSourceUrl = STATIC_URL1,
+                recipeId = recipeId,
                 navHostController = navHostController
             )
         }

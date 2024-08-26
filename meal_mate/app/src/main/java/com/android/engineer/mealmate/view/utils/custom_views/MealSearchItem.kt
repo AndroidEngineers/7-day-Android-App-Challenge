@@ -43,26 +43,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.android.engineer.mealmate.R
-import com.android.engineer.mealmate.data.model.response.SearchByIngredients
-import com.android.engineer.mealmate.data.model.response.SearchByNutrients
+import com.android.engineer.mealmate.data.remote.model.response.IngredientsResponseItem
+import com.android.engineer.mealmate.data.remote.model.response.NutrientsResponseItem
 import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.ui.theme.OrangePrimary
 import com.android.engineer.mealmate.view.features.home.FORWARD_SLASH
 import com.android.engineer.mealmate.view.features.home.RecipeViewModel
-import com.android.engineer.mealmate.view.utils.constants.nav.RECIPE_DETAILS
+import com.android.engineer.mealmate.view.utils.constants.nav.graph.RECIPE_DETAILS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostController) {
+fun MealSearchView(navHostController: NavHostController) {
+    val viewModel = hiltViewModel<RecipeViewModel>()
+
     val searchText by viewModel.searchText.collectAsState()
     val searchByNutrients by viewModel.searchByNutrients.collectAsState()
     val searchByIngredients by viewModel.searchByIngredients.collectAsState()
     val isActive by viewModel.isActive.collectAsState()
     val historyItem by viewModel.historyItem.collectAsState()
     val isSearchByNutrients by viewModel.isSearchByNutrients.collectAsState()
+    val isBottomSheetShowing by viewModel.isBottomSheetShowing.collectAsState()
 
     DockedSearchBar(
         modifier = Modifier
@@ -104,7 +108,11 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
                 )
             } else {
                 Icon(
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            viewModel.onFilterIconClicked()
+                        },
                     imageVector = Icons.Default.FilterList,
                     contentDescription = stringResource(id = R.string.search_icon)
                 )
@@ -133,7 +141,7 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
         }
     }
     Spacer(modifier = Modifier.height(30.dp))
-    if (historyItem.size > 2) {
+    if (historyItem.size > 1) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -141,13 +149,13 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
             if (isSearchByNutrients) {
                 items(items = searchByNutrients) { item ->
                     RowItemByNutrients(item = item) {
-                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.id))
                     }
                 }
             } else {
-                items(items = searchByIngredients) { item ->
+                items(items = searchByIngredients){ item ->
                     RowItemByIngredients(item = item) {
-                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.title))
+                        navHostController.navigate(RECIPE_DETAILS.plus(FORWARD_SLASH).plus(item.id))
                     }
                 }
             }
@@ -168,11 +176,15 @@ fun MealSearchView(viewModel: RecipeViewModel, navHostController: NavHostControl
             )
         }
     }
+
+    if (isBottomSheetShowing) {
+       MealModelBottomSheet(onDismiss = { viewModel.showHideBottomSheet(isShow = false) }, skipPartiallyExpanded = true)
+    }
     Spacer(modifier = Modifier.height(30.dp))
 }
 
 @Composable
-fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
+fun RowItemByNutrients(item: NutrientsResponseItem, onItemSelected: (Int) -> Unit) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -263,7 +275,7 @@ fun RowItemByNutrients(item: SearchByNutrients, onItemSelected: (Int) -> Unit) {
 }
 
 @Composable
-fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Unit) {
+fun RowItemByIngredients(item: IngredientsResponseItem, onItemSelected: (Int) -> Unit) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -325,7 +337,7 @@ fun RowItemByIngredients(item: SearchByIngredients, onItemSelected: (Int) -> Uni
 
 
 @Composable
-fun ShowIngredientsCountView(item: SearchByIngredients) {
+fun ShowIngredientsCountView(item: IngredientsResponseItem) {
     if (item.missedIngredientCount > 0) {
         ShowCountView(
             countTitle = stringResource(id = R.string.missed_ingredient),
@@ -381,6 +393,6 @@ fun MealSearchItemPreview() {
             .background(OrangeOnPrimary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MealSearchView(viewModel = RecipeViewModel(), navHostController = rememberNavController())
+        MealSearchView(navHostController = rememberNavController())
     }
 }
