@@ -42,7 +42,7 @@ import coil.request.ImageRequest
 import com.abhijith.animex.R
 import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.components.GenreTag
-import com.abhijith.animex.ui.components.RatingTag
+import com.abhijith.animex.ui.components.ScoreTag
 import com.abhijith.animex.ui.components.StatItem
 import com.abhijith.animex.ui.components.YoutubeVideoTile
 import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewModel
@@ -113,7 +113,7 @@ fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsVi
                         overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    RatingTag(rating = animeItem.rating)
+                    ScoreTag(rating = animeItem.score)
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier
@@ -141,7 +141,7 @@ fun AnimeDetailsInfo(animeItem: AnimeItem, animeDetailsViewModel: AnimeDetailsVi
                             StatItem(
                                 imageVector = Icons.Default.Info,
                                 contentDesc = getString(LocalContext.current, R.string.score),
-                                count = animeItem.score
+                                count = animeItem.popularity
                             )
                         }
                     }

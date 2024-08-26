@@ -1,20 +1,53 @@
 [versions]
-agp = "8.4.1"
-kotlin = "1.9.0"
+agp = "8.4.2"
+kotlin = "2.0.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
-composeBom = "2023.08.00"
-nav_version = "2.5.3"
-compose_ui_version = "1.0.0"
-compose_material_version = "1.0.0"
+composeBom = "2024.08.00"
+nav_version = "2.6.0"
+compose_ui_version = "1.6.8"
+compose_material_version = "1.6.8"
+
+kotlin_coroutines_core_version = "1.7.3"
+lifecycle_viewmodel_ktx_version = "2.8.4"
+lifecycle_runtime_ktx_version = "2.8.4"
+glide_version = "1.0.0-beta01"
+retrofit2_version = "2.9.0"
+converter_gson_version = "2.9.0"
+logging_interceptor_version = "4.9.1"
+dagger_version = "2.48"
+activity_version = "1.9.1"
+test_monitor_version = "1.7.2"
+test_core_ktx_version = "1.6.1"
+dagger_compiler_version = "2.48"
+room_runtime_version = "2.6.1"
+room_ktx = "2.6.1"
+room_compiler = "2.6.1"
+
+
+mockito_core_version = "5.3.1"
+arch_core_testing_version = "2.2.0"
+coroutines_test_version = "1.7.3"
+turbine_verion = "0.12.1"
+
+dev_tools_ksp_verison = "2.0.10-1.0.24"
+androidx_viewmodel_compose = "2.8.4"
+lifecycleRuntimeComposeAndroidVersion = "2.8.4"
+material3_html_text_version = "2.0.0-beta01"
+coil = "2.7.0"
+mockito_version = "5.3.1"
+core_testing_version = "2.2.0"
+coroutine_test_version = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito_version" }
+core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core_testing_version" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -32,7 +65,41 @@ androidx-navigation = {group = "androidx.navigation", name = "navigation-compose
 androidx-compose-ui = {group = "androidx.compose.ui", name = "ui", version.ref = "compose_ui_version"}
 androidx-compose-material = {group = "androidx.compose.material", name = "material", version.ref = "compose_material_version"}
 
+
+androidx-coroutines-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin_coroutines_core_version"}
+androidx-lifecycle = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle_viewmodel_ktx_version"}
+androidx-lifecycle_runtime = {group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle_runtime_ktx_version"}
+github_glide = {group = "com.github.bumptech.glide", name = "compose", version.ref = "glide_version"}
+squareup_retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2_version"}
+square_converter_gson = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter_gson_version"}
+logging_interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging_interceptor_version"}
+
+androidx_viewmodel_compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx_viewmodel_compose"}
+google_dagger = {group = "com.google.dagger", name = "dagger", version.ref = "dagger_version"}
+androidx_activity = {group = "androidx.activity", name = "activity", version.ref = "activity_version"}
+androidx_test_monitor = {group = "androidx.test", name = "monitor", version.ref = "test_monitor_version"}
+core_ktx = {group = "androidx.test", name = "core-ktx", version.ref = "test_core_ktx_version"}
+#dagger_compiler = {group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger_compiler_version"}
+androidx-room_runtime = {group = "androidx.room", name = "room-runtime", version.ref = "room_runtime_version"}
+androidx-room_ktx = {group = "androidx.room", name = "room-ktx", version.ref = "room_ktx"}
+#androidx-room_compiler_plugin = {group = "androidx.room", name = "room-compiler", version.ref = "room_compiler"}
+
+mockito_core_version = {group = "org.mockito", name = "mockito-core", version.ref = "mockito_core_version"}
+arch_core_testing = {group = "androidx.arch.core", name = "core-testing", version.ref = "arch_core_testing_version"}
+coroutines_test = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines_test_version"}
+cash_turbine = {group = "app.cash.turbine", name = "turbine", version.ref = "turbine_verion"}
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger_compiler_version" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room_compiler" }
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroidVersion" }
+material3_html_text = {group = "de.charlex.compose.material3", name = "material3-html-text", version.ref = "material3_html_text_version"}
+io_coil = { group = "io.coil-kt", name = "coil", version.ref = "coil"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+#room-compiler = { id = "androidx.room.room.compiler", version.ref = "room_compiler" }
+#dagger-compiler = { id = "com.google.dagger.dagger.compiler", version.ref = "dagger_compiler_version" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "dev_tools_ksp_verison" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+#dagger-compiler = { id = "com.google.dagger.dagger.compiler", version.ref = "dagger_compiler_version" }
 

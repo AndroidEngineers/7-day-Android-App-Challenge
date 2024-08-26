@@ -24,15 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.make_food.ui.commonui.ScreenContentText
-import com.example.make_food.ui.commonui.ScreenTitleText
+import com.example.reciperoulette.presentation.ui.commonui.ScreenContentText
+import com.example.reciperoulette.presentation.ui.commonui.ScreenTitleText
 import com.example.reciperoulette.R
+import com.example.reciperoulette.domain.model.Step
 
 @Composable
 fun CardDetailContent(
-    name: String,
+    step: Step,
     modifier: Modifier = Modifier,
-    content: List<String> = List(10) { "$it" }
 ) {
 
     val expanded = rememberSaveable {
@@ -61,24 +61,28 @@ fun CardDetailContent(
             {
 
                 ScreenContentText(
-                    text = name,
+                    text = step.step,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(16.dp)
                         .weight(1f)
                 )
 
-                IconButton(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically),
-                    onClick = { expanded.value = !expanded.value }) {
-                    Icon(
-                        imageVector = if (expanded.value) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                        contentDescription = if (expanded.value) stringResource(R.string.show_less) else stringResource(
-                            R.string.show_more
+                if (step.ingredients.isNotEmpty() && step.equipment.isNotEmpty()) {
+                    IconButton(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically),
+                        onClick = { expanded.value = !expanded.value }) {
+                        Icon(
+                            imageVector = if (expanded.value) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                            contentDescription = if (expanded.value) stringResource(R.string.show_less) else stringResource(
+                                R.string.show_more
+                            )
                         )
-                    )
+                    }
                 }
+
+
             }
 
             if (expanded.value) {
@@ -88,37 +92,43 @@ fun CardDetailContent(
                         .padding(12.dp)
                 ) {
 
-                    ScreenTitleText(
-                        "Ingredients",
-                        modifier
-                            .padding(top = 16.dp, bottom = 12.dp)
-                    )
+                    if (step.ingredients.isNotEmpty()) {
+                        ScreenTitleText(
+                            stringResource(id = R.string.ingredients),
+                            modifier
+                                .padding(top = 16.dp, bottom = 12.dp)
+                        )
 
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = modifier.padding(top = 24.dp, bottom = 12.dp)
-                    ) {
-                        items(content) {
-                            Intgradientelement(modifier)
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = modifier.padding(top = 24.dp, bottom = 12.dp)
+                        ) {
+                            items(step.ingredients) { ingredients ->
+                                StepIngredientElement(ingredients)
+                            }
+
                         }
-
                     }
 
 
-                    ScreenTitleText(
-                        "Equipements",
-                        modifier
-                            .padding(top = 16.dp, bottom = 12.dp)
-                    )
+                    if (step.equipment.isNotEmpty()) {
+                        ScreenTitleText(
+                            stringResource(
+                                id = R.string.equipements_used,
+                                modifier
+                                    .padding(top = 16.dp, bottom = 12.dp)
+                            )
+                        )
 
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = modifier.padding(top = 24.dp, bottom = 12.dp)
-                    ) {
-                        items(content) {
-                            Intgradientelement(modifier)
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = modifier.padding(top = 24.dp, bottom = 12.dp)
+                        ) {
+                            items(step.equipment) { equipement ->
+                                StepEquipmentElement(equipement)
+                            }
+
                         }
-
                     }
 
                 }
