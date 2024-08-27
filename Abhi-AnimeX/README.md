@@ -1,13 +1,12 @@
-<img src="https://github.com/user-attachments/assets/23afc770-8f95-4c9a-8971-2f550ba1c4d4"/>
+<img src="https://github.com/user-attachments/assets/23afc770-8f95-4c9a-8971-2f550ba1c4d4" width= "150" height="175"/> 
 
 # Anime X
 
-Anime X is a sample app built with [Jetpack Compose][compose]
-
+Anime X is a sample app built with Jetpack Compose
 This sample showcases:
 
 - jetpack compose + kotlin
-- MVVM + Clean Arch (data, domain (usecases) and UI) - as of now implemented on network layer
+- MVVM + Clean Arch (data, domain (usecases) and UI) - as of now implemented on the network layer
 - kotlin flows + coroutines
 - compose navigation
 - hilt 
@@ -36,7 +35,7 @@ There might be some bugs that would have crept in and went unnoticed while learn
 
 ### Anime List
 The [AnimeList](Abhi-AnimeX/app/src/main/java/com/abhijith/animex/ui/screens/animelist/AnimeList.kt) composable is the entry point to this screen.
-This screen basically calls the [Season API](https://api.jikan.moe/v4/seasons/now) from [jikan](https://jikan.moe/) that displays current seasonal anime.
+This screen basically calls the [SeasonNow API](https://api.jikan.moe/v4/seasons/now) from [jikan](https://jikan.moe/) that displays current seasonal anime.
 
 ### Anime Details
 The [AnimeDetails](Abhi-AnimeX/app/src/main/java/com/abhijith/animex/ui/screens/animedetails/AnimeDetails.kt) composable is the entry point to this screen.
