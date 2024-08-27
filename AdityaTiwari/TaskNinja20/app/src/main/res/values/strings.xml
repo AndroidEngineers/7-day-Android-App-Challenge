@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Task Ninja 2.0</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="task_app_logo">Task App Logo</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="all_task">All Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="enter_description">Enter your task description here...</string>
+    <string name="select_date">Select Deadline Date</string>
+    <string name="in_progress">In-Progress</string>
+    <string name="enter_title">Task Title</string>
+    <string name="task_status">Task Status</string>
+    <string name="pending">Pending</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="completed">Completed</string>
+    <string name="task_priority">Priority</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+</resources>

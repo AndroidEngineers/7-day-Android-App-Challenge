@@ -1,28 +1,21 @@
 package com.android.engineer.mealmate.view.utils.custom_views
 
-import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -34,11 +27,11 @@ import com.android.engineer.mealmate.view.utils.constants.nav.BottomBarScreen
 
 @Composable
 fun MealBottomBar(navHostController: NavHostController) {
-    val screens = mutableListOf(
+    val screens = listOf(
         BottomBarScreen.Home,
         BottomBarScreen.MealPlan,
-        BottomBarScreen.ShopList,
-        BottomBarScreen.Report,
+        /*BottomBarScreen.ShopList, // These items will be available in Phase 2.
+        BottomBarScreen.Report,*/
         BottomBarScreen.Profile
     )
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
@@ -56,25 +49,12 @@ fun MealBottomBar(navHostController: NavHostController) {
             enter = slideInVertically(initialOffsetY = { it }),
             exit = slideOutVertically(targetOffsetY = { it }),
             content = {
-                BottomAppBar(
-                    modifier =
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        Modifier
-                            .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
-                            .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
-                            .height(64.dp)
-
-                    } else {
-                        Modifier
-                            .padding(bottom = 58.dp, start = 28.dp, end = 28.dp)
-                            .clip(shape = RoundedCornerShape(corner = CornerSize(24.dp)))
-                            .height(75.dp)
-                    },
-                    containerColor = OrangePrimary,
+                NavigationBar(
+                    containerColor = OrangePrimary
                 ) {
-                    screens.forEach { screen ->
+                    screens.forEach { tabItem ->
                         AddItem(
-                            screen = screen,
+                            screen = tabItem,
                             currentDestination = currentDestination,
                             navHostController = navHostController
                         )
@@ -104,9 +84,14 @@ fun RowScope.AddItem(
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Color.White,
             unselectedIconColor = Color.White.copy(alpha = 0.5f),
-            indicatorColor = OrangePrimary
+            indicatorColor = OrangePrimary,
+            selectedTextColor = Color.White,
+            unselectedTextColor =  Color.White.copy(alpha = 0.5f)
         ),
-        alwaysShowLabel = false,
+        label = {
+            Text(text = screen.title)
+        },
+        alwaysShowLabel = true,
         onClick = {
             navHostController.navigate(screen.route) {
                 // Pop up to the start destination of the graph to

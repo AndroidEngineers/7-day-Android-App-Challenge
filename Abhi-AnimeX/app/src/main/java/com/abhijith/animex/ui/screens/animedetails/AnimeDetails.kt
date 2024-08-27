@@ -17,11 +17,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,24 +28,42 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abhijith.animex.R
+import com.abhijith.animex.domain.model.AnimeItem
 import com.abhijith.animex.ui.components.GenreTag
+import com.abhijith.animex.ui.components.ScoreTag
 import com.abhijith.animex.ui.components.StatItem
+import com.abhijith.animex.ui.components.YoutubeVideoTile
+import com.abhijith.animex.ui.screens.animedetails.viewmodel.AnimeDetailsViewModel
+import com.abhijith.animex.ui.screens.error.ErrorScreen
+import com.abhijith.animex.ui.screens.loading.LoadingScreen
 
 @Composable
-fun AnimeDetails() {
-    val genreList = listOf("comedy", "gag humor", "school", "adventure")
+fun AnimeDetails(animeDetailsViewModel: AnimeDetailsViewModel = viewModel()) {
+    when (val uiState = animeDetailsViewModel.uiState.collectAsState().value) {
+        is AnimeDetailsUiState.Error -> ErrorScreen(uiState.message)
+        is AnimeDetailsUiState.Loading -> LoadingScreen()
+        is AnimeDetailsUiState.Success -> AnimeDetailsInfo(uiState.item)
+    }
+}
 
+@Composable
+fun AnimeDetailsInfo(animeItem: AnimeItem) {
     Box(
         modifier = Modifier
+            .testTag("AnimeDetailsInfo")
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
@@ -57,7 +74,7 @@ fun AnimeDetails() {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://cdn.myanimelist.net/images/anime/1084/144617l.webp")
+                        .data(animeItem.imageUrl)
                         .crossfade(true).build(),
                     contentDescription = null,
                     placeholder = painterResource(android.R.drawable.ic_menu_report_image),
@@ -74,10 +91,11 @@ fun AnimeDetails() {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Anime Title",
-                        style = MaterialTheme.typography.headlineMedium,
+                        text = animeItem.title,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 1,
+                        maxLines = 2,
+                        textAlign = TextAlign.Center,
                         color = Color.Black,
                         overflow = TextOverflow.Ellipsis,
                         fontFamily = FontFamily(
@@ -85,61 +103,19 @@ fun AnimeDetails() {
                         ),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(horizontalArrangement = Arrangement.SpaceAround) {
-                        Text(
-                            text = "Anime year",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        Text(
-                            text = "|",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ), modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                        Text(
-                            text = "Japanese name",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Gray,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
+                    Text(
+                        text = animeItem.yearAndJapaneseName,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        color = Color.Gray,
+                        fontFamily = FontFamily(
+                            Font(R.font.montserrat_regular)
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Rating",
-                            tint = Color(0xFFF9A825)
-                        )
-                        Text(
-                            text = "4.7",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            color = Color.Black,
-                            fontFamily = FontFamily(
-                                Font(R.font.montserrat_regular)
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
-                    }
+                    ScoreTag(rating = animeItem.score)
                     Spacer(modifier = Modifier.height(16.dp))
                     Box(
                         modifier = Modifier
@@ -161,19 +137,19 @@ fun AnimeDetails() {
                             StatItem(
                                 imageVector = Icons.Default.PlayArrow,
                                 modifier = Modifier.rotate(270F),
-                                contentDesc = "Rank",
-                                count = "138"
+                                contentDesc = getString(LocalContext.current, R.string.rank),
+                                count = animeItem.rank
                             )
                             StatItem(
                                 imageVector = Icons.Default.Info,
-                                contentDesc = "Score",
-                                count = "23345"
+                                contentDesc = getString(LocalContext.current, R.string.score),
+                                count = animeItem.popularity
                             )
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "This Japanese Lorem Ipsum is based on the kanji frequency count at tidraso.co.uk and includes about 50% kanji, 25% hiragana, 20% katakana and 5% roman numerals and punctuation. Katakana and hiragana cluster in strings between 1 to 4 chars at random points in each paragraph. Hiragana occurs more often at the end of sentences, rather in clumps of 1 to 4 chars rather than just single chars. Katakana is very unlikely to appear as a single character in Japanese text, but hiragana could. Exclamation and question marks are \"double-byte\", not standard ascii ones. Suggestions for improvements or alternatives are welcome.",
+                        text = animeItem.synopsis,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray,
@@ -184,11 +160,12 @@ fun AnimeDetails() {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(genreList.count()) {
-                            GenreTag(genreList[it])
+                        items(animeItem.genres.count()) {
+                            GenreTag(animeItem.genres[it])
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
+                    YoutubeVideoTile(animeItem.youtubeId)
                 }
             }
         }

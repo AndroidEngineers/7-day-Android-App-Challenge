@@ -6,13 +6,17 @@ Please include a summary of the changes you have made. Highlight the key aspects
 
 ## Checklist
 
-- [ ] My project includes a `README.md` file with a brief overview of the project, how to set it up, and any relevant information.
-- [ ] I have added a screenshot or screen recording showing the functionality of the app.
-- [ ] I have tested the project and confirmed it works as expected.
+- [x] My project includes a `README.md` file with a brief overview of the project, how to set it up, and any relevant information.
+- [x] I have added a screenshot or screen recording showing the functionality of the app.
+- [x] I have tested the project and confirmed it works as expected.
 
 ## Screenshots
 
-If applicable, please add a screenshot or a screen recording to demonstrate the functionality of your app.
+<p>
+   <img src="https://github.com/abhinavcodedev/7-day-Android-App-Challenge/blob/main/AniFetch/screenshots/SplashScreen.png" width="200" height="400" />
+  <img src="https://github.com/abhinavcodedev/7-day-Android-App-Challenge/blob/main/AniFetch/screenshots/Screenshot1.png" width="200" height="400" />
+  <img src="https://github.com/abhinavcodedev/7-day-Android-App-Challenge/blob/main/AniFetch/screenshots/Screenshot2.png" width="200" height="400" />
+</p>
 
 ## Project README
 

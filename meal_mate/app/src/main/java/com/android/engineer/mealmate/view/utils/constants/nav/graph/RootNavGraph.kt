@@ -10,9 +10,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.android.engineer.mealmate.view.features.DashboardScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.AUTHENTICATION
-import com.android.engineer.mealmate.view.utils.constants.nav.DASHBOARD
-import com.android.engineer.mealmate.view.utils.constants.nav.ROOT
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
 
 @Composable

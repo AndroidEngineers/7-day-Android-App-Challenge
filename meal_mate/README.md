@@ -24,8 +24,17 @@ Meal Mate is a user-friendly mobile app designed to help you discover, organize,
 <p>
    <img src="./readme/launcher_icon.png" width="200" height="400"  alt="Launcher Icon"/>
    <img src="./readme/splash.png" width="200" height="400" alt="Splash Screen" />
+   <img src="./readme/start.png" width="200" height="400" alt="Start Screen" />
+   <img src="./readme/login.png" width="200" height="400" alt="Login Screen" />
+   <img src="./readme/signup.png" width="200" height="400" alt="Signup Screen" />
    <img src="./readme/home_screen.png" width="200" height="400" alt="Home Screen" />
-   <img src="./readme/details_screen.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/food_prefs_nutrients.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/searched_by_nutrients.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/ingredients.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/searched_by_ingredients.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/home_details_web_view.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/meal_plan.png" width="200" height="400" alt="Recipe Detail Screen"/>
+   <img src="./readme/profile_tab.png" width="200" height="400" alt="Recipe Detail Screen"/>
 </p>
 
 ## Technology used
