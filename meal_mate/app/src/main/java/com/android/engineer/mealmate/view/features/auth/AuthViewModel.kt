@@ -8,6 +8,7 @@ import com.android.engineer.mealmate.data.local.datastore.MealDataStore
 import com.android.engineer.mealmate.data.local.roomdb.User
 import com.android.engineer.mealmate.data.remote.model.request.RegisterRequest
 import com.android.engineer.mealmate.data.utils.IS_LOGGED_IN
+import com.android.engineer.mealmate.data.utils.USERNAME
 import com.android.engineer.mealmate.repository.local.UserRepository
 import com.android.engineer.mealmate.repository.remote.AuthRepository
 import com.android.engineer.mealmate.view.features.auth.state.VisitingRegisterUiState
@@ -103,9 +104,6 @@ class AuthViewModel @Inject constructor(
                     val visitRegister = repository.registerAccount(registerRequest)
                     visitRegister.collectLatest { registerResponse ->
                         if (registerResponse.status == "success") {
-//                            dataStore.putString(USERNAME, registerResponse.username)
-//                            dataStore.putString(PASSWORD, registerResponse.spoonacularPassword)
-//                            dataStore.putString(HASH, registerResponse.hash)
                             val user = User(username = registerResponse.username, firstName = _firstName.value, lastName = _lastName.value, email = _email.value, password = registerResponse.spoonacularPassword, hash = registerResponse.hash)
                             val result = userRepository.insertUser(user)
                             if(result > 0) {
@@ -148,6 +146,7 @@ class AuthViewModel @Inject constructor(
                     val user = userRepository.getUser(_userName.value, _userPassword.value)
 
                     if(user != null) {
+                        dataStore.putString(USERNAME, user.username)
                         dataStore.putBoolean(IS_LOGGED_IN, true)
                         isScreenLoading.value = false
                         onCallBack(VisitingRegisterUiState.Success())

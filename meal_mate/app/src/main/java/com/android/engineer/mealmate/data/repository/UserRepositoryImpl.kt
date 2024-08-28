@@ -12,4 +12,7 @@ class UserRepositoryImpl @Inject constructor(private val userDao: UserDao): User
     override suspend fun getUser(username: String, password: String): User? {
         return userDao.getUser(username, password)
     }
+    override suspend fun getEmail(username: String): String {
+        return userDao.getEmail(username) ?: ""
+    }
 }

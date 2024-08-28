@@ -3,7 +3,6 @@ package com.android.engineer.mealmate.di
 import android.app.Application
 import com.android.engineer.mealmate.data.local.datastore.MealDataStore
 import com.android.engineer.mealmate.data.local.datastore.MealDataStoreImpl
-import com.android.engineer.mealmate.data.local.roomdb.User
 import com.android.engineer.mealmate.data.local.roomdb.UserDao
 import com.android.engineer.mealmate.data.remote.MealAPI
 import com.android.engineer.mealmate.data.repository.AuthRepositoryImpl

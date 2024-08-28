@@ -1,8 +1,5 @@
 package com.android.engineer.mealmate.repository.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
 import com.android.engineer.mealmate.data.local.roomdb.User
 
 interface UserRepository {
@@ -11,4 +8,5 @@ interface UserRepository {
 
     suspend fun getUser(username: String, password: String): User?
 
+    suspend fun getEmail(username: String): String
 }

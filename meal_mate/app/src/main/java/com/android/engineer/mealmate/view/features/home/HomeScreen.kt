@@ -76,7 +76,7 @@ fun ShowTopView(userName: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        MealText(text = stringResource(id = R.string.hello).plus(", ").plus(userName), fontSize = 30.sp)
+        MealText(text = stringResource(id = R.string.hello).plus(" ").plus(userName).plus(","), fontSize = 30.sp)
         // This feature is disabled.
         /*MealIconButton(
             onClick = {},
