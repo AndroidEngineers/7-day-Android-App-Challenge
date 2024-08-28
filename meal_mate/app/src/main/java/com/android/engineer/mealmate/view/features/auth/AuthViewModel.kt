@@ -109,8 +109,7 @@ class AuthViewModel @Inject constructor(
                             if(result > 0) {
                                 isScreenLoading.value = false
                                 onCallBack(VisitingRegisterUiState.Success())
-                                // sendEmail(_email.value, registerResponse.spoonacularPassword)
-                                Log.d("testing", "${registerResponse.spoonacularPassword}")
+                                Log.d("testing", registerResponse.spoonacularPassword)
 
                             } else {
                                 isScreenLoading.value = false

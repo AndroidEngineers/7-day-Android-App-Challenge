@@ -42,7 +42,6 @@ import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.view.features.auth.state.VisitingRegisterUiState
 import com.android.engineer.mealmate.view.utils.UtilConst
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.graph.DASHBOARD
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealLottieAnimation
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
