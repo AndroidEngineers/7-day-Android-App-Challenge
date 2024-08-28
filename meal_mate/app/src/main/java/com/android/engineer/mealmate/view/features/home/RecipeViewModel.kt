@@ -16,7 +16,7 @@ import com.android.engineer.mealmate.data.utils.MIN_CARBS_KEY
 import com.android.engineer.mealmate.data.utils.NUMBER_KEY
 import com.android.engineer.mealmate.data.utils.NUMBER_KEY_VALUE
 import com.android.engineer.mealmate.data.utils.USERNAME
-import com.android.engineer.mealmate.domain.repository.RecipeSearchRepository
+import com.android.engineer.mealmate.repository.remote.RecipeSearchRepository
 import com.android.engineer.mealmate.view.features.home.model.MealChipList
 import com.android.engineer.mealmate.view.utils.constants.MinMaxRangeEnum
 import com.android.engineer.mealmate.view.utils.constants.NutrientsEnum

@@ -49,7 +49,7 @@ fun HomeScreen(navHostController: NavHostController, paddingValues: PaddingValue
     ) {
 
         if (viewModel.isScreenLoading.value) {
-            MealLottieAnimation(rawResId = R.raw.api_progress, imageSize = 200.dp)
+            MealLottieAnimation(rawResId = R.raw.loading_animation, imageSize = 200.dp)
         } else {
             ShowTopView(userName = loggedInUserName)
             Spacer(modifier = Modifier

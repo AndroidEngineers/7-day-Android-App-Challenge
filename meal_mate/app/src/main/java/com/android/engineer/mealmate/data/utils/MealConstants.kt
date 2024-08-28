@@ -29,3 +29,5 @@ const val SEARCH_BY_NUTRIENTS = "recipes/findByNutrients"
 const val SEARCH_BY_INGREDIENTS = "recipes/findByIngredients"
 const val RECIPE_INFO_BY_ID = "recipes/{id}/information"
 const val REGISTER_API = "users/connect"
+
+const val USER_DATABASE_NAME = "meal_user_database"
