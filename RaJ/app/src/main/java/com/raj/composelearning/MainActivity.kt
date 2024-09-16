@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raj.composelearning.ui.theme.ComposeLearningTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +86,7 @@ fun ProfileUser() {
                     userInput.value += 7
                 }
             ) {
+
                 Text(text = "7")
             }
 
@@ -202,9 +204,10 @@ fun ProfileUser() {
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(Color.Green),
                 onClick = {
-
+                    userInput.value += "+"
                 }
             ) {
+
                 Text(text = "+")
             }
 
@@ -213,6 +216,7 @@ fun ProfileUser() {
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(Color.Red),
                 onClick = {
+                    userInput.value += "-"
 
                 }
             ) {
@@ -224,14 +228,24 @@ fun ProfileUser() {
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(),
                 onClick = {
-
+                    if (userInput.value.contains("+")) {
+                        val pars = userInput.value.split("+")
+                        val num1 = pars[0]
+                        val num2 = pars[1]
+                        val sum = num1.toInt() + num2.toInt()
+                        userInput.value = sum.toString()
+                    } else if (userInput.value.contains("-")) {
+                        val pars = userInput.value.split("-")
+                        val num1 = pars[0]
+                        val num2 = pars[1]
+                        val sub = num2.toInt() - num1.toInt()
+                        userInput.value = sub.toString()
+                    }
                 }
             ) {
                 Text(text = "=")
             }
         }
-
-
     }
 
 }
