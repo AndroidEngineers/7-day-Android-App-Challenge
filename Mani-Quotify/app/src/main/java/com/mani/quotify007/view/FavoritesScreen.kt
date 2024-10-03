@@ -31,15 +31,10 @@ fun FavoritesScreen() {
         "The only way to do great work is to love what you do."
     ) }
 
-    fun removeFavorite(quote: String) {
-        favoriteQuotes.remove(quote)
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         favoriteQuotes.forEach { quote ->
@@ -61,7 +56,7 @@ fun FavoritesScreen() {
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(
-                        onClick = { removeFavorite(quote) },
+                        onClick = { favoriteQuotes.remove(quote) },
                         modifier = Modifier.background(Color.Blue.copy(alpha = 0.1f))
                     ) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove")

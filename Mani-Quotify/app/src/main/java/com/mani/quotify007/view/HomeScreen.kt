@@ -23,10 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mani.quotify007.view.utils.StringConstants.HYPHEN_SPACE
-import com.mani.quotify007.view.utils.StringConstants.QUOTE_AUTHOR_1
-import com.mani.quotify007.view.utils.StringConstants.QUOTE_OF_THE_DAY_HEADER
-import com.mani.quotify007.view.utils.StringConstants.QUOTE_TEXT_1
+
+const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
+const val HYPHEN_SPACE = "- "
+const val QUOTE_TEXT_1 = "Success is the sum of small efforts, repeated day in and day out."
+const val QUOTE_AUTHOR_1 = "Robert Collier"
 
 @Composable
 fun HomeScreen() {
