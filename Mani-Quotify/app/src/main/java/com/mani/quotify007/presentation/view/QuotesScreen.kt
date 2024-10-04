@@ -26,9 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.presentation.viewmodel.MainEvent
 
 @Composable
-fun QuotesScreen(quote: Quote, addFavorite: (Quote) -> Unit) {
+fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,7 +65,7 @@ fun QuotesScreen(quote: Quote, addFavorite: (Quote) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            TextButton(onClick = { addFavorite(quote) }) {
+            TextButton(onClick = { onEvent(MainEvent.AddFavorite(quote)) }) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Save")
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Save")
@@ -85,5 +86,5 @@ fun QuotesScreen(quote: Quote, addFavorite: (Quote) -> Unit) {
 @Preview
 @Composable
 fun QuotesScreenPreview() {
-    QuotesScreen(Quote("Sample quote"), addFavorite = {})
+    QuotesScreen(Quote("Sample quote"), onEvent = {})
 }

@@ -9,20 +9,22 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.presentation.view.utils.BottomNavItem
+import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.presentation.viewmodel.MainState
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    state: MainState,
     quotes: List<Quote>,
     favoriteQuotes: List<Quote>,
-    addFavorite: (Quote) -> Unit,
-    removeFavorite: (Quote) -> Unit
+    onEvent: (MainEvent) -> Unit
 ) {
     NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
-        composable(BottomNavItem.Home.route) { HomeScreen(quotes, addFavorite) }
-        composable(BottomNavItem.Search.route) { SearchScreen(quotes, addFavorite) }
-        composable(BottomNavItem.Favorites.route) { FavoritesScreen(favoriteQuotes, removeFavorite) }
+        composable(BottomNavItem.Home.route) { HomeScreen(state, onEvent) }
+        composable(BottomNavItem.Search.route) { SearchScreen(quotes, onEvent) }
+        composable(BottomNavItem.Favorites.route) { FavoritesScreen(favoriteQuotes, onEvent) }
     }
 }
 
@@ -32,9 +34,9 @@ fun NavigationGraphPreview() {
     val navController = rememberNavController()
     NavigationGraph(
         navController = navController,
+        state = MainState(),
         quotes = listOf(Quote("Sample quote")),
         favoriteQuotes = listOf(Quote("Sample favorite quote")),
-        addFavorite = {},
-        removeFavorite = {}
+        onEvent = {}
     )
 }

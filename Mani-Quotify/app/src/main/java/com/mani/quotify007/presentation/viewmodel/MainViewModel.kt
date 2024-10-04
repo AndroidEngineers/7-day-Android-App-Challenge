@@ -9,12 +9,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 data class MainState(
     val quotes: List<Quote> = emptyList(),
-    val favoriteQuotes: List<Quote> = emptyList()
+    val favoriteQuotes: List<Quote> = emptyList(),
+    val randomQuote: Quote? = null
 )
 
 sealed class MainEvent {
     data class AddFavorite(val quote: Quote) : MainEvent()
     data class RemoveFavorite(val quote: Quote): MainEvent()
+    data object GetRandomQuote: MainEvent()
 }
 
 class MainViewModel : ViewModel() {
@@ -26,7 +28,8 @@ class MainViewModel : ViewModel() {
 
     init {
         _state.value = MainState(
-            quotes = getQuoteUseCase.execute()
+            quotes = getQuoteUseCase.execute(),
+            randomQuote = getQuoteUseCase.execute().randomOrNull()
         )
     }
 
@@ -41,6 +44,10 @@ class MainViewModel : ViewModel() {
                 _state.value = _state.value.copy(
                     favoriteQuotes = _state.value.favoriteQuotes - event.quote
                 )
+            }
+            is MainEvent.GetRandomQuote -> {
+                val randomQuote = _state.value.quotes.randomOrNull()
+                _state.value = _state.value.copy(randomQuote = randomQuote)
             }
         }
     }

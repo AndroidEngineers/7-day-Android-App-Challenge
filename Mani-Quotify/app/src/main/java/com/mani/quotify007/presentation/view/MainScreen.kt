@@ -9,7 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.mani.quotify007.presentation.ui.theme.QuotifyAppTheme
-import com.mani.quotify007.presentation.viewmodel.MainEvent
 import com.mani.quotify007.presentation.viewmodel.MainViewModel
 
 @Composable
@@ -24,10 +23,10 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
+            state = state,
             quotes = state.quotes,
             favoriteQuotes = state.favoriteQuotes,
-            addFavorite = { quote -> viewModel.onEvent(MainEvent.AddFavorite(quote)) },
-            removeFavorite = { quote -> viewModel.onEvent(MainEvent.RemoveFavorite(quote)) }
+            onEvent = { event -> viewModel.onEvent(event) }
         )
     }
 }

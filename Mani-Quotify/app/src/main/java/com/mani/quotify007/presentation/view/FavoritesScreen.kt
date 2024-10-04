@@ -13,9 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.presentation.viewmodel.MainEvent
 
 @Composable
-fun FavoritesScreen(quotes: List<Quote>, removeFavorite: (Quote) -> Unit) {
+fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
     if (quotes.isEmpty()) {
         Column(
             modifier = Modifier
@@ -35,7 +36,7 @@ fun FavoritesScreen(quotes: List<Quote>, removeFavorite: (Quote) -> Unit) {
         ) {
             LazyColumn {
                 items(quotes) { quote ->
-                    QuotesScreen(quote, removeFavorite)
+                    QuotesScreen(quote, onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) })
                 }
             }
         }
@@ -45,5 +46,5 @@ fun FavoritesScreen(quotes: List<Quote>, removeFavorite: (Quote) -> Unit) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf(Quote("Sample quote")), removeFavorite = {})
+    FavoritesScreen(listOf(Quote("Sample quote")), onEvent = {})
 }

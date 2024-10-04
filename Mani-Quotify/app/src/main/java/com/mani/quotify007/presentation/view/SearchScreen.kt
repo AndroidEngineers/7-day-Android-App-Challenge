@@ -26,9 +26,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.presentation.viewmodel.MainEvent
 
 @Composable
-fun SearchScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
+fun SearchScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredQuotes = quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
 
@@ -54,7 +55,7 @@ fun SearchScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(filteredQuotes) { quote ->
-                QuotesScreen(quote, addFavorite)
+                QuotesScreen(quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) })
             }
         }
     }
@@ -63,5 +64,5 @@ fun SearchScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(listOf(Quote("Sample quote")), addFavorite = {})
+    SearchScreen(listOf(Quote("Sample quote")), onEvent = {})
 }

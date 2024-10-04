@@ -19,14 +19,15 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.presentation.viewmodel.MainState
 
 const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
 const val HYPHEN_SPACE = "- "
 const val QUOTE_AUTHOR_1 = "Robert Collier"
 
 @Composable
-fun HomeScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
+fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,9 +36,11 @@ fun HomeScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
-        QuotesScreen(quote = quotes.get(0), addFavorite = addFavorite)
+        state.randomQuote?.let { quote ->
+            QuotesScreen(quote = quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) })
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        TextButton(onClick = { /* Refresh action */ }) {
+        TextButton(onClick = { onEvent(MainEvent.GetRandomQuote) }) {
             Icon(imageVector = Icons.Default.Refresh, contentDescription = "Save")
             Spacer(modifier = Modifier.width(4.dp))
             Text("Refresh")
@@ -48,5 +51,5 @@ fun HomeScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(listOf(Quote("Sample quote")), addFavorite = {})
+    HomeScreen(MainState(), onEvent = {})
 }
