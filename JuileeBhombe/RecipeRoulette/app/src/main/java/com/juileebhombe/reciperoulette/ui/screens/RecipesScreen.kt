@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -44,19 +47,36 @@ fun RecipesScreen() {
 
 
 @Composable
-fun RecipesTab() {
+private fun RecipesTab() {
     val tabs = listOf("ALL", "VEG", "VEGAN", "NON-VEG")
 
     val selectedIndex = remember {
         mutableIntStateOf(0)
     }
-    TabRow(selectedTabIndex = selectedIndex.intValue) {
+    TabRow(
+        selectedTabIndex = selectedIndex.intValue,
+        containerColor = Color.White,
+        contentColor = Color.Black,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedIndex.intValue]),
+                color = Color.Black
+            )
+        }
+    ) {
 
         tabs.forEachIndexed { index, s ->
             Tab(
                 selected = selectedIndex.intValue == index,
                 onClick = { selectedIndex.intValue = index }) {
-                Text(text = s)
+                Text(
+                    modifier = Modifier
+                        .padding(3.dp),
+                    text = s, fontSize = 20.sp,
+                    fontWeight = FontWeight(700),
+                    letterSpacing = (-0.2).sp,
+                    fontFamily = FontFamily.Monospace,
+                )
             }
         }
     }
@@ -64,7 +84,7 @@ fun RecipesTab() {
 
 
 @Composable
-fun RecipeCard() {
+private fun RecipeCard() {
     Box(
         contentAlignment = Alignment.BottomStart,
         modifier = Modifier
@@ -81,7 +101,7 @@ fun RecipeCard() {
         Text(
             text = "Recipe Name", modifier = Modifier.padding(15.dp), fontWeight = FontWeight(900),
             fontSize = 20.sp,
-            letterSpacing = (1).sp,
+            letterSpacing = 1.sp,
             fontFamily = FontFamily.SansSerif,
         )
     }
@@ -90,7 +110,7 @@ fun RecipeCard() {
 
 @Preview(showBackground = true)
 @Composable
-fun RecipesScreenPreview() {
+private fun RecipesScreenPreview() {
     RecipeRouletteTheme {
         RecipesScreen()
     }
