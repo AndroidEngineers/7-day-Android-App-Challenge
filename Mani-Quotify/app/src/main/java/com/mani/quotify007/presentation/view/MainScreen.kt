@@ -15,6 +15,8 @@ import com.mani.quotify007.presentation.viewmodel.MainViewModel
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
     val navController = rememberNavController()
+    /* Collect the current state from the ViewModel as a State object.
+    * the state is preserved across configuration changes and the UI is updated reactively */
     val state = viewModel.state.collectAsState().value
     Scaffold(
         bottomBar = { BottomAppBar(navController) }
