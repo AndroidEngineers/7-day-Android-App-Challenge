@@ -21,13 +21,17 @@ fun MainScreen() {
         "Life is 10% what happens to us and 90% how we react to it.",
         "The only way to do great work is to love what you do."
     ) }
+    val favoriteQuotes = remember { mutableStateListOf<String>() }
     Scaffold(
         bottomBar = { BottomAppBar(navController) }
     ) { innerPadding ->
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            quotes = quotes
+            quotes = quotes,
+            favoriteQuotes = favoriteQuotes,
+            addFavorite = { quote -> favoriteQuotes.add(quote) },
+            removeFavorite = { quote -> favoriteQuotes.remove(quote) }
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.mani.quotify007.view
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,19 +14,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FavoritesScreen(quotes: List<String>) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (quotes.isEmpty()) {
+fun FavoritesScreen(quotes: List<String>, removeFavorite: (String) -> Unit) {
+    if (quotes.isEmpty()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text("No favorite quotes available.")
-        } else {
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             LazyColumn {
                 items(quotes) { quote ->
-                    QuotesScreen(quote)
+                    QuotesScreen(quote, removeFavorite)
                 }
             }
         }
@@ -35,5 +44,5 @@ fun FavoritesScreen(quotes: List<String>) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf("Sample quote"))
+    FavoritesScreen(listOf("Sample quote"), removeFavorite = {})
 }

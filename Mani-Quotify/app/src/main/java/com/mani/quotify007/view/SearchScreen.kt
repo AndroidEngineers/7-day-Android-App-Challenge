@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SearchScreen(quotes: List<String>) {
+fun SearchScreen(quotes: List<String>, addFavorite: (String) -> Unit) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredQuotes = quotes.filter { it.contains(searchQuery.text, ignoreCase = true) }
 
@@ -53,7 +53,7 @@ fun SearchScreen(quotes: List<String>) {
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(filteredQuotes) { quote ->
-                QuotesScreen(quote)
+                QuotesScreen(quote, addFavorite)
             }
         }
     }
@@ -62,5 +62,5 @@ fun SearchScreen(quotes: List<String>) {
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(listOf("Sample quote"))
+    SearchScreen(listOf("Sample quote"), addFavorite = {})
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun QuotesScreen(quote: String) {
+fun QuotesScreen(quote: String, addFavorite: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,7 +63,7 @@ fun QuotesScreen(quote: String) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            TextButton(onClick = { /* Save action */ }) {
+            TextButton(onClick = { addFavorite(quote) }) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Save")
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Save")
@@ -84,5 +84,5 @@ fun QuotesScreen(quote: String) {
 @Preview
 @Composable
 fun QuotesScreenPreview() {
-    QuotesScreen("Sample quote")
+    QuotesScreen("Sample quote", addFavorite = {})
 }

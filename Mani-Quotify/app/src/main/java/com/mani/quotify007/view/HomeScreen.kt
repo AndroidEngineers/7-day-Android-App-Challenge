@@ -25,7 +25,7 @@ const val HYPHEN_SPACE = "- "
 const val QUOTE_AUTHOR_1 = "Robert Collier"
 
 @Composable
-fun HomeScreen(quotes: List<String>) {
+fun HomeScreen(quotes: List<String>, addFavorite: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,7 +34,7 @@ fun HomeScreen(quotes: List<String>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
-        QuotesScreen(quote = quotes[0])
+        QuotesScreen(quote = quotes[0], addFavorite = addFavorite)
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { /* Refresh action */ }) {
             Icon(imageVector = Icons.Default.Refresh, contentDescription = "Save")
@@ -47,5 +47,5 @@ fun HomeScreen(quotes: List<String>) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(listOf("Sample quote"))
+    HomeScreen(listOf("Sample quote"), addFavorite = {})
 }
