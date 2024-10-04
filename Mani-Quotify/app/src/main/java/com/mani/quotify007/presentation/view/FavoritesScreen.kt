@@ -1,4 +1,4 @@
-package com.mani.quotify007.view
+package com.mani.quotify007.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,9 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mani.quotify007.domain.model.Quote
 
 @Composable
-fun FavoritesScreen(quotes: List<String>, removeFavorite: (String) -> Unit) {
+fun FavoritesScreen(quotes: List<Quote>, removeFavorite: (Quote) -> Unit) {
     if (quotes.isEmpty()) {
         Column(
             modifier = Modifier
@@ -44,5 +45,5 @@ fun FavoritesScreen(quotes: List<String>, removeFavorite: (String) -> Unit) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf("Sample quote"), removeFavorite = {})
+    FavoritesScreen(listOf(Quote("Sample quote")), removeFavorite = {})
 }

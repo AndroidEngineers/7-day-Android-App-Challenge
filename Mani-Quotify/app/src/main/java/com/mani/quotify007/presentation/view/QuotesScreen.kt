@@ -1,4 +1,4 @@
-package com.mani.quotify007.view
+package com.mani.quotify007.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mani.quotify007.domain.model.Quote
 
 @Composable
-fun QuotesScreen(quote: String, addFavorite: (String) -> Unit) {
+fun QuotesScreen(quote: Quote, addFavorite: (Quote) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +40,7 @@ fun QuotesScreen(quote: String, addFavorite: (String) -> Unit) {
                 .padding(16.dp)
         ) {
             Text(
-                text = quote,
+                text = quote.text,
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.Black,
                 fontFamily = FontFamily.Serif,
@@ -49,7 +50,7 @@ fun QuotesScreen(quote: String, addFavorite: (String) -> Unit) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = HYPHEN_SPACE+QUOTE_AUTHOR_1,
+                text = HYPHEN_SPACE + QUOTE_AUTHOR_1,
                 fontFamily = FontFamily.Monospace,
                 color = Color.Blue,
                 fontSize = 18.sp,
@@ -84,5 +85,5 @@ fun QuotesScreen(quote: String, addFavorite: (String) -> Unit) {
 @Preview
 @Composable
 fun QuotesScreenPreview() {
-    QuotesScreen("Sample quote", addFavorite = {})
+    QuotesScreen(Quote("Sample quote"), addFavorite = {})
 }

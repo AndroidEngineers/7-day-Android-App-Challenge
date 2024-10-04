@@ -1,4 +1,4 @@
-package com.mani.quotify007.view
+package com.mani.quotify007.presentation.view
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.mani.quotify007.view.utils.BottomNavItem
+import com.mani.quotify007.presentation.view.utils.BottomNavItem
 
 @Composable
 fun BottomAppBar(navController: NavHostController?) {

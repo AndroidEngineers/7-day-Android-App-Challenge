@@ -1,4 +1,4 @@
-package com.mani.quotify007.ui.theme
+package com.mani.quotify007.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

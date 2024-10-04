@@ -1,4 +1,4 @@
-package com.mani.quotify007.view
+package com.mani.quotify007.presentation.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +25,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mani.quotify007.domain.model.Quote
 
 @Composable
-fun SearchScreen(quotes: List<String>, addFavorite: (String) -> Unit) {
+fun SearchScreen(quotes: List<Quote>, addFavorite: (Quote) -> Unit) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-    val filteredQuotes = quotes.filter { it.contains(searchQuery.text, ignoreCase = true) }
+    val filteredQuotes = quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -62,5 +63,5 @@ fun SearchScreen(quotes: List<String>, addFavorite: (String) -> Unit) {
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(listOf("Sample quote"), addFavorite = {})
+    SearchScreen(listOf(Quote("Sample quote")), addFavorite = {})
 }

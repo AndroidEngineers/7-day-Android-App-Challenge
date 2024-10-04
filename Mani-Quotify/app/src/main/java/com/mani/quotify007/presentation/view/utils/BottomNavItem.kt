@@ -1,4 +1,4 @@
-package com.mani.quotify007.view.utils
+package com.mani.quotify007.presentation.view.utils
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
