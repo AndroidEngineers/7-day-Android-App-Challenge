@@ -1,0 +1,35 @@
+# Android/IntelliJ
+.idea/
+.vscode/
+*.iml
+*.hprof
+
+# Gradle
+.gradle/
+/build/
+**/build/
+.gradle/
+gradle-app.setting
+gradle.properties
+
+# Local configuration file (sdk location, etc.)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# APK, JAR, Bundle files
+*.apk
+*.ap_
+*.jar
+*.aab
+
+# Kotlin-specific files
+*.ktm
+*.kts
+
+# Unit test reports
+/test-results/
