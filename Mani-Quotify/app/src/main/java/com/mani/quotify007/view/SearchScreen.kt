@@ -27,16 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(quotes: List<String>) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-    val quotes = listOf(
-        "Success is the sum of small efforts, repeated day in and day out.",
-        "The only limit to our realization of tomorrow is our doubts of today.",
-        "The future belongs to those who believe in the beauty of their dreams.",
-        "The best way to predict the future is to invent it.",
-        "Life is 10% what happens to us and 90% how we react to it.",
-        "The only way to do great work is to love what you do."
-    )
     val filteredQuotes = quotes.filter { it.contains(searchQuery.text, ignoreCase = true) }
 
     Column(modifier = Modifier
@@ -70,5 +62,5 @@ fun SearchScreen() {
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen()
+    SearchScreen(listOf("Sample quote"))
 }

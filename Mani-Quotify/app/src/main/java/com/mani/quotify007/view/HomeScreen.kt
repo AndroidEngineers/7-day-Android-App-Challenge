@@ -22,11 +22,10 @@ import androidx.compose.ui.unit.sp
 
 const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
 const val HYPHEN_SPACE = "- "
-const val QUOTE_TEXT_1 = "Success is the sum of small efforts, repeated day in and day out."
 const val QUOTE_AUTHOR_1 = "Robert Collier"
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(quotes: List<String>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +34,7 @@ fun HomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
-        QuotesScreen(quote = QUOTE_TEXT_1)
+        QuotesScreen(quote = quotes[0])
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { /* Refresh action */ }) {
             Icon(imageVector = Icons.Default.Refresh, contentDescription = "Save")
@@ -48,5 +47,5 @@ fun HomeScreen() {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(listOf("Sample quote"))
 }

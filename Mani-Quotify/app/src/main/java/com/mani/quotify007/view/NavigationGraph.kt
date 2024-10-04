@@ -10,11 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.mani.quotify007.view.utils.BottomNavItem
 
 @Composable
-fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
+fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier, quotes: List<String>) {
     NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
-        composable(BottomNavItem.Home.route) { HomeScreen() }
-        composable(BottomNavItem.Search.route) { SearchScreen() }
-        composable(BottomNavItem.Favorites.route) { FavoritesScreen() }
+        composable(BottomNavItem.Home.route) { HomeScreen(quotes) }
+        composable(BottomNavItem.Search.route) { SearchScreen(quotes) }
+        composable(BottomNavItem.Favorites.route) { FavoritesScreen(quotes) }
     }
 }
 
@@ -22,5 +22,5 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
 @Composable
 fun NavigationGraphPreview() {
     val navController = rememberNavController()
-    NavigationGraph(navController = navController)
+    NavigationGraph(navController = navController, quotes = listOf("Sample quote"))
 }
