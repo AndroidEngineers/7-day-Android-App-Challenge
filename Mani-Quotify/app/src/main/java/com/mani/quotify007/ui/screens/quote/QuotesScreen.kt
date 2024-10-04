@@ -1,5 +1,6 @@
 package com.mani.quotify007.ui.screens.quote
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +22,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +38,7 @@ import com.mani.quotify007.ui.screens.home.HYPHEN_SPACE
 @Composable
 fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit, isAddOnly: Boolean) {
     val context = LocalContext.current
+    val clipboardManager = LocalClipboardManager.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -89,11 +93,21 @@ fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit, isAddOnly: Boolean)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Save")
             }
-            TextButton(onClick = { /* Copy text action */ }) {
+            TextButton(onClick = {
+                clipboardManager.setText(AnnotatedString("${quote.text} - ${quote.author}"))
+                Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+            }) {
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Copy Text")
             }
-            TextButton(onClick = { /* Share action */ }) {
+            TextButton(onClick = {
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "${quote.text} - ${quote.author}")
+                    type = "text/plain"
+                }
+                context.startActivity(Intent.createChooser(shareIntent, null))
+            }) {
                 Icon(imageVector = Icons.Default.Share, contentDescription = "Share")
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Share")
