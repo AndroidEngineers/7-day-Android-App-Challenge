@@ -1,23 +1,12 @@
-package com.mani.quotify007.presentation.viewmodel
+package com.mani.quotify007.ui.navigation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.mani.quotify007.data.repository.QuoteRepositoryImpl
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.domain.usecase.GetQuoteUseCase
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-
-data class MainState(
-    val quotes: List<Quote> = emptyList(),
-    val favoriteQuotes: List<Quote> = emptyList(),
-    val randomQuote: Quote? = null
-)
-
-sealed class MainEvent {
-    data class AddFavorite(val quote: Quote) : MainEvent()
-    data class RemoveFavorite(val quote: Quote): MainEvent()
-    data object GetRandomQuote: MainEvent()
-}
 
 class MainViewModel : ViewModel() {
     private val _state = MutableStateFlow(MainState())

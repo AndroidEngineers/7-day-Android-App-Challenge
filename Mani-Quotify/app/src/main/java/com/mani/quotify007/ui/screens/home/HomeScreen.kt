@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,8 +19,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mani.quotify007.presentation.viewmodel.MainEvent
-import com.mani.quotify007.presentation.viewmodel.MainState
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
 const val HYPHEN_SPACE = "- "

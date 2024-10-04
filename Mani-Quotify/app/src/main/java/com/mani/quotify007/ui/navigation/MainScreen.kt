@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -8,8 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.mani.quotify007.presentation.ui.theme.QuotifyAppTheme
-import com.mani.quotify007.presentation.viewmodel.MainViewModel
+import com.mani.quotify007.ui.navigation.viewmodel.MainViewModel
+import com.mani.quotify007.ui.screens.bottomappbar.BottomAppBar
+import com.mani.quotify007.ui.theme.QuotifyAppTheme
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {

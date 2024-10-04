@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +26,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mani.quotify007.domain.model.Quote
-import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
 fun SearchScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {

@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view.utils
+package com.mani.quotify007.ui.screens.bottomappbar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

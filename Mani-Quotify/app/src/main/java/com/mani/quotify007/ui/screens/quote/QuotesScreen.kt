@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.quote
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mani.quotify007.domain.model.Quote
-import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.screens.home.HYPHEN_SPACE
 
 @Composable
 fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit) {

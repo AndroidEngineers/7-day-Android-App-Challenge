@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,9 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mani.quotify007.domain.model.Quote
-import com.mani.quotify007.presentation.view.utils.BottomNavItem
-import com.mani.quotify007.presentation.viewmodel.MainEvent
-import com.mani.quotify007.presentation.viewmodel.MainState
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.screens.favorites.FavoritesScreen
+import com.mani.quotify007.ui.screens.home.HomeScreen
+import com.mani.quotify007.ui.screens.search.SearchScreen
+import com.mani.quotify007.ui.screens.bottomappbar.BottomNavItem
 
 @Composable
 fun NavigationGraph(

@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.favorites
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mani.quotify007.domain.model.Quote
-import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
 fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
