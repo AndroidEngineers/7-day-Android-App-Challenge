@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.reciperoulette.screens.RecipeDetailScreen
 import com.example.reciperoulette.screens.RecipeListItem
 import com.example.reciperoulette.screens.RecipesScreen
 import com.example.reciperoulette.ui.theme.RecipeRouletteTheme
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContent {
-            RecipesScreen()
+            RecipeDetailScreen()
         }
     }
 }
