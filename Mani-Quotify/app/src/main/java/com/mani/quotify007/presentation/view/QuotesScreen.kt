@@ -51,7 +51,7 @@ fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = HYPHEN_SPACE + QUOTE_AUTHOR_1,
+                text = HYPHEN_SPACE + quote.author,
                 fontFamily = FontFamily.Monospace,
                 color = Color.Blue,
                 fontSize = 18.sp,
@@ -86,5 +86,5 @@ fun QuotesScreen(quote: Quote, onEvent: (MainEvent) -> Unit) {
 @Preview
 @Composable
 fun QuotesScreenPreview() {
-    QuotesScreen(Quote("Sample quote"), onEvent = {})
+    QuotesScreen(Quote("Sample quote", "Sample author"), onEvent = {})
 }

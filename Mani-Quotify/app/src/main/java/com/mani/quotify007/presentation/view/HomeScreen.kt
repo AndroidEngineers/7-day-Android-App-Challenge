@@ -24,7 +24,6 @@ import com.mani.quotify007.presentation.viewmodel.MainState
 
 const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
 const val HYPHEN_SPACE = "- "
-const val QUOTE_AUTHOR_1 = "Robert Collier"
 
 @Composable
 fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {

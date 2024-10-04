@@ -5,12 +5,12 @@ import com.mani.quotify007.domain.repository.QuoteRepository
 
 class QuoteRepositoryImpl : QuoteRepository {
     private val quotes = mutableListOf(
-        Quote("The greatest glory in living lies not in never falling, but in rising every time we fall."),
-        Quote("The way to get started is to quit talking and begin doing."),
-        Quote("Your time is limited, so don't waste it living someone else's life."),
-        Quote("If life were predictable it would cease to be life, and be without flavor."),
-        Quote("If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough."),
-        Quote("If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.")
+        Quote("The greatest glory in living lies not in never falling, but in rising every time we fall.", "Nelson Mandela"),
+        Quote("The way to get started is to quit talking and begin doing.", "Walt Disney"),
+        Quote("Your time is limited, so don't waste it living someone else's life.", "Steve Jobs"),
+        Quote("If life were predictable it would cease to be life, and be without flavor.", "Eleanor Roosevelt"),
+        Quote("If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.", "Oprah Winfrey"),
+        Quote("If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.", "James Cameron")
     )
     private val favoriteQuotes = mutableListOf<Quote>()
 

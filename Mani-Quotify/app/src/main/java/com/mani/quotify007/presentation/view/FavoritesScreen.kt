@@ -46,5 +46,5 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf(Quote("Sample quote")), onEvent = {})
+    FavoritesScreen(listOf(Quote("Sample quote", "Sample Author")), onEvent = {})
 }

@@ -35,8 +35,8 @@ fun NavigationGraphPreview() {
     NavigationGraph(
         navController = navController,
         state = MainState(),
-        quotes = listOf(Quote("Sample quote")),
-        favoriteQuotes = listOf(Quote("Sample favorite quote")),
+        quotes = listOf(Quote("Sample quote", "Sample Author")),
+        favoriteQuotes = listOf(Quote("Sample favorite quote", "Sample Author")),
         onEvent = {}
     )
 }
