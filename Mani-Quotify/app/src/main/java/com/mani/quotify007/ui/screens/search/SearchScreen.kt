@@ -56,7 +56,7 @@ fun SearchScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(filteredQuotes) { quote ->
-                QuotesScreen(quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) })
+                QuotesScreen(quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) }, true)
             }
         }
     }

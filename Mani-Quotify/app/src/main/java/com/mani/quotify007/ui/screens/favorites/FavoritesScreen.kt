@@ -37,7 +37,11 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
         ) {
             LazyColumn {
                 items(quotes) { quote ->
-                    QuotesScreen(quote, onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) })
+                    QuotesScreen(
+                        quote,
+                        onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) },
+                        false
+                    )
                 }
             }
         }

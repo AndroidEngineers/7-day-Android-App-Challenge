@@ -37,7 +37,7 @@ fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
         state.randomQuote?.let { quote ->
-            QuotesScreen(quote = quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) })
+            QuotesScreen(quote = quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) }, isAddOnly = true)
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { onEvent(MainEvent.GetRandomQuote) }) {
