@@ -1,19 +1,18 @@
 package com.mani.quotify007.ui.navigation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import com.mani.quotify007.data.repository.QuoteRepositoryImpl
-import com.mani.quotify007.domain.usecase.GetQuoteUseCase
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.mani.quotify007.QuotifyApp
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _state = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state
 
-    private val repository = QuoteRepositoryImpl()
-    private val getQuoteUseCase = GetQuoteUseCase(repository = repository)
+    private val getQuoteUseCase = (application as QuotifyApp).getQuoteUseCase
 
     init {
         _state.value = MainState(
