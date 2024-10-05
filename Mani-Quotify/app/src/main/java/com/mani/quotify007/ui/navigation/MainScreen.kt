@@ -8,12 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.viewmodel.MainViewModel
 import com.mani.quotify007.ui.screens.bottomappbar.BottomAppBar
 import com.mani.quotify007.ui.theme.QuotifyAppTheme
 
 @Composable
-fun MainScreen(viewModel: MainViewModel = viewModel()) {
+fun MainScreen(
+    viewModel: MainViewModel = viewModel(),
+    onCopyText: (Quote) -> Unit,
+    onShareClick: (Quote) -> Unit
+) {
     val navController = rememberNavController()
     /* Collect the current state from the ViewModel as a State object.
     * the state is preserved across configuration changes and the UI is updated reactively */
@@ -27,7 +32,9 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
             state = state,
             quotes = state.quotes,
             favoriteQuotes = state.favoriteQuotes,
-            onEvent = { event -> viewModel.onEvent(event) }
+            onEvent = { event -> viewModel.onEvent(event) },
+            onCopyText = onCopyText,
+            onShareClick = onShareClick
         )
     }
 }
@@ -36,6 +43,6 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
 @Composable
 fun MainScreenPreview() {
     QuotifyAppTheme {
-        MainScreen()
+        MainScreen(onCopyText = {}, onShareClick = {})
     }
 }

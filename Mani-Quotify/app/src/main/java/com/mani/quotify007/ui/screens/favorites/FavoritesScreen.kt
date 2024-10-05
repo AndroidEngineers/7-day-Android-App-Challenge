@@ -17,7 +17,12 @@ import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
-fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
+fun FavoritesScreen(
+    quotes: List<Quote>,
+    onEvent: (MainEvent) -> Unit,
+    onCopyText: (Quote) -> Unit,
+    onShareClick: (Quote) -> Unit
+) {
     if (quotes.isEmpty()) {
         Column(
             modifier = Modifier
@@ -40,7 +45,9 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
                     QuotesScreen(
                         quote,
                         onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) },
-                        false
+                        false,
+                        onCopyText = onCopyText,
+                        onShareClick = onShareClick
                     )
                 }
             }
@@ -51,5 +58,9 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf(Quote("Sample quote", "Sample Author")), onEvent = {})
+    FavoritesScreen(
+        listOf(Quote("Sample quote", "Sample Author")),
+        onEvent = {},
+        onCopyText = {},
+        onShareClick = {})
 }

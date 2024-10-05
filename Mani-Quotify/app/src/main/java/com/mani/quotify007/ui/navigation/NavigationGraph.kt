@@ -10,10 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.screens.bottomappbar.BottomNavItem
 import com.mani.quotify007.ui.screens.favorites.FavoritesScreen
 import com.mani.quotify007.ui.screens.home.HomeScreen
 import com.mani.quotify007.ui.screens.search.SearchScreen
-import com.mani.quotify007.ui.screens.bottomappbar.BottomNavItem
 
 @Composable
 fun NavigationGraph(
@@ -22,12 +22,35 @@ fun NavigationGraph(
     state: MainState,
     quotes: List<Quote>,
     favoriteQuotes: List<Quote>,
-    onEvent: (MainEvent) -> Unit
+    onEvent: (MainEvent) -> Unit,
+    onCopyText: (Quote) -> Unit,
+    onShareClick: (Quote) -> Unit
 ) {
-    NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
-        composable(BottomNavItem.Home.route) { HomeScreen(state, onEvent) }
-        composable(BottomNavItem.Search.route) { SearchScreen(quotes, onEvent) }
-        composable(BottomNavItem.Favorites.route) { FavoritesScreen(favoriteQuotes, onEvent) }
+    NavHost(navController, startDestination = BottomNavItem.HOME.route, modifier = modifier) {
+        composable(BottomNavItem.HOME.route) {
+            HomeScreen(
+                state,
+                onEvent,
+                onCopyText,
+                onShareClick
+            )
+        }
+        composable(BottomNavItem.SEARCH.route) {
+            SearchScreen(
+                quotes,
+                onEvent,
+                onCopyText,
+                onShareClick
+            )
+        }
+        composable(BottomNavItem.FAVORITES.route) {
+            FavoritesScreen(
+                favoriteQuotes,
+                onEvent,
+                onCopyText,
+                onShareClick
+            )
+        }
     }
 }
 
@@ -40,6 +63,8 @@ fun NavigationGraphPreview() {
         state = MainState(),
         quotes = listOf(Quote("Sample quote", "Sample Author")),
         favoriteQuotes = listOf(Quote("Sample favorite quote", "Sample Author")),
-        onEvent = {}
+        onEvent = {},
+        onCopyText = {},
+        onShareClick = {}
     )
 }

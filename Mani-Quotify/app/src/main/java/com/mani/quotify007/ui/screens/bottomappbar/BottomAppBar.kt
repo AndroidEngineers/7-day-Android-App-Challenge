@@ -15,9 +15,9 @@ import androidx.navigation.NavHostController
 @Composable
 fun BottomAppBar(navController: NavHostController?) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Search,
-        BottomNavItem.Favorites
+        BottomNavItem.HOME,
+        BottomNavItem.SEARCH,
+        BottomNavItem.FAVORITES
     )
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
