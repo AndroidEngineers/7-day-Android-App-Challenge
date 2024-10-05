@@ -1,4 +1,4 @@
-package com.example.reciperoulette.screens
+package com.example.reciperoulette.screens.recipedetailscree
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,11 +40,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reciperoulette.R
 
 @Preview
 @Composable
-fun RecipeDetailScreen(modifier: Modifier = Modifier) {
+fun RecipeDetailScreen(
+    modifier: Modifier = Modifier,
+    recipeDetailViewModel: RecipeDetailViewModel = viewModel()
+) {
+    val data by recipeDetailViewModel.recipeData.collectAsState()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -65,11 +73,11 @@ fun RecipeDetailScreen(modifier: Modifier = Modifier) {
             )
 
             HeadingUi(headingName = "Gradiant")
-            GradiantListScreen()
+            GradiantListScreen(gradiantList = data.gradiant)
             HeadingUi(headingName = "Summary")
-            SummaryScreen()
+            SummaryScreen(summary = data.summary ?: "")
             HeadingUi(headingName = "Instruction")
-            InstructionScreen()
+            InstructionScreen(instruction = data.instruction?:"")
         }
     }
 }
@@ -130,7 +138,7 @@ private fun HeadingUi(modifier: Modifier = Modifier, headingName: String = "Reci
 
 @Preview
 @Composable
-private fun GradiantListItem(modifier: Modifier = Modifier) {
+private fun GradiantListItem(modifier: Modifier = Modifier,gradiantName:String = "") {
     Box(
         modifier = modifier
 
@@ -149,7 +157,7 @@ private fun GradiantListItem(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "gradiant Name",
+                text = gradiantName,
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 10.4.sp,
@@ -163,23 +171,23 @@ private fun GradiantListItem(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-private fun GradiantListScreen(modifier: Modifier = Modifier) {
+private fun GradiantListScreen(modifier: Modifier = Modifier,gradiantList:List<String>) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        items(10) {
-            GradiantListItem()
+        items(gradiantList) {
+            GradiantListItem(gradiantName = it)
         }
     }
 }
 
 @Preview
 @Composable
-private fun SummaryScreen(modifier: Modifier = Modifier) {
+private fun SummaryScreen(modifier: Modifier = Modifier, summary: String = "") {
     Text(
         text = "Madeleine Thien is a Canadian writer whose work explores the trans-cultural world of Asian art, politics, and family life within Canada’s diasporic Asian Communities. She was born in 1974 to a Malaysian Chinese father and a Hong Kong Chinese mother. Thien studied contemporary dance but switched to creative writing as an undergraduate in college. She earned her MFA in writing from the University of British Columbia.",
         color = Color.White,
@@ -189,7 +197,7 @@ private fun SummaryScreen(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun InstructionScreen(modifier: Modifier = Modifier) {
+private fun InstructionScreen(modifier: Modifier = Modifier,instruction:String = "") {
     Text(
         text = "Madeleine Thien is a Canadian writer whose work explores the trans-cultural world of Asian art, politics, and family life within Canada’s diasporic Asian Communities. She was born in 1974 to a Malaysian Chinese father and a Hong Kong Chinese mother. Thien studied contemporary dance but switched to creative writing as an undergraduate in college. She earned her MFA in writing from the University of British Columbia.",
         color = Color.White,

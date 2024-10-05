@@ -1,6 +1,5 @@
-package com.example.reciperoulette.screens
+package com.example.reciperoulette.screens.recipescreen
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,14 +17,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,24 +37,29 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reciperoulette.R
 
-enum class FilterCards {
-    ALL, VEG, NON_VEG
-}
 
 @Preview
 @Composable
-fun RecipesScreen(modifier: Modifier = Modifier) {
-    var selectedcard by remember {
+fun RecipesScreen(
+    modifier: Modifier = Modifier,
+    recipesViewModel: RecipesViewModel = viewModel(),
+    onRecipeClick: () -> Unit = {}
+) {
+    val recipeList by recipesViewModel.recipeList.collectAsState()
+    var selectedcard by rememberSaveable {
         mutableStateOf(FilterCards.ALL)
+    }
+
+    LaunchedEffect(Unit) {
+       recipesViewModel.updateRecipeList(FilterCards.ALL)
     }
 
     fun selectCard(select: FilterCards) {
@@ -72,33 +79,48 @@ fun RecipesScreen(modifier: Modifier = Modifier) {
                     .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                FillterScreen(filterCards = FilterCards.ALL, selectedcard = selectedcard) {
+                FillterScreen(
+                    filterCards = FilterCards.ALL,
+                    selectedcard = selectedcard,
+                    recipesViewModel = recipesViewModel
+                ) {
                     selectCard(it)
                 }
-                FillterScreen(filterCards = FilterCards.VEG, selectedcard = selectedcard) {
+                FillterScreen(
+                    filterCards = FilterCards.VEG,
+                    selectedcard = selectedcard,
+                    recipesViewModel = recipesViewModel
+                ) {
                     selectCard(it)
                 }
-                FillterScreen(filterCards = FilterCards.NON_VEG, selectedcard = selectedcard) {
+                FillterScreen(
+                    filterCards = FilterCards.NON_VEG,
+                    selectedcard = selectedcard,
+                    recipesViewModel = recipesViewModel
+                ) {
                     selectCard(it)
                 }
             }
 
-            LazyColumn(contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(10){
-                    RecipeListItem()
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(recipeList) {
+                    RecipeListItem(onRecipeClick = onRecipeClick, recipeName = it)
                 }
             }
         }
     }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun FillterScreen(
     modifier: Modifier = Modifier,
     filterCards: FilterCards = FilterCards.ALL,
     selectedcard: FilterCards = FilterCards.ALL,
+    recipesViewModel: RecipesViewModel,
     onClick: (filterCards: FilterCards) -> Unit = {}
 ) {
     val name = filterCards.name
@@ -114,6 +136,7 @@ private fun FillterScreen(
                 shape = RoundedCornerShape(size = 23.dp)
             )
             .clickable {
+                recipesViewModel.updateRecipeList(filterCards)
                 onClick(filterCards)
             }
 
@@ -176,11 +199,14 @@ private fun ToolBar(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun RecipeListItem(modifier: Modifier = Modifier) {
+fun RecipeListItem(modifier: Modifier = Modifier, recipeName:String = "", onRecipeClick: () -> Unit = {}) {
     Card(modifier = modifier
-        .fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically) {
+        .fillMaxWidth()
+        .clickable { onRecipeClick() }) {
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.recipe),
                 contentDescription = null,
@@ -197,7 +223,7 @@ fun RecipeListItem(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Recipe Name",
+                    text = recipeName,
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 22.4.sp,
@@ -205,7 +231,7 @@ fun RecipeListItem(modifier: Modifier = Modifier) {
                         color = Color(0xFFFEFEFE)
                     )
                 )
-Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Recipe Time: 48 min",
                     style = TextStyle(
