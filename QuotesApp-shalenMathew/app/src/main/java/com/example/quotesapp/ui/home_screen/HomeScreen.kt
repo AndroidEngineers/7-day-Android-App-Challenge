@@ -1,5 +1,6 @@
-package com.example.quotesapp.ui.screen
+package com.example.quotesapp.ui.home_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -30,13 +32,17 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.aghajari.compose.lazyswipecards.LazySwipeCards
 import com.example.quotesapp.R
+import com.example.quotesapp.domain.model.Quote
 import com.example.quotesapp.ui.theme.GIFont
 import com.example.quotesapp.ui.theme.customBlack
 import com.example.quotesapp.ui.theme.customGrey
+import com.example.quotesapp.ui.viewmodel.QuoteViewModel
 
 
 @Composable
-fun HomeScreen(paddingValues: PaddingValues){
+fun HomeScreen(paddingValues: PaddingValues,quoteViewModel: QuoteViewModel){
+
+    val state = quoteViewModel.quoteState.value
 
     Box(modifier = Modifier.fillMaxSize().background(Color.Black)){
 
@@ -49,8 +55,7 @@ fun HomeScreen(paddingValues: PaddingValues){
             .padding(paddingValues)) {
 
             QuoteOfTheDaySection()
-            QuoteItemListSection()
-
+            QuoteItemListSection(state,quoteViewModel)
         }
 
     }
@@ -84,7 +89,9 @@ fun QuoteOfTheDaySection(){
 }
 
 @Composable
-fun QuoteItem(data:QuoteData){
+fun QuoteItem(data: Quote, quoteViewModel: QuoteViewModel){
+
+    val context = LocalContext.current
 
     val gradient = Brush.radialGradient(
         0.0f to customBlack,
@@ -134,17 +141,24 @@ fun QuoteItem(data:QuoteData){
             .align(Alignment.BottomEnd)
             .padding(horizontal = 20.dp,vertical=28.dp)) {
 
-            AsyncImage(model = R.drawable.send,
+            AsyncImage(model = R.drawable.heart_unfilled,
                 contentDescription = null,
-                modifier=Modifier.size(35.dp).clickable {
-//                    Log.d("TAG","ok this is")
-                })
+                modifier=Modifier.size(35.dp)
+                    .clickable {
+                        quoteViewModel.onEvent(QuoteEvent.LIKE)
+                        Toast.makeText(context, "Like", Toast.LENGTH_SHORT).show()
+
+                    })
 
             Spacer(modifier=Modifier.height(25.dp))
 
-            AsyncImage(model = R.drawable.heart_unfilled,
+            AsyncImage(model = R.drawable.send,
                 contentDescription = null,
-                modifier=Modifier.size(35.dp))
+                modifier=Modifier.size(35.dp).clickable {
+                    quoteViewModel.onEvent(QuoteEvent.SHARE)
+                    Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show()
+                })
+
 
         }
 
@@ -153,13 +167,15 @@ fun QuoteItem(data:QuoteData){
 }
 
 @Composable
-fun QuoteItemListSection(){
+fun QuoteItemListSection(state: QuoteState, quoteViewModel: QuoteViewModel) {
 
     // data
-    val list = mutableListOf<QuoteData>()
-    list.addAll(listOf(QuoteData(quote = "Mjisj ijis ocmskcjsc scjsicskcc sck" , author = "Ti shaw"),
-        QuoteData(quote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at sapien eget lacus." , author = "Shalen mathew"),
-        QuoteData(quote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut neque sit amet lectus interdum elementum. Suspendisse vel " , author = "Xing Ping")))
+//    val list = mutableListOf<QuoteData>()
+//    list.addAll(listOf(QuoteData(quote = "Mjisj ijis ocmskcjsc scjsicskcc sck" , author = "Ti shaw"),
+//        QuoteData(quote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at sapien eget lacus."
+//            , author = "Shalen mathew"),
+//        QuoteData(quote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut neque sit amet " +
+//                "lectus interdum elementum. Suspendisse vel " , author = "Xing Ping")))
 
     // ---------------------
 
@@ -167,23 +183,22 @@ fun QuoteItemListSection(){
 
     LazySwipeCards(cardColor = Color.Transparent,
         cardShadowElevation = 0.dp,
-        translateSize = 8.dp) {
+        translateSize = 8.dp,
+        swipeThreshold = 0.4f) {
         // Add items
-        items(list) {it->
-            QuoteItem(it)
+
+        items(state.data) {it->
+            QuoteItem(it,quoteViewModel)
 
         }
         onSwiped { item, _ ->
-            list.add(item as QuoteData)
+//            list.add(item as QuoteData)
+            state.data.add(item as Quote)
         }
     }
 
 }
 
 
-data class QuoteData(
-    val quote:String,
-    val author:String
-)
 
 
