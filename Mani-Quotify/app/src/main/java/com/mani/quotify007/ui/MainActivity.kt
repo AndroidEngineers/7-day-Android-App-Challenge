@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mani.quotify007.ui.navigation.MainScreen
-import com.mani.quotify007.ui.screens.utils.ClipboardUtil
-import com.mani.quotify007.ui.screens.utils.ShareUtil
+import com.mani.quotify007.ui.screens.utils.onCopyText
+import com.mani.quotify007.ui.screens.utils.shareQuote
 import com.mani.quotify007.ui.theme.QuotifyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,8 +14,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             QuotifyAppTheme {
                 MainScreen(
-                    onCopyText = { quote -> ClipboardUtil.onCopyText(this, quote) },
-                    onShareClick = { quote -> ShareUtil.shareQuote(this, quote) }
+                    onCopyText = { quote -> onCopyText(this, quote) },
+                    onShareClick = { quote -> shareQuote(this, quote) }
                 )
             }
         }
