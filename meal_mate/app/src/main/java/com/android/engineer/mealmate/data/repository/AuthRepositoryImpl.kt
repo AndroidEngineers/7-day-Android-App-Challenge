@@ -4,7 +4,7 @@ import com.android.engineer.mealmate.data.remote.model.request.RegisterRequest
 import com.android.engineer.mealmate.data.remote.model.response.RegisterResponse
 import com.android.engineer.mealmate.data.remote.MealAPI
 import com.android.engineer.mealmate.data.utils.API_KEY_VALUE
-import com.android.engineer.mealmate.domain.repository.AuthRepository
+import com.android.engineer.mealmate.repository.remote.AuthRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
