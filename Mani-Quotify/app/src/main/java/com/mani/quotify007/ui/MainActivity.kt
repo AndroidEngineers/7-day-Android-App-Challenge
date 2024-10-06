@@ -9,6 +9,7 @@ import com.mani.quotify007.ui.navigation.MainScreen
 import com.mani.quotify007.ui.navigation.viewmodel.MainViewModel
 import com.mani.quotify007.ui.screens.utils.onCopyText
 import com.mani.quotify007.ui.screens.utils.shareQuote
+import com.mani.quotify007.ui.screens.utils.showToast
 import com.mani.quotify007.ui.theme.QuotifyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,6 +33,9 @@ class MainActivity : ComponentActivity() {
         }
         viewModel.shareClickEvent.observe(this) { quote ->
             shareQuote(this, quote)
+        }
+        viewModel.showToast.observe(this) { message ->
+            message?.let { showToast(it) }
         }
     }
 }

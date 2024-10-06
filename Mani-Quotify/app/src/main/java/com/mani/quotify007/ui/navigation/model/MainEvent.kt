@@ -8,4 +8,5 @@ sealed class MainEvent {
     data object GetRandomQuote: MainEvent()
     data class CopyText(val quote: Quote): MainEvent()
     data class ShareClick(val quote: Quote): MainEvent()
+    data class ShowToast(val message: String): MainEvent()
 }

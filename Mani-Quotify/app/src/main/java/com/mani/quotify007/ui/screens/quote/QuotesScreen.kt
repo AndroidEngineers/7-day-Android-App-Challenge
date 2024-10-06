@@ -1,6 +1,5 @@
 package com.mani.quotify007.ui.screens.quote
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +20,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.screens.utils.ADDED_TO_FAVORITES
+import com.mani.quotify007.ui.screens.utils.ALREADY_ADDED_TO_FAVORITES
 import com.mani.quotify007.ui.screens.utils.HYPHEN_SPACE
+import com.mani.quotify007.ui.screens.utils.REMOVED_FROM_FAVORITES
+import com.mani.quotify007.ui.screens.utils.TEXT_COPIED_TO_CLIPBOARD
 
 @Composable
 fun QuotesScreen(
@@ -38,8 +40,6 @@ fun QuotesScreen(
     onEvent: (MainEvent) -> Unit,
     isAddOnly: Boolean
 ) {
-    // TODO: Approach to be discussed - context should be passed from MainActivity.
-    val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,15 +80,15 @@ fun QuotesScreen(
                     if (!quote.isFavorite) {
                         quote.isFavorite = true
                         onEvent(MainEvent.AddFavorite(quote))
-                        Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show()
+                        onEvent(MainEvent.ShowToast(ADDED_TO_FAVORITES))
                     } else {
-                        Toast.makeText(context, "Already added to favorites", Toast.LENGTH_SHORT).show()
+                        onEvent(MainEvent.ShowToast(ALREADY_ADDED_TO_FAVORITES))
                     }
                 } else {
                     if (quote.isFavorite) {
                         quote.isFavorite = false
                         onEvent(MainEvent.RemoveFavorite(quote))
-                        Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show()
+                        onEvent(MainEvent.ShowToast(REMOVED_FROM_FAVORITES))
                     }
                 }
             }) {
@@ -101,6 +101,7 @@ fun QuotesScreen(
             }
             TextButton(onClick = {
                 onEvent(MainEvent.CopyText(quote))
+                onEvent(MainEvent.ShowToast(TEXT_COPIED_TO_CLIPBOARD))
             }) {
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Copy Text")

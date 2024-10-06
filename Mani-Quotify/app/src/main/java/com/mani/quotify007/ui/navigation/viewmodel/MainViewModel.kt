@@ -24,6 +24,9 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
     private val _shareClickEvent = MutableLiveData<Quote>()
     val shareClickEvent: LiveData<Quote> = _shareClickEvent
 
+    private val _showToast = MutableLiveData<String>()
+    val showToast: LiveData<String> = _showToast
+
     private val getQuoteUseCase = (application as QuotifyApp).getQuoteUseCase
 
     init {
@@ -71,6 +74,7 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
 
                 is MainEvent.CopyText -> _copyTextEvent.postValue(event.quote)
                 is MainEvent.ShareClick -> _shareClickEvent.postValue(event.quote)
+                is MainEvent.ShowToast -> _showToast.postValue(event.message)
             }
         }
     }
