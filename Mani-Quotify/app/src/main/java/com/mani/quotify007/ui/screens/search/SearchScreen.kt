@@ -32,9 +32,7 @@ import com.mani.quotify007.ui.screens.quote.QuotesScreen
 @Composable
 fun SearchScreen(
     quotes: List<Quote>,
-    onEvent: (MainEvent) -> Unit,
-    onCopyText: (Quote) -> Unit,
-    onShareClick: (Quote) -> Unit
+    onEvent: (MainEvent) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredQuotes = quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
@@ -63,10 +61,8 @@ fun SearchScreen(
             items(filteredQuotes) { quote ->
                 QuotesScreen(
                     quote,
-                    onEvent = { onEvent(MainEvent.AddFavorite(quote)) },
-                    true,
-                    onCopyText = onCopyText,
-                    onShareClick = onShareClick
+                    onEvent = onEvent,
+                    true
                 )
             }
         }
@@ -78,8 +74,6 @@ fun SearchScreen(
 fun SearchScreenPreview() {
     SearchScreen(
         listOf(Quote(0, "Sample quote")),
-        onEvent = {},
-        onCopyText = {},
-        onShareClick = {}
+        onEvent = {}
     )
 }

@@ -36,9 +36,7 @@ import com.mani.quotify007.ui.screens.utils.HYPHEN_SPACE
 fun QuotesScreen(
     quote: Quote,
     onEvent: (MainEvent) -> Unit,
-    isAddOnly: Boolean,
-    onCopyText: (Quote) -> Unit,
-    onShareClick: (Quote) -> Unit
+    isAddOnly: Boolean
 ) {
     // TODO: Approach to be discussed - context should be passed from MainActivity.
     val context = LocalContext.current
@@ -102,13 +100,13 @@ fun QuotesScreen(
                 Text("Save")
             }
             TextButton(onClick = {
-                onCopyText(quote)
+                onEvent(MainEvent.CopyText(quote))
             }) {
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Copy Text")
             }
             TextButton(onClick = {
-                onShareClick(quote)
+                onEvent(MainEvent.ShareClick(quote))
             }) {
                 Icon(imageVector = Icons.Default.Share, contentDescription = "Share")
                 Spacer(modifier = Modifier.width(4.dp))
@@ -124,7 +122,6 @@ fun QuotesScreenPreview() {
     QuotesScreen(
         Quote(0, "Sample quote", "Sample author"),
         onEvent = {},
-        true,
-        onCopyText = {},
-        onShareClick = {})
+        true
+    )
 }

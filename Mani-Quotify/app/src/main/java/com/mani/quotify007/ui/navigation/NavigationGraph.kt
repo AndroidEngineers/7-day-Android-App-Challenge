@@ -22,33 +22,25 @@ fun NavigationGraph(
     state: MainState,
     quotes: List<Quote>,
     favoriteQuotes: List<Quote>,
-    onEvent: (MainEvent) -> Unit,
-    onCopyText: (Quote) -> Unit,
-    onShareClick: (Quote) -> Unit
+    onEvent: (MainEvent) -> Unit
 ) {
     NavHost(navController, startDestination = BottomNavItem.HOME.route, modifier = modifier) {
         composable(BottomNavItem.HOME.route) {
             HomeScreen(
                 state,
-                onEvent,
-                onCopyText,
-                onShareClick
+                onEvent
             )
         }
         composable(BottomNavItem.SEARCH.route) {
             SearchScreen(
                 quotes,
-                onEvent,
-                onCopyText,
-                onShareClick
+                onEvent
             )
         }
         composable(BottomNavItem.FAVORITES.route) {
             FavoritesScreen(
                 favoriteQuotes,
-                onEvent,
-                onCopyText,
-                onShareClick
+                onEvent
             )
         }
     }
@@ -63,8 +55,6 @@ fun NavigationGraphPreview() {
         state = MainState(),
         quotes = listOf(Quote(0,"Sample quote", "Sample Author")),
         favoriteQuotes = listOf(Quote(0,"Sample favorite quote", "Sample Author")),
-        onEvent = {},
-        onCopyText = {},
-        onShareClick = {}
+        onEvent = {}
     )
 }

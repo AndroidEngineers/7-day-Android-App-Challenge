@@ -2,6 +2,8 @@ package com.mani.quotify007.ui.navigation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mani.quotify007.QuotifyApp
 import com.mani.quotify007.data.local.FavoriteQuoteEntity
@@ -15,6 +17,12 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val application: Application) : AndroidViewModel(application) {
     private val _state = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state
+
+    private val _copyTextEvent = MutableLiveData<Quote>()
+    val copyTextEvent: LiveData<Quote> = _copyTextEvent
+
+    private val _shareClickEvent = MutableLiveData<Quote>()
+    val shareClickEvent: LiveData<Quote> = _shareClickEvent
 
     private val getQuoteUseCase = (application as QuotifyApp).getQuoteUseCase
 
@@ -60,6 +68,9 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
                     val randomQuote = _state.value.quotes.randomOrNull()
                     _state.value = _state.value.copy(randomQuote = randomQuote)
                 }
+
+                is MainEvent.CopyText -> _copyTextEvent.postValue(event.quote)
+                is MainEvent.ShareClick -> _shareClickEvent.postValue(event.quote)
             }
         }
     }

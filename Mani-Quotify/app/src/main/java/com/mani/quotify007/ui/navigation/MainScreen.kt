@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
 import com.mani.quotify007.ui.screens.bottomappbar.BottomAppBar
@@ -15,9 +14,7 @@ import com.mani.quotify007.ui.theme.QuotifyAppTheme
 @Composable
 fun MainScreen(
     state: MainState,
-    onEvent: (MainEvent) -> Unit,
-    onCopyText: (Quote) -> Unit,
-    onShareClick: (Quote) -> Unit
+    onEvent: (MainEvent) -> Unit
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -29,9 +26,7 @@ fun MainScreen(
             state = state,
             quotes = state.quotes,
             favoriteQuotes = state.favoriteQuotes,
-            onEvent = onEvent,
-            onCopyText = onCopyText,
-            onShareClick = onShareClick
+            onEvent = onEvent
         )
     }
 }
@@ -42,9 +37,7 @@ fun MainScreenPreview() {
     QuotifyAppTheme {
         MainScreen(
             state = MainState(),
-            onEvent = {},
-            onCopyText = {},
-            onShareClick = {}
+            onEvent = {}
         )
     }
 }

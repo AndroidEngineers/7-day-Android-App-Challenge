@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
 import com.mani.quotify007.ui.screens.quote.QuotesScreen
@@ -28,9 +27,7 @@ import com.mani.quotify007.ui.screens.utils.QUOTE_OF_THE_DAY_HEADER
 @Composable
 fun HomeScreen(
     state: MainState,
-    onEvent: (MainEvent) -> Unit,
-    onCopyText: (Quote) -> Unit,
-    onShareClick: (Quote) -> Unit
+    onEvent: (MainEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -43,10 +40,8 @@ fun HomeScreen(
         state.randomQuote?.let { quote ->
             QuotesScreen(
                 quote = quote,
-                onEvent = { onEvent(MainEvent.AddFavorite(quote)) },
-                isAddOnly = true,
-                onCopyText = onCopyText,
-                onShareClick = onShareClick
+                onEvent = onEvent,
+                isAddOnly = true
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -61,5 +56,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(MainState(), onEvent = {}, onCopyText = {}, onShareClick = {})
+    HomeScreen(MainState(), onEvent = {})
 }

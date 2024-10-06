@@ -23,11 +23,15 @@ class MainActivity : ComponentActivity() {
                 val state = viewModel.state.collectAsState().value
                 MainScreen(
                     state,
-                    onEvent = { event -> viewModel.onEvent(event) },
-                    onCopyText = { quote -> onCopyText(this, quote) },
-                    onShareClick = { quote -> shareQuote(this, quote) }
+                    onEvent = { event -> viewModel.onEvent(event) }
                 )
             }
+        }
+        viewModel.copyTextEvent.observe(this) { quote ->
+            onCopyText(this, quote)
+        }
+        viewModel.shareClickEvent.observe(this) { quote ->
+            shareQuote(this, quote)
         }
     }
 }
