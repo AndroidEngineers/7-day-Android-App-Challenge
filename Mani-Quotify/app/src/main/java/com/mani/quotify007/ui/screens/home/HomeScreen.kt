@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,14 +19,21 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mani.quotify007.presentation.viewmodel.MainEvent
-import com.mani.quotify007.presentation.viewmodel.MainState
+import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
 const val HYPHEN_SPACE = "- "
 
 @Composable
-fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {
+fun HomeScreen(
+    state: MainState,
+    onEvent: (MainEvent) -> Unit,
+    onCopyText: (Quote) -> Unit,
+    onShareClick: (Quote) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,7 +43,13 @@ fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
         state.randomQuote?.let { quote ->
-            QuotesScreen(quote = quote, onEvent = { onEvent(MainEvent.AddFavorite(quote)) })
+            QuotesScreen(
+                quote = quote,
+                onEvent = { onEvent(MainEvent.AddFavorite(quote)) },
+                isAddOnly = true,
+                onCopyText = onCopyText,
+                onShareClick = onShareClick
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { onEvent(MainEvent.GetRandomQuote) }) {
@@ -50,5 +63,5 @@ fun HomeScreen(state: MainState, onEvent: (MainEvent) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(MainState(), onEvent = {})
+    HomeScreen(MainState(), onEvent = {}, onCopyText = {}, onShareClick = {})
 }

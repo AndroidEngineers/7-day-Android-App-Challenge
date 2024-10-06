@@ -1,34 +1,40 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.bottomappbar
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.mani.quotify007.presentation.view.utils.BottomNavItem
 
 @Composable
 fun BottomAppBar(navController: NavHostController?) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Search,
-        BottomNavItem.Favorites
+        BottomNavItem.HOME,
+        BottomNavItem.SEARCH,
+        BottomNavItem.FAVORITES
     )
-    androidx.compose.material3.BottomAppBar {
-        val currentRoute = navController?.currentBackStackEntry?.destination?.route
-        items.forEach { item ->
+    var selectedItemIndex by rememberSaveable {
+        mutableIntStateOf(0)
+    }
+    NavigationBar {
+        items.forEachIndexed { index, item ->
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = item.title) },
+                selected = selectedItemIndex == index,
                 label = { Text(item.title) },
-                selected = currentRoute == item.route,
                 onClick = {
+                    selectedItemIndex = index
                     navController?.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }
-                }
-            )
+                },
+                icon = { Icon(if(index == selectedItemIndex) item.selectedIcon else item.unselectedIcon, contentDescription = item.title) })
         }
     }
 }
