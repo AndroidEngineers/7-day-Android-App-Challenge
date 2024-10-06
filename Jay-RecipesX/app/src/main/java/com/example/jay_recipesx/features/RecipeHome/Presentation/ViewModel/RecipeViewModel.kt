@@ -3,15 +3,20 @@ package com.example.jay_recipesx.features.RecipeHome.Presentation.ViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jay_recipesx.features.RecipeHome.Data.Repositories.RecipeRepoImpl
+import com.example.jay_recipesx.features.RecipeHome.Domain.Repositories.IRecipeRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel : ViewModel() {
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
+    private val iRecipeRepo : IRecipeRepo
+) : ViewModel() {
 
-    // State Flow
-    private val iRecipeRepo = RecipeRepoImpl()
+
     private val _recipes = MutableStateFlow<RecipeHomeState>(InitialRecipeHomeState())
     val recipes: StateFlow<RecipeHomeState> = _recipes
 
@@ -29,9 +34,11 @@ class RecipeViewModel : ViewModel() {
                 // Launch coroutine to handle API call in a non-blocking way
                 viewModelScope.launch {
                     _recipes.value = RecipeHomeLoadingState()
-                    delay(3000)
                     try {
-                        val recipe = iRecipeRepo.getRandomRecipe()
+                        // API will return list of recipes
+                        // we need to extract the first recipe
+                        val recipe = iRecipeRepo.getRandomRecipe().recipes.firstOrNull()
+
                         if (recipe != null) {
                             _recipes.value = RecipeHomeSuccessState(recipes = recipe)
                         } else {
