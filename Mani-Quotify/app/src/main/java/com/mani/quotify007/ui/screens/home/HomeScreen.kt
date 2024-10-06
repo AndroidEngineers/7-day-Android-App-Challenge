@@ -23,9 +23,7 @@ import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
 import com.mani.quotify007.ui.screens.quote.QuotesScreen
-
-const val QUOTE_OF_THE_DAY_HEADER = "Quote of the Day"
-const val HYPHEN_SPACE = "- "
+import com.mani.quotify007.ui.screens.utils.QUOTE_OF_THE_DAY_HEADER
 
 @Composable
 fun HomeScreen(

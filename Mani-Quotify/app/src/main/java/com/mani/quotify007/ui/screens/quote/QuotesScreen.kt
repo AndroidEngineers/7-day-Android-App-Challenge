@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
-import com.mani.quotify007.ui.screens.home.HYPHEN_SPACE
+import com.mani.quotify007.ui.screens.utils.HYPHEN_SPACE
 
 @Composable
 fun QuotesScreen(
@@ -122,7 +122,7 @@ fun QuotesScreen(
 @Composable
 fun QuotesScreenPreview() {
     QuotesScreen(
-        Quote("Sample quote", "Sample author"),
+        Quote(0, "Sample quote", "Sample author"),
         onEvent = {},
         true,
         onCopyText = {},

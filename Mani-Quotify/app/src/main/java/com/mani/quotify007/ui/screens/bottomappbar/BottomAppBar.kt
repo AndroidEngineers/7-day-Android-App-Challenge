@@ -34,7 +34,12 @@ fun BottomAppBar(navController: NavHostController?) {
                         launchSingleTop = true
                     }
                 },
-                icon = { Icon(if(index == selectedItemIndex) item.selectedIcon else item.unselectedIcon, contentDescription = item.title) })
+                icon = {
+                    Icon(
+                        if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                        contentDescription = item.title
+                    )
+                })
         }
     }
 }
