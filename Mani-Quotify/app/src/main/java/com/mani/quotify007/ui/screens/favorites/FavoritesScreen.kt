@@ -12,16 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
 import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
 fun FavoritesScreen(
-    quotes: List<Quote>,
+    state: MainState,
     onEvent: (MainEvent) -> Unit
 ) {
-    if (quotes.isEmpty()) {
+    if (state.favoriteQuotes.isEmpty()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -39,7 +39,7 @@ fun FavoritesScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LazyColumn {
-                items(quotes) { quote ->
+                items(state.favoriteQuotes) { quote ->
                     QuotesScreen(
                         quote,
                         onEvent = onEvent,
@@ -55,7 +55,7 @@ fun FavoritesScreen(
 @Composable
 fun FavoritesScreenPreview() {
     FavoritesScreen(
-        listOf(Quote(0, "Sample quote", "Sample Author")),
+        MainState(),
         onEvent = {}
     )
 }

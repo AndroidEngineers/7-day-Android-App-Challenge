@@ -25,17 +25,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainState
 import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
 fun SearchScreen(
-    quotes: List<Quote>,
+    state: MainState,
     onEvent: (MainEvent) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-    val filteredQuotes = quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
+    val filteredQuotes =
+        state.quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -73,7 +74,7 @@ fun SearchScreen(
 @Composable
 fun SearchScreenPreview() {
     SearchScreen(
-        listOf(Quote(0, "Sample quote")),
+        MainState(),
         onEvent = {}
     )
 }

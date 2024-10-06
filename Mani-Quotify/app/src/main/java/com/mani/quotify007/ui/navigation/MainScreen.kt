@@ -24,8 +24,6 @@ fun MainScreen(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
             state = state,
-            quotes = state.quotes,
-            favoriteQuotes = state.favoriteQuotes,
             onEvent = onEvent
         )
     }
