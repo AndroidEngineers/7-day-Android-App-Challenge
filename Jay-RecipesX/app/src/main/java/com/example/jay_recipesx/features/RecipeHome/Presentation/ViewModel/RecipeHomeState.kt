@@ -1,5 +1,6 @@
 package com.example.jay_recipesx.features.RecipeHome.Presentation.ViewModel
 
+import com.example.jay_recipesx.features.RecipeHome.Data.Models.Recipe
 import com.example.jay_recipesx.features.RecipeHome.Data.Models.RecipeModel
 
 
@@ -8,7 +9,7 @@ sealed class RecipeHomeState
 class InitialRecipeHomeState : RecipeHomeState()
 
 data class RecipeHomeSuccessState(
-    val recipes: RecipeModel
+    val recipes: Recipe
 ) : RecipeHomeState()
 
 data class RecipeHomeErrorState(
