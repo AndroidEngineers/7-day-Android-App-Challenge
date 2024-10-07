@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reciperoulette.R
+import com.example.reciperoulette.model.ExtendedIngredient
 
 @Preview
 @Composable
@@ -60,7 +61,7 @@ fun RecipeDetailScreen(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
             RecipeDetailToolBar()
-            HeadingUi()
+            HeadingUi(headingName = data.recipeName?:"Recipe Name")
             Image(
                 painter = painterResource(id = R.drawable.recipe),
                 contentDescription = null,
@@ -173,14 +174,14 @@ private fun GradiantListItem(modifier: Modifier = Modifier,gradiantName:String =
 
 //@Preview
 @Composable
-private fun GradiantListScreen(modifier: Modifier = Modifier,gradiantList:List<String>) {
+private fun GradiantListScreen(modifier: Modifier = Modifier,gradiantList:List<ExtendedIngredient>) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(gradiantList) {
-            GradiantListItem(gradiantName = it)
+            GradiantListItem(gradiantName = it.name)
         }
     }
 }

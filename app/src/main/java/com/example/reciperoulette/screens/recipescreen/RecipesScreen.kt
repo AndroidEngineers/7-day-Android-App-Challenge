@@ -26,7 +26,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,30 +35,32 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.reciperoulette.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
+import com.example.reciperoulette.model.Recipe
+import com.example.reciperoulette.screens.recipedetailscree.RecipeDetailViewModel
 
 
-@Preview
+//@Preview
 @Composable
 fun RecipesScreen(
     modifier: Modifier = Modifier,
-    recipesViewModel: RecipesViewModel = viewModel(),
+    recipeDetailViewModel: RecipeDetailViewModel,
     onRecipeClick: () -> Unit = {}
 ) {
+    val recipesViewModel: RecipesViewModel = hiltViewModel()
     val recipeList by recipesViewModel.recipeList.collectAsState()
     var selectedcard by rememberSaveable {
         mutableStateOf(FilterCards.ALL)
     }
 
     LaunchedEffect(Unit) {
-       recipesViewModel.updateRecipeList(FilterCards.ALL)
+        recipesViewModel.updateRecipeList(FilterCards.ALL)
     }
 
     fun selectCard(select: FilterCards) {
@@ -107,7 +108,11 @@ fun RecipesScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(recipeList) {
-                    RecipeListItem(onRecipeClick = onRecipeClick, recipeName = it)
+                    RecipeListItem(
+                        onRecipeClick = onRecipeClick,
+                        recipe = it,
+                        recipeDetailViewModel = recipeDetailViewModel
+                    )
                 }
             }
         }
@@ -197,18 +202,26 @@ private fun ToolBar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun RecipeListItem(modifier: Modifier = Modifier, recipeName:String = "", onRecipeClick: () -> Unit = {}) {
+fun RecipeListItem(
+    modifier: Modifier = Modifier,
+    recipeDetailViewModel: RecipeDetailViewModel,
+    recipe: Recipe,
+    onRecipeClick: () -> Unit = {}
+) {
+    val painter = rememberAsyncImagePainter(model = recipe.image )
     Card(modifier = modifier
         .fillMaxWidth()
-        .clickable { onRecipeClick() }) {
+        .clickable {
+            recipeDetailViewModel.getRecipe(recipe)
+            onRecipeClick() }) {
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.recipe),
+                painter = painter,
                 contentDescription = null,
                 modifier = Modifier
                     .size(100.dp)
@@ -223,7 +236,7 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipeName:String = "", onReci
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = recipeName,
+                    text = recipe.title?:"",
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 22.4.sp,
@@ -233,7 +246,7 @@ fun RecipeListItem(modifier: Modifier = Modifier, recipeName:String = "", onReci
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Recipe Time: 48 min",
+                    text = "Recipe Time: ${recipe.readyInMinutes} min",
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 22.4.sp,
