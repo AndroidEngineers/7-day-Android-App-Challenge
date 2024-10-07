@@ -76,5 +76,10 @@ fun SearchScreen(
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(listOf(Quote("Sample quote")), onEvent = {}, onCopyText = {}, onShareClick = {})
+    SearchScreen(
+        listOf(Quote(0, "Sample quote")),
+        onEvent = {},
+        onCopyText = {},
+        onShareClick = {}
+    )
 }

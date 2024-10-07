@@ -61,8 +61,8 @@ fun NavigationGraphPreview() {
     NavigationGraph(
         navController = navController,
         state = MainState(),
-        quotes = listOf(Quote("Sample quote", "Sample Author")),
-        favoriteQuotes = listOf(Quote("Sample favorite quote", "Sample Author")),
+        quotes = listOf(Quote(0,"Sample quote", "Sample Author")),
+        favoriteQuotes = listOf(Quote(0,"Sample favorite quote", "Sample Author")),
         onEvent = {},
         onCopyText = {},
         onShareClick = {}

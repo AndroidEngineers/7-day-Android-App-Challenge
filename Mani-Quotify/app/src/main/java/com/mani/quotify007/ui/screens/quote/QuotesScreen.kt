@@ -1,5 +1,6 @@
 package com.mani.quotify007.ui.screens.quote
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.ui.navigation.model.MainEvent
-import com.mani.quotify007.ui.screens.home.HYPHEN_SPACE
+import com.mani.quotify007.ui.screens.utils.HYPHEN_SPACE
 
 @Composable
 fun QuotesScreen(
@@ -38,6 +40,8 @@ fun QuotesScreen(
     onCopyText: (Quote) -> Unit,
     onShareClick: (Quote) -> Unit
 ) {
+    // TODO: Approach to be discussed - context should be passed from MainActivity.
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,13 +82,15 @@ fun QuotesScreen(
                     if (!quote.isFavorite) {
                         quote.isFavorite = true
                         onEvent(MainEvent.AddFavorite(quote))
+                        Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show()
                     } else {
-//                        Toast.makeText(context, "Already added to favorites", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Already added to favorites", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     if (quote.isFavorite) {
                         quote.isFavorite = false
                         onEvent(MainEvent.RemoveFavorite(quote))
+                        Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show()
                     }
                 }
             }) {
@@ -116,7 +122,7 @@ fun QuotesScreen(
 @Composable
 fun QuotesScreenPreview() {
     QuotesScreen(
-        Quote("Sample quote", "Sample author"),
+        Quote(0, "Sample quote", "Sample author"),
         onEvent = {},
         true,
         onCopyText = {},

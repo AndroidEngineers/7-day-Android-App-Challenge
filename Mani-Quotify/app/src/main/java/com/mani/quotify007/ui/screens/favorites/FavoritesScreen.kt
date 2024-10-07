@@ -59,7 +59,7 @@ fun FavoritesScreen(
 @Composable
 fun FavoritesScreenPreview() {
     FavoritesScreen(
-        listOf(Quote("Sample quote", "Sample Author")),
+        listOf(Quote(0, "Sample quote", "Sample Author")),
         onEvent = {},
         onCopyText = {},
         onShareClick = {})
