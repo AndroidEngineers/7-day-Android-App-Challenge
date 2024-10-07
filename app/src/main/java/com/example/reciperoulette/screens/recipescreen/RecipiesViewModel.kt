@@ -6,6 +6,7 @@ import com.example.reciperoulette.data.local.getAllRecipeList
 import com.example.reciperoulette.data.local.getNonVegRecipeList
 import com.example.reciperoulette.data.local.getVegRecipeList
 import com.example.reciperoulette.data.repositoryimpl.RecipesRepositoryImpl
+import com.example.reciperoulette.domain.recipesUseCase.RecipesUseCase
 import com.example.reciperoulette.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,10 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipesViewModel @Inject constructor(private val repositoryImpl: RecipesRepositoryImpl) : ViewModel() {
+class RecipesViewModel @Inject constructor(private val recipesUseCase: RecipesUseCase) :
+    ViewModel() {
     private val _recipeList = MutableStateFlow(emptyList<Recipe>())
     val recipeList: StateFlow<List<Recipe>>
         get() = _recipeList
+
     init {
 //       getData()
     }
@@ -26,24 +29,22 @@ class RecipesViewModel @Inject constructor(private val repositoryImpl: RecipesRe
         when (filterCards) {
             FilterCards.ALL -> {
                 viewModelScope.launch {
-                    _recipeList.value = repositoryImpl.getRecipesList()?.recipes?: emptyList()
+                    _recipeList.value = recipesUseCase.getRecipeData()
                 }
 
             }
 
             FilterCards.VEG -> {
-//                _recipeList.value = getVegRecipeList()
+                viewModelScope.launch {
+                    _recipeList.value = recipesUseCase.getVegData()
+                }
             }
 
             FilterCards.NON_VEG -> {
-//                _recipeList.value = getNonVegRecipeList()
+                viewModelScope.launch {
+                    _recipeList.value = recipesUseCase.getNonVegData()
+                }
             }
-        }
-    }
-
-    private fun getData(){
-        viewModelScope.launch {
-            repositoryImpl.getRecipesList()
         }
     }
 }
