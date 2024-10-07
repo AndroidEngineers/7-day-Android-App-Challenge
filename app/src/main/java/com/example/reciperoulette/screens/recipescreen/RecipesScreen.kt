@@ -55,18 +55,19 @@ import kotlin.math.log
 fun RecipesScreen(
     modifier: Modifier = Modifier,
     recipeDetailViewModel: RecipeDetailViewModel,
+    recipesViewModel:RecipesViewModel,
     onRecipeClick: () -> Unit = {}
 ) {
-    val recipesViewModel: RecipesViewModel = hiltViewModel()
     val recipeList by recipesViewModel.recipeList.collectAsState()
-    var selectedcard by rememberSaveable {
-        mutableStateOf(FilterCards.ALL)
-    }
-
     LaunchedEffect(Unit) {
         Log.d("RecipesScreen", "RecipesScreen: #ak inside a launchEffect")
         recipesViewModel.updateRecipeList(FilterCards.ALL)
     }
+    var selectedcard by rememberSaveable {
+        mutableStateOf(FilterCards.ALL)
+    }
+
+
 
     fun selectCard(select: FilterCards) {
         selectedcard = select

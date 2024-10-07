@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.ViewStructure.HtmlInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,7 +55,8 @@ import com.example.reciperoulette.model.ExtendedIngredient
 @Composable
 fun RecipeDetailScreen(
     modifier: Modifier = Modifier,
-    recipeDetailViewModel: RecipeDetailViewModel
+    recipeDetailViewModel: RecipeDetailViewModel,
+    onBackPress:()->Unit = {}
 ) {
     val data by recipeDetailViewModel.recipeData.collectAsState()
     val painter = rememberAsyncImagePainter(model = data.recipeImage, placeholder = painterResource(id = R.drawable.recipe) )
@@ -67,7 +69,7 @@ fun RecipeDetailScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            RecipeDetailToolBar()
+            RecipeDetailToolBar(onBackPress = onBackPress)
             HeadingUi(headingName = data.recipeName?:"Recipe Name")
             Image(
                 painter = painter,
@@ -92,7 +94,7 @@ fun RecipeDetailScreen(
 
 @Preview
 @Composable
-private fun RecipeDetailToolBar(modifier: Modifier = Modifier) {
+private fun RecipeDetailToolBar(modifier: Modifier = Modifier,onBackPress: () -> Unit = {}) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -118,7 +120,10 @@ private fun RecipeDetailToolBar(modifier: Modifier = Modifier) {
             Image(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(color = Color.White)
+                colorFilter = ColorFilter.tint(color = Color.White),
+                modifier = Modifier.clickable {
+                    onBackPress()
+                }
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(

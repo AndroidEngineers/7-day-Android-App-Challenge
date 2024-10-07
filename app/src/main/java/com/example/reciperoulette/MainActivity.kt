@@ -13,6 +13,7 @@ import com.example.reciperoulette.data.constants.RECIPE_SCREEN
 import com.example.reciperoulette.screens.recipedetailscree.RecipeDetailScreen
 import com.example.reciperoulette.screens.recipedetailscree.RecipeDetailViewModel
 import com.example.reciperoulette.screens.recipescreen.RecipesScreen
+import com.example.reciperoulette.screens.recipescreen.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,15 +31,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
     val recipeDetailViewModel:RecipeDetailViewModel = hiltViewModel()
+    val recipesViewModel: RecipesViewModel = hiltViewModel()
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = RECIPE_SCREEN) {
         composable(route = RECIPE_SCREEN) {
-            RecipesScreen(recipeDetailViewModel = recipeDetailViewModel){
+            RecipesScreen(recipeDetailViewModel = recipeDetailViewModel, recipesViewModel = recipesViewModel){
                 navController.navigate(RECIPE_DETAIL_SCREEN)
             }
         }
         composable(route = RECIPE_DETAIL_SCREEN) {
-            RecipeDetailScreen(recipeDetailViewModel = recipeDetailViewModel)
+            RecipeDetailScreen(recipeDetailViewModel = recipeDetailViewModel){
+                navController.popBackStack()
+            }
         }
     }
 }
