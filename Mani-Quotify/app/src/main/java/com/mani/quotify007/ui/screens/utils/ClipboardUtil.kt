@@ -11,7 +11,7 @@ fun onCopyText(context: Context, quote: Quote) {
     clipboardManager.setPrimaryClip(
         ClipData.newPlainText(
             "quote",
-            "${quote.text} - ${quote.author}"
+            "${quote.content} - ${quote.author}"
         )
     )
 }

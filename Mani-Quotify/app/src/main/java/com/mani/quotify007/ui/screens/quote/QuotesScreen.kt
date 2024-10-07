@@ -51,7 +51,7 @@ fun QuotesScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = quote.text,
+                text = quote.content,
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.Black,
                 fontFamily = FontFamily.Serif,
@@ -121,7 +121,7 @@ fun QuotesScreen(
 @Composable
 fun QuotesScreenPreview() {
     QuotesScreen(
-        Quote(0, "Sample quote", "Sample author"),
+        Quote(_id = "000", content = "Sample quote", author = "Sample author"),
         onEvent = {},
         true
     )

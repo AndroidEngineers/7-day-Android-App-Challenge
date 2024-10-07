@@ -36,7 +36,7 @@ fun SearchScreen(
 ) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredQuotes =
-        state.quotes.filter { it.text.contains(searchQuery.text, ignoreCase = true) }
+        state.quotes.filter { it.content.contains(searchQuery.text, ignoreCase = true) }
 
     Column(modifier = Modifier
         .fillMaxSize()

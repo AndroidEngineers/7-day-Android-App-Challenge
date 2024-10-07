@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.mani.quotify007.QuotifyApp
 import com.mani.quotify007.data.local.FavoriteQuoteEntity
 import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.domain.model.QuoteResult
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -29,22 +31,36 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
 
     private val getQuoteUseCase = (application as QuotifyApp).getQuoteUseCase
 
+    private lateinit var quoteResult: QuoteResult
+
     init {
+        loadQuotesData()
+    }
+
+    private fun loadQuotesData() {
         viewModelScope.launch {
+            _state.value.isLoading = true
+            try {
+                quoteResult = getQuoteUseCase.result()
+            } catch (e: Exception) {
+                _showToast.postValue(e.message)
+            } finally {
+                _state.value.isLoading = false
+            }
             (application as QuotifyApp).quoteDb.favoriteQuoteDao().getAllFavoriteQuotes()
+                .catch { e -> e.printStackTrace() }
                 .collect { quotes ->
                     _state.value =
                         _state.value.copy(favoriteQuotes = quotes.map { it.toDomainModel() })
                     _state.value = _state.value.copy(
-                        quotes = getQuoteUseCase.execute().map { quote ->
-                            if (state.value.favoriteQuotes.any { it.id == quote.id }) {
+                        quotes = quoteResult.results.map { quote ->
+                            if (state.value.favoriteQuotes.any { it._id == quote._id }) {
                                 quote.isFavorite = true
                             } else {
                                 quote.isFavorite = false
                             }
                             quote
-                        },
-                        randomQuote = getQuoteUseCase.execute().randomOrNull()
+                        }
                     )
                 }
         }
@@ -79,7 +95,7 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
         }
     }
 
-    private fun FavoriteQuoteEntity.toDomainModel() = Quote(id, text, author, true)
+    private fun FavoriteQuoteEntity.toDomainModel() = Quote(id, content = content, author = author, isFavorite = true)
 
-    private fun Quote.toEntity() = FavoriteQuoteEntity(id = id, text = text, author = author ?: "")
+    private fun Quote.toEntity() = FavoriteQuoteEntity(id = _id, content = content, author = author)
 }

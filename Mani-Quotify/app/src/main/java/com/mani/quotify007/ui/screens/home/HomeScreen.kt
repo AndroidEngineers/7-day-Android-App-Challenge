@@ -37,9 +37,10 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(QUOTE_OF_THE_DAY_HEADER, fontStyle = FontStyle.Italic, fontSize = 30.sp)
+        if (state.randomQuote == null) onEvent(MainEvent.GetRandomQuote)
         state.randomQuote?.let { quote ->
             QuotesScreen(
-                quote = quote,
+                quote = state.randomQuote,
                 onEvent = onEvent,
                 isAddOnly = true
             )

@@ -1,8 +1,11 @@
 package com.mani.quotify007.ui.navigation
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
@@ -20,12 +23,17 @@ fun MainScreen(
     Scaffold(
         bottomBar = { BottomAppBar(navController) }
     ) { innerPadding ->
-        NavigationGraph(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding),
-            state = state,
-            onEvent = onEvent
-        )
+        Box {
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+            NavigationGraph(
+                navController = navController,
+                modifier = Modifier.padding(innerPadding),
+                state = state,
+                onEvent = onEvent
+            )
+        }
     }
 }
 
