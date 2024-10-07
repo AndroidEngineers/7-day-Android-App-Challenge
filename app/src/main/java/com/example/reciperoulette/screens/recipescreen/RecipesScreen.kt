@@ -59,15 +59,15 @@ fun RecipesScreen(
     onRecipeClick: () -> Unit = {}
 ) {
     val recipeList by recipesViewModel.recipeList.collectAsState()
-    LaunchedEffect(Unit) {
-        Log.d("RecipesScreen", "RecipesScreen: #ak inside a launchEffect")
-        recipesViewModel.updateRecipeList(FilterCards.ALL)
-    }
+
     var selectedcard by rememberSaveable {
         mutableStateOf(FilterCards.ALL)
     }
 
-
+    LaunchedEffect(selectedcard) {
+        Log.d("RecipesScreen", "RecipesScreen: #ak inside a launchEffect")
+        recipesViewModel.updateRecipeList(selectedcard)
+    }
 
     fun selectCard(select: FilterCards) {
         selectedcard = select

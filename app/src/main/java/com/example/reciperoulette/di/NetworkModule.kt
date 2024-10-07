@@ -30,9 +30,9 @@ class NetworkModule {
         return retrofit.create(RecipeApi::class.java)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideRecipe(recipeApi: RecipeApi): RecipesRepository {
-//        return RecipesRepositoryImpl(recipeApi)
-//    }
+    @Singleton
+    @Provides
+    fun provideRecipe(recipeApi: RecipeApi): RecipesRepository {
+        return RecipesRepositoryImpl(recipeApi)
+    }
 }

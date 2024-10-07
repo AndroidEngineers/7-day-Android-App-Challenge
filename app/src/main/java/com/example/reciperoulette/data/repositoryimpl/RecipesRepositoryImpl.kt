@@ -7,8 +7,8 @@ import com.example.reciperoulette.model.Recipe
 import com.example.reciperoulette.model.RecipeData
 import javax.inject.Inject
 
-class RecipesRepositoryImpl @Inject constructor(private val recipeApi: RecipeApi) {
-     suspend fun getRecipesList(): RecipeData? {
+class RecipesRepositoryImpl @Inject constructor(private val recipeApi: RecipeApi):RecipesRepository {
+     override suspend fun getRecipesList(): RecipeData? {
         val recipeListResponse = recipeApi.getRecipe()
         if (recipeListResponse.isSuccessful) {
             Log.d("RecipesRepositoryImpl", "#ak inside getRecipesList: ${recipeListResponse.body()}")
