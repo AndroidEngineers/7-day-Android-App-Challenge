@@ -6,5 +6,6 @@ data class RecipeDetailState(
     var summary: String? = null,
     var instruction: String? = null,
     var gradiant: List<ExtendedIngredient> = emptyList(),
-    var recipeName:String? = null
+    var recipeName:String? = null,
+    var recipeImage:String? = null
 )

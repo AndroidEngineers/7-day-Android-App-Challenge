@@ -27,5 +27,6 @@ class RecipeDetailViewModel : ViewModel() {
         _recipeData.value.instruction = recipe.instructions
         _recipeData.value.gradiant = recipe.extendedIngredients
         _recipeData.value.recipeName = recipe.title
+        _recipeData.value.recipeImage = recipe.image
     }
 }

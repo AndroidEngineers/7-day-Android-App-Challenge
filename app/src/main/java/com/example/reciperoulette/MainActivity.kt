@@ -38,7 +38,7 @@ fun App() {
             }
         }
         composable(route = RECIPE_DETAIL_SCREEN) {
-            RecipeDetailScreen()
+            RecipeDetailScreen(recipeDetailViewModel = recipeDetailViewModel)
         }
     }
 }

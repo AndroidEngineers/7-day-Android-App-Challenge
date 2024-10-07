@@ -1,5 +1,6 @@
 package com.example.reciperoulette.screens.recipescreen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,6 +36,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,8 +44,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.example.reciperoulette.R
 import com.example.reciperoulette.model.Recipe
 import com.example.reciperoulette.screens.recipedetailscree.RecipeDetailViewModel
+import kotlin.math.log
 
 
 //@Preview
@@ -60,6 +64,7 @@ fun RecipesScreen(
     }
 
     LaunchedEffect(Unit) {
+        Log.d("RecipesScreen", "RecipesScreen: #ak inside a launchEffect")
         recipesViewModel.updateRecipeList(FilterCards.ALL)
     }
 
@@ -210,12 +215,13 @@ fun RecipeListItem(
     recipe: Recipe,
     onRecipeClick: () -> Unit = {}
 ) {
-    val painter = rememberAsyncImagePainter(model = recipe.image )
+    val painter = rememberAsyncImagePainter(model = recipe.image, placeholder = painterResource(id = R.drawable.recipe))
     Card(modifier = modifier
         .fillMaxWidth()
         .clickable {
             recipeDetailViewModel.getRecipe(recipe)
-            onRecipeClick() }) {
+            onRecipeClick()
+        }) {
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically

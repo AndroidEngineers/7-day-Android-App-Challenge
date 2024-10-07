@@ -1,5 +1,7 @@
 package com.example.reciperoulette.screens.recipedetailscree
 
+import android.annotation.SuppressLint
+import android.view.ViewStructure.HtmlInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,17 +43,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.HtmlCompat
+import androidx.core.text.toSpanned
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.reciperoulette.R
 import com.example.reciperoulette.model.ExtendedIngredient
 
-@Preview
+//@Preview
 @Composable
 fun RecipeDetailScreen(
     modifier: Modifier = Modifier,
-    recipeDetailViewModel: RecipeDetailViewModel = viewModel()
+    recipeDetailViewModel: RecipeDetailViewModel
 ) {
     val data by recipeDetailViewModel.recipeData.collectAsState()
+    val painter = rememberAsyncImagePainter(model = data.recipeImage, placeholder = painterResource(id = R.drawable.recipe) )
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -63,7 +70,7 @@ fun RecipeDetailScreen(
             RecipeDetailToolBar()
             HeadingUi(headingName = data.recipeName?:"Recipe Name")
             Image(
-                painter = painterResource(id = R.drawable.recipe),
+                painter = painter,
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
@@ -137,9 +144,11 @@ private fun HeadingUi(modifier: Modifier = Modifier, headingName: String = "Reci
     )
 }
 
-@Preview
+//@Preview
 @Composable
-private fun GradiantListItem(modifier: Modifier = Modifier,gradiantName:String = "") {
+private fun GradiantListItem(modifier: Modifier = Modifier,gradiantName:String = "",gradiantImage:String ) {
+//    val imageUrl = "https://img.spoonacular.com/$gradiantImage"
+    val painter = rememberAsyncImagePainter(model = gradiantImage)
     Box(
         modifier = modifier
 
@@ -151,7 +160,7 @@ private fun GradiantListItem(modifier: Modifier = Modifier,gradiantName:String =
             Image(
                 painter = painterResource(id = R.drawable.recipe),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .size(50.dp)
                     .clip(RoundedCornerShape(8.dp))
@@ -181,16 +190,17 @@ private fun GradiantListScreen(modifier: Modifier = Modifier,gradiantList:List<E
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(gradiantList) {
-            GradiantListItem(gradiantName = it.name)
+            GradiantListItem(gradiantName = it.name,gradiantImage = it.image)
         }
     }
 }
 
+@SuppressLint("RememberReturnType")
 @Preview
 @Composable
 private fun SummaryScreen(modifier: Modifier = Modifier, summary: String = "") {
     Text(
-        text = "Madeleine Thien is a Canadian writer whose work explores the trans-cultural world of Asian art, politics, and family life within Canada’s diasporic Asian Communities. She was born in 1974 to a Malaysian Chinese father and a Hong Kong Chinese mother. Thien studied contemporary dance but switched to creative writing as an undergraduate in college. She earned her MFA in writing from the University of British Columbia.",
+        text = summary,
         color = Color.White,
         modifier = modifier.padding(horizontal = 16.dp)
     )
@@ -200,7 +210,7 @@ private fun SummaryScreen(modifier: Modifier = Modifier, summary: String = "") {
 @Composable
 private fun InstructionScreen(modifier: Modifier = Modifier,instruction:String = "") {
     Text(
-        text = "Madeleine Thien is a Canadian writer whose work explores the trans-cultural world of Asian art, politics, and family life within Canada’s diasporic Asian Communities. She was born in 1974 to a Malaysian Chinese father and a Hong Kong Chinese mother. Thien studied contemporary dance but switched to creative writing as an undergraduate in college. She earned her MFA in writing from the University of British Columbia.",
+        text = instruction,
         color = Color.White,
         modifier = modifier.padding(horizontal = 16.dp)
     )
