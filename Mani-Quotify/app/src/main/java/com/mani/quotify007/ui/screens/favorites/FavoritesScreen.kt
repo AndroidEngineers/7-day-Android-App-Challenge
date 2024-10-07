@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.view
+package com.mani.quotify007.ui.screens.favorites
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,10 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mani.quotify007.domain.model.Quote
-import com.mani.quotify007.presentation.viewmodel.MainEvent
+import com.mani.quotify007.ui.navigation.model.MainEvent
+import com.mani.quotify007.ui.screens.quote.QuotesScreen
 
 @Composable
-fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
+fun FavoritesScreen(
+    quotes: List<Quote>,
+    onEvent: (MainEvent) -> Unit,
+    onCopyText: (Quote) -> Unit,
+    onShareClick: (Quote) -> Unit
+) {
     if (quotes.isEmpty()) {
         Column(
             modifier = Modifier
@@ -36,7 +42,13 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
         ) {
             LazyColumn {
                 items(quotes) { quote ->
-                    QuotesScreen(quote, onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) })
+                    QuotesScreen(
+                        quote,
+                        onEvent = { onEvent(MainEvent.RemoveFavorite(quote)) },
+                        false,
+                        onCopyText = onCopyText,
+                        onShareClick = onShareClick
+                    )
                 }
             }
         }
@@ -46,5 +58,9 @@ fun FavoritesScreen(quotes: List<Quote>, onEvent: (MainEvent) -> Unit) {
 @Preview
 @Composable
 fun FavoritesScreenPreview() {
-    FavoritesScreen(listOf(Quote("Sample quote", "Sample Author")), onEvent = {})
+    FavoritesScreen(
+        listOf(Quote(0, "Sample quote", "Sample Author")),
+        onEvent = {},
+        onCopyText = {},
+        onShareClick = {})
 }

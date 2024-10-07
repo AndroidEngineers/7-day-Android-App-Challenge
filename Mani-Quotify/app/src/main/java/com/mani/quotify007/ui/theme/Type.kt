@@ -1,4 +1,4 @@
-package com.mani.quotify007.presentation.ui.theme
+package com.mani.quotify007.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
