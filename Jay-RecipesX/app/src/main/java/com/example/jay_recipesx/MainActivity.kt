@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     RecipeHomeScreen(
                         modifier = Modifier.padding(innerPadding),
-                        state = state
+                        viewModel = viewModel
                     )
                 }
             }
