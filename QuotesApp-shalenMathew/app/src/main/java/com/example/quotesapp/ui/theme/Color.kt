@@ -13,3 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 val customBlack = Color(0xFF000000)
 val customGrey = Color(0xFF4E4E4E)
 val Grey = Color(0xFF999999)
+
+val bottomNavItem = Color(0xFF282828)
