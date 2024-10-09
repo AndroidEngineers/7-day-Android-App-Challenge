@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
     interface QuoteRepository {
     suspend fun getQuoteResult(): QuoteResult
-    fun getQuotes(): List<Quote>
     fun addQuote(quote: Quote)
     fun removeQuote(quote: Quote)
     suspend fun getFavoriteQuotes(): Flow<List<Quote>>

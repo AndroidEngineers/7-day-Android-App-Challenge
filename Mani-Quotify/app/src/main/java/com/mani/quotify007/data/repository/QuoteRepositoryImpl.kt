@@ -18,16 +18,12 @@ class QuoteRepositoryImpl(
     override suspend fun getQuoteResult(): QuoteResult =
         quoteApiService.getQuoteResult().toResults()
 
-    override fun getQuotes(): List<Quote> = quotesDataList
-
-    //TODO: Future implementation
     override fun addQuote(quote: Quote) {
-        quotesDataList.add(quote)
+        //TODO: add quote to list
     }
 
-    //TODO: Future implementation
     override fun removeQuote(quote: Quote) {
-        quotesDataList.remove(quote)
+        //TODO: remove quote from list
     }
 
     override suspend fun getFavoriteQuotes(): Flow<List<Quote>> =
