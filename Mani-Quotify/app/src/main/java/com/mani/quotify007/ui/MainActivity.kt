@@ -4,15 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mani.quotify007.QuotifyApp
 import com.mani.quotify007.ui.navigation.MainScreen
+import com.mani.quotify007.ui.navigation.model.UiActionEvent
 import com.mani.quotify007.ui.navigation.viewmodel.MainViewModel
 import com.mani.quotify007.ui.navigation.viewmodel.QuoteViewModelFactory
 import com.mani.quotify007.ui.screens.utils.onCopyText
 import com.mani.quotify007.ui.screens.utils.shareQuote
 import com.mani.quotify007.ui.screens.utils.showToast
 import com.mani.quotify007.ui.theme.QuotifyAppTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -35,14 +40,17 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
-        viewModel.copyTextEvent.observe(this) { quote ->
-            onCopyText(this, quote)
-        }
-        viewModel.shareClickEvent.observe(this) { quote ->
-            shareQuote(this, quote)
-        }
-        viewModel.showToast.observe(this) { message ->
-            message?.let { showToast(it) }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiActionEvent.collect { event ->
+                    when (event) {
+                        is UiActionEvent.CopyText -> onCopyText(this@MainActivity, event.quote)
+                        is UiActionEvent.ShareClick -> shareQuote(this@MainActivity, event.quote)
+                        is UiActionEvent.ShowToast -> showToast(event.message)
+                        else -> { /* Do nothing */}
+                    }
+                }
+            }
         }
     }
 }

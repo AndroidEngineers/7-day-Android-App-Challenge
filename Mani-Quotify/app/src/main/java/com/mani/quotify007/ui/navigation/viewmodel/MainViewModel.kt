@@ -1,14 +1,14 @@
 package com.mani.quotify007.ui.navigation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.domain.usecase.GetQuoteUseCase
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.navigation.model.UiActionEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -17,14 +17,8 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
     private val _state = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state
 
-    private val _copyTextEvent = MutableLiveData<Quote>()
-    val copyTextEvent: LiveData<Quote> = _copyTextEvent
-
-    private val _shareClickEvent = MutableLiveData<Quote>()
-    val shareClickEvent: LiveData<Quote> = _shareClickEvent
-
-    private val _showToast = MutableLiveData<String>()
-    val showToast: LiveData<String> = _showToast
+    private val _uiActionEvent = MutableSharedFlow<UiActionEvent>()
+    val uiActionEvent: SharedFlow<UiActionEvent?> = _uiActionEvent
 
     init {
         loadQuotesData()
@@ -52,7 +46,7 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
                         _state.value.isLoading = false
                     }
             } catch (e: Exception) {
-                _showToast.postValue(e.message)
+                _uiActionEvent.emit(UiActionEvent.ShowToast(e.message.toString()))
             } finally {
                 _state.value.isLoading = false
             }
@@ -78,10 +72,11 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
                     val randomQuote = _state.value.quotes.randomOrNull()
                     _state.value = _state.value.copy(randomQuote = randomQuote)
                 }
+                is MainEvent.CopyText -> _uiActionEvent.emit(UiActionEvent.CopyText(event.quote))
 
-                is MainEvent.CopyText -> _copyTextEvent.postValue(event.quote)
-                is MainEvent.ShareClick -> _shareClickEvent.postValue(event.quote)
-                is MainEvent.ShowToast -> _showToast.postValue(event.message)
+                is MainEvent.ShareClick -> _uiActionEvent.emit(UiActionEvent.ShareClick(event.quote))
+
+                is MainEvent.ShowToast -> _uiActionEvent.emit(UiActionEvent.ShowToast(event.message))
             }
         }
     }
