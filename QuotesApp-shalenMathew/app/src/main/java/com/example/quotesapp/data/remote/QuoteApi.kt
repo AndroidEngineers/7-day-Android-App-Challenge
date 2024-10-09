@@ -12,4 +12,5 @@ interface QuoteApi {
    suspend fun getQuoteOfTheDay():QuotesDto
 
 
+
 }

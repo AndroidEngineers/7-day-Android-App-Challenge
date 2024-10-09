@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navHost, startDestination = Screen.Home.route){
 
                         composable(Screen.Home.route){  HomeScreen(paddingValues,quoteViewModel) }
-                        composable(Screen.Fav.route){ FavScreen() }
+                        composable(Screen.Fav.route){ FavScreen(paddingValues,quoteViewModel) }
 
                     }
 

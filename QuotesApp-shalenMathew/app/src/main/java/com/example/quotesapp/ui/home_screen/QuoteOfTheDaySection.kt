@@ -33,7 +33,7 @@ fun QuoteOfTheDaySection(quoteViewModel: QuoteViewModel) {
                 modifier = Modifier.padding(start = 15.dp, top = 18.dp),
                 color = Color.White)
 
-            Text(text = state.qot?.quote ?: "Null",
+            Text(text = state.qot?.quote ?: state.error,
                 fontFamily = GIFont,
                 fontWeight = FontWeight.Thin,
                 fontSize = 15.sp,

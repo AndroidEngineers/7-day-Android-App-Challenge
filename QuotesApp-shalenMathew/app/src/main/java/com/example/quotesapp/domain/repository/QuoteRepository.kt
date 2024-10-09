@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuoteRepository {
 
-    fun getQuote(): Flow<Resource<QuoteHome>>
-
-    fun saveLikedQuote(id: Int)
-
+  fun getQuote(): Flow<Resource<QuoteHome>>
+     suspend  fun saveLikedQuote(quote: Quote)
 }

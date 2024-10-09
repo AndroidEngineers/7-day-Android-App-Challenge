@@ -1,15 +1,19 @@
 package com.example.quotesapp.ui.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.quotesapp.domain.model.Quote
 import com.example.quotesapp.domain.usecases.QuoteUseCase
 import com.example.quotesapp.ui.home_screen.util.QuoteEvent
 import com.example.quotesapp.ui.home_screen.util.QuoteState
 import com.example.quotesapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +29,6 @@ class QuoteViewModel @Inject constructor(private val quoteUseCase: QuoteUseCase)
         getQuote()
     }
 
-
    private fun getQuote(){
 
        viewModelScope.launch {
@@ -34,17 +37,22 @@ class QuoteViewModel @Inject constructor(private val quoteUseCase: QuoteUseCase)
 
                when(it){
                   is Resource.Success->{
+//                      Log.d("TAG","viewmodel " + it.data!!.quotesList[0].toString())
 
-                      Log.d("TAG","viewmodel " + it.data!!.quotesList[0].toString())
-                      _quoteState.value = _quoteState.value.copy(dataList = it.data.quotesList,
-                          qot = it.data.quotesOfTheDay[0])
+                      it.data?.let { data->
+                          _quoteState.value = _quoteState.value.copy(dataList = data.quotesList.toMutableList(),
+                              qot = data.quotesOfTheDay[0], isLoading = false)
+                      } ?:{ _quoteState.value = _quoteState.value.copy(dataList = mutableListOf(),
+                          qot =null , isLoading = false) }
+
+
                   }
 
                    is Resource.Error -> {
-                       Log.d("TAG","From viewmodel - ${it.message}")
+                     _quoteState.value = _quoteState.value.copy(error = it.message ?: "Something went wrong", isLoading = false)
                    }
                    is Resource.Loading -> {
-                       Log.d("TAG","From viewmodel - Loading")
+                       _quoteState.value =_quoteState.value.copy(isLoading = true)
                    }
                }
            }
@@ -57,10 +65,29 @@ class QuoteViewModel @Inject constructor(private val quoteUseCase: QuoteUseCase)
 
             is QuoteEvent.Like -> {
 
+                Log.d("TAG","Before true-"+quoteEvent.quote.liked.toString())
+                Log.d("TAG","Before id-"+ quoteEvent.quote.id)
+                viewModelScope.launch {
+//                    quoteUseCase.likedQuote(quoteEvent.quote)
+                    val updatedQuote = quoteUseCase.likedQuote(quoteEvent.quote)
+
+                    _quoteState.value=_quoteState.value.copy(dataList = _quoteState.value.dataList.map { quote->
+                        if(quote.id==updatedQuote.id) updatedQuote else quote
+                    }.toMutableList(), isLoading = true)
+
+                    delay(100)
+                    _quoteState.value=_quoteState.value.copy(isLoading = false)
+
+//                    Log.d("TAG","After liked-"+ updatedQuote.liked)
+//                    Log.d("TAG","After-"+ updatedQuote.quote)
+//                    Log.d("TAG","After id-"+ updatedQuote.id)
+                }
+
             }
             is QuoteEvent.Share -> {Log.d("TAG","SHARE")}
         }
 
     }
+
 
 }
