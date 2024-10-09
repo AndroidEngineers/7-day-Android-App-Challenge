@@ -27,8 +27,6 @@ class QuoteRepositoryImplementation(private val api:QuoteApi, private val db:Quo
 
             Log.d("TAG",Thread.currentThread().name)
 
-
-
             try {
 
                 withContext(Dispatchers.IO){
@@ -44,19 +42,25 @@ class QuoteRepositoryImplementation(private val api:QuoteApi, private val db:Quo
 //                        quotesOfTheDay = qot
 //                    )
 
-                    db.getQuoteDao().deleteAll()
+
+                    quotesList.forEach { it->
+                        if(!it.liked){
+                            db.getQuoteDao().deleteQuote(it)
+                        }
+                    }
+
+//                    db.getQuoteDao().deleteAll()
 
                     quotesList.let { list->
                         db.getQuoteDao().insertQuoteList(quotesList)
                     }
 
-                    Log.d("TAG","From impl inside catch-" + db.getQuoteDao().getAllQuotes().size)
+                    Log.d("TAG","From impl inside try-" + db.getQuoteDao().getAllQuotes().size)
 
                     quoteHome= QuoteHome(
                         quotesList = db.getQuoteDao().getAllQuotes(),
                         quotesOfTheDay = qot
                     )
-
                 }
 
                 emit(Resource.Success(quoteHome))
@@ -66,6 +70,8 @@ class QuoteRepositoryImplementation(private val api:QuoteApi, private val db:Quo
                 Log.d("TAG","From impl inside catch "+e.message.toString())
             }
 
+
+
         }
 
     }
@@ -73,4 +79,6 @@ class QuoteRepositoryImplementation(private val api:QuoteApi, private val db:Quo
     override suspend fun saveLikedQuote(quote: Quote) {
         db.getQuoteDao().insertLikedQuote(quote)
     }
+
+
 }

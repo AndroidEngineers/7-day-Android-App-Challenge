@@ -1,4 +1,4 @@
-package com.example.quotesapp.ui.home_screen.util
+package com.example.quotesapp.ui.fav_screen.util
 
 import com.example.quotesapp.domain.model.Quote
 
@@ -8,6 +8,6 @@ import com.example.quotesapp.domain.model.Quote
 //}
 // replacing this with sealed class for more customization
 
-sealed class QuoteEvent {
-    data class Like(val quote: Quote):QuoteEvent()
+sealed class FavQuoteEvent {
+    data class Like(val quote: Quote):FavQuoteEvent()
 }

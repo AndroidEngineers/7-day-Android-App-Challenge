@@ -1,6 +1,5 @@
 package com.example.quotesapp.ui.fav_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,15 +27,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.quotesapp.R
 import com.example.quotesapp.domain.model.Quote
-import com.example.quotesapp.ui.home_screen.util.QuoteEvent
+import com.example.quotesapp.ui.fav_screen.util.FavQuoteEvent
 import com.example.quotesapp.ui.theme.GIFont
 import com.example.quotesapp.ui.theme.customBlack
 import com.example.quotesapp.ui.theme.customGrey
-import com.example.quotesapp.ui.viewmodel.QuoteViewModel
+import com.example.quotesapp.ui.viewmodel.FavQuoteViewModel
 
 
 @Composable
-fun FavQuoteItem(data: Quote){
+fun FavQuoteItem(quote: Quote, quoteViewModel: FavQuoteViewModel){
 
     val gradient = Brush.radialGradient(
         0.0f to customBlack,
@@ -63,7 +61,7 @@ fun FavQuoteItem(data: Quote){
                     .padding(start=12.dp,top = 10.dp)
                     .size(30.dp))
 
-            Text(text = data.quote,
+            Text(text = quote.quote,
                 fontFamily = GIFont,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
@@ -75,11 +73,11 @@ fun FavQuoteItem(data: Quote){
 
             Spacer(modifier= Modifier.height(20.dp))
 
-            Text(text = data.author,
+            Text(text = quote.author,
                 color = Color.Gray,
                 modifier = Modifier.padding(horizontal = 15.dp))
 
-            if (data.liked ){
+
 
                Box(modifier = Modifier.fillMaxWidth()
                    ){
@@ -88,16 +86,8 @@ fun FavQuoteItem(data: Quote){
                        modifier= Modifier.padding(end = 12.dp, bottom = 10.dp)
                            .size(30.dp)
                            .clickable {
-
+                               quoteViewModel.onEvent(FavQuoteEvent.Like(quote))
                            }.align(Alignment.BottomEnd))
-               }
-            }else{
-                AsyncImage(model = R.drawable.heart_unfilled,
-                    contentDescription = null,
-                    modifier= Modifier.size(35.dp)
-                        .clickable {
-
-                        })
 
             }
 

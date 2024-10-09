@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -84,8 +85,9 @@ fun QuoteItem(data: Quote, quoteViewModel: QuoteViewModel){
                 fontFamily = GIFont,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 15.dp),
-                color = Color.White,
+                modifier = Modifier.padding(horizontal = 15.dp)
+                    .fillMaxWidth(),
+                color = White,
                 style = TextStyle(
                     lineHeight = 40.sp // Set the line height
                 )
@@ -118,7 +120,6 @@ fun QuoteItem(data: Quote, quoteViewModel: QuoteViewModel){
                             .clickable {
                                 quoteViewModel.onEvent(QuoteEvent.Like(data))
                             })
-
                 }
 
             Spacer(modifier= Modifier.height(25.dp))

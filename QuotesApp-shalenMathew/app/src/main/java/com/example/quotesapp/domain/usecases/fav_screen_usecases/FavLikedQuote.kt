@@ -1,14 +1,13 @@
-package com.example.quotesapp.domain.usecases
-
+package com.example.quotesapp.domain.usecases.fav_screen_usecases
 
 import android.util.Log
 import com.example.quotesapp.domain.model.Quote
-import com.example.quotesapp.domain.repository.QuoteRepository
+import com.example.quotesapp.domain.repository.FavQuoteRepository
 import javax.inject.Inject
 
-class LikedQuote @Inject constructor(val quoteRepository: QuoteRepository) {
+class FavLikedQuote @Inject constructor(val quoteRepository: FavQuoteRepository) {
 
-    suspend operator fun  invoke(quote:Quote):Quote{
+    suspend operator fun  invoke(quote:Quote): Quote {
 
         val updatedQuote = quote.copy(liked = !quote.liked)
         quoteRepository.saveLikedQuote(updatedQuote)

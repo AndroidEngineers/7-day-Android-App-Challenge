@@ -1,20 +1,15 @@
 package com.example.quotesapp.ui.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.quotesapp.domain.model.Quote
-import com.example.quotesapp.domain.usecases.QuoteUseCase
+import com.example.quotesapp.domain.usecases.home_screen_usecases.QuoteUseCase
 import com.example.quotesapp.ui.home_screen.util.QuoteEvent
 import com.example.quotesapp.ui.home_screen.util.QuoteState
 import com.example.quotesapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -84,7 +79,6 @@ class QuoteViewModel @Inject constructor(private val quoteUseCase: QuoteUseCase)
                 }
 
             }
-            is QuoteEvent.Share -> {Log.d("TAG","SHARE")}
         }
 
     }

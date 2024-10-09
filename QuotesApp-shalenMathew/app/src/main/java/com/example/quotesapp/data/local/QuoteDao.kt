@@ -22,9 +22,9 @@ interface QuoteDao {
    suspend fun deleteQuote(quote: Quote)
 
     @Query(" SELECT * FROM Quote WHERE liked==1 ")
-    fun getAllLikedQuotes(): Flow<List<Quote>>
+    fun getAllLikedQuotes(): List<Quote>
 
-    @Query(" SELECT * FROM Quote ")
+    @Query(" SELECT * FROM Quote ORDER BY id DESC ")
    suspend fun getAllQuotes():List<Quote>
 
     @Query("DELETE FROM quote")
