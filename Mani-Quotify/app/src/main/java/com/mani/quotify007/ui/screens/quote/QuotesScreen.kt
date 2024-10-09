@@ -121,7 +121,7 @@ fun QuotesScreen(
 @Composable
 fun QuotesScreenPreview() {
     QuotesScreen(
-        Quote(_id = "000", content = "Sample quote", author = "Sample author"),
+        Quote(id = "000", content = "Sample quote", author = "Sample author"),
         onEvent = {},
         true
     )
