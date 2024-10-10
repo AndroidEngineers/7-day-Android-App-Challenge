@@ -31,9 +31,8 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
                 useCase.dbQuotes()
                     .catch { e -> e.printStackTrace() }
                     .collect { quotes ->
-                        _state.value =
-                            _state.value.copy(favoriteQuotes = quotes)
                         _state.value = _state.value.copy(
+                            favoriteQuotes = quotes,
                             quotes = useCase.result().results.map { quote ->
                                 if (state.value.favoriteQuotes.any { it.id == quote.id }) {
                                     quote.isFavorite = true
@@ -41,9 +40,9 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
                                     quote.isFavorite = false
                                 }
                                 quote
-                            }
+                            },
+                            isLoading = false
                         )
-                        _state.value.isLoading = false
                     }
             } catch (e: Exception) {
                 _uiActionEvent.emit(UiActionEvent.ShowToast(e.message.toString()))
