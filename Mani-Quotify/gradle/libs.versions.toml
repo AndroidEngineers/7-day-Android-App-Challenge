@@ -33,6 +33,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 ktx-sxn-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "jsonConverter" }
 ktx-sxn-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "ktxConvertor" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }

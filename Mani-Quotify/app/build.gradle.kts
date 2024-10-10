@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.ktx.sxn.json)
     implementation(libs.ktx.sxn.converter)
     implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

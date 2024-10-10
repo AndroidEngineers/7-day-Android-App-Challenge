@@ -10,9 +10,11 @@ import com.mani.quotify007.data.repository.QuoteRepositoryImpl
 import com.mani.quotify007.domain.repository.QuoteRepository
 import com.mani.quotify007.domain.usecase.GetQuoteUseCase
 import com.mani.quotify007.ui.screens.utils.BASE_URL
+import com.mani.quotify007.ui.screens.utils.JSON_TYPE
 import com.mani.quotify007.ui.screens.utils.QUOTIFY_DB_NAME
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 interface QuotiyAppModule {
@@ -28,8 +30,8 @@ class QuotiyAppModuleImpl(context: QuotifyApp) : QuotiyAppModule {
     override val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(getSafeOkHttpClient(context))
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .client(getSafeOkHttpClient(context).newBuilder().addInterceptor(logging).build())
+            .addConverterFactory(Json.asConverterFactory(JSON_TYPE.toMediaType()))
             .build()
     }
     override val quoteDb: QuotifyDatabase by lazy {
@@ -52,4 +54,8 @@ class QuotiyAppModuleImpl(context: QuotifyApp) : QuotiyAppModule {
     override val quoteFavoriteQuoteDao: FavoriteQuoteDao by lazy {
         quoteDb.favoriteQuoteDao()
     }
+}
+
+val logging = HttpLoggingInterceptor().apply {
+    level = HttpLoggingInterceptor.Level.BODY
 }
