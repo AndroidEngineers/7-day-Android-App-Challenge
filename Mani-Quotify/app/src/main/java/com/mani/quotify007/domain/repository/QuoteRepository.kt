@@ -4,7 +4,7 @@ import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.domain.model.QuoteResult
 import kotlinx.coroutines.flow.Flow
 
-    interface QuoteRepository {
+interface QuoteRepository {
     suspend fun getQuoteResult(): QuoteResult
     fun addQuote(quote: Quote)
     fun removeQuote(quote: Quote)

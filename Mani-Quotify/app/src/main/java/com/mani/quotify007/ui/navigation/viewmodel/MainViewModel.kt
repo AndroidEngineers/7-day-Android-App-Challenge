@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mani.quotify007.domain.usecase.GetQuoteUseCase
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.navigation.model.ResponseResult
 import com.mani.quotify007.ui.navigation.model.UiActionEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,28 +28,31 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
     private fun loadQuotesData() {
         viewModelScope.launch {
             _state.value.isLoading = true
-            try {
-                useCase.dbQuotes()
-                    .catch { e -> e.printStackTrace() }
-                    .collect { quotes ->
-                        _state.value = _state.value.copy(
-                            favoriteQuotes = quotes,
-                            quotes = useCase.result().results.map { quote ->
-                                if (state.value.favoriteQuotes.any { it.id == quote.id }) {
-                                    quote.isFavorite = true
-                                } else {
-                                    quote.isFavorite = false
-                                }
-                                quote
-                            },
-                            isLoading = false
-                        )
+            useCase.dbQuotes()
+                .catch { e -> e.printStackTrace() }
+                .collect { quotes ->
+                    when(val result = useCase.result()) {
+                        is ResponseResult.Success -> {
+                            _state.value = _state.value.copy(
+                                favoriteQuotes = quotes,
+                                quotes = result.data.results.map { quote ->
+                                    quote.isFavorite = quotes.any { it.id == quote.id }
+                                    quote
+                                },
+                                isLoading = false
+                            )
+                        }
+                        is ResponseResult.Error -> {
+                            _state.value = _state.value.copy(
+                                favoriteQuotes = quotes,
+                                isLoading = false
+                            )
+                            _uiActionEvent.emit(
+                                UiActionEvent.ShowToast(result.exception.message.toString())
+                            )
+                        }
                     }
-            } catch (e: Exception) {
-                _uiActionEvent.emit(UiActionEvent.ShowToast(e.message.toString()))
-            } finally {
-                _state.value.isLoading = false
-            }
+                }
         }
     }
 
