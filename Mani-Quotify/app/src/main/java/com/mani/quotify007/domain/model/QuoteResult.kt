@@ -1,10 +1,10 @@
 package com.mani.quotify007.domain.model
 
 data class QuoteResult(
-    val count: Long,
-    val lastItemIndex: Long,
-    val page: Long,
+    val count: Long? = null,
+    val lastItemIndex: Long? = null,
+    val page: Long? = null,
     val results: List<Quote>,
-    val totalCount: Long,
-    val totalPages: Long
+    val totalCount: Long? = null,
+    val totalPages: Long? = null
 )

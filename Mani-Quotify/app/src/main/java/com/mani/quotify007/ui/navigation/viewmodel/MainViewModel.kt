@@ -25,7 +25,7 @@ class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
         loadQuotesData()
     }
 
-    private fun loadQuotesData() {
+    fun loadQuotesData() {
         viewModelScope.launch {
             _state.value.isLoading = true
             useCase.dbQuotes()
