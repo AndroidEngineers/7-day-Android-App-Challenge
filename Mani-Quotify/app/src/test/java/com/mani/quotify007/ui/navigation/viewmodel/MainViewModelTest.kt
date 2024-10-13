@@ -3,12 +3,14 @@ package com.mani.quotify007.ui.navigation.viewmodel
 import com.mani.quotify007.domain.model.Quote
 import com.mani.quotify007.domain.model.QuoteResult
 import com.mani.quotify007.domain.usecase.GetQuoteUseCase
+import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.ResponseResult
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -66,4 +68,19 @@ class MainViewModelTest {
         assertEquals(false, viewModel.state.value.isLoading)
 
     }
+
+    @Test
+    fun `onEvent CopyText should emit UiActionEvent CopyText`() = runTest(UnconfinedTestDispatcher()) {
+        val quote = Quote(id = "1", content = "Test Quote", author = "Author")
+
+        val quotes = listOf(Quote(id = "1", content = "Test Quote", author = "Author"))
+        val quoteResult = QuoteResult(results = quotes)
+        coEvery { useCase.dbQuotes() } returns flowOf(quotes)
+        coEvery { useCase.result() } returns ResponseResult.Success(quoteResult)
+
+        viewModel.onEvent(MainEvent.CopyText(quote))
+        viewModel.onEvent(MainEvent.ShareClick(quote))
+        viewModel.onEvent(MainEvent.ShowToast("quote"))
+    }
+
 }
