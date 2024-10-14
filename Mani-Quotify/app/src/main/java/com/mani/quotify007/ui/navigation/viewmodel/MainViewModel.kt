@@ -1,40 +1,57 @@
 package com.mani.quotify007.ui.navigation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mani.quotify007.QuotifyApp
-import com.mani.quotify007.data.local.FavoriteQuoteEntity
-import com.mani.quotify007.domain.model.Quote
+import com.mani.quotify007.domain.usecase.GetQuoteUseCase
 import com.mani.quotify007.ui.navigation.model.MainEvent
 import com.mani.quotify007.ui.navigation.model.MainState
+import com.mani.quotify007.ui.navigation.model.ResponseResult
+import com.mani.quotify007.ui.navigation.model.UiActionEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val application: Application) : AndroidViewModel(application) {
+class MainViewModel(private val useCase: GetQuoteUseCase) : ViewModel() {
     private val _state = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state
 
-    private val getQuoteUseCase = (application as QuotifyApp).getQuoteUseCase
+    private val _uiActionEvent = MutableSharedFlow<UiActionEvent>()
+    val uiActionEvent: SharedFlow<UiActionEvent?> = _uiActionEvent
 
     init {
+        loadQuotesData()
+    }
+
+    fun loadQuotesData() {
         viewModelScope.launch {
-            (application as QuotifyApp).quoteDb.favoriteQuoteDao().getAllFavoriteQuotes()
+            _state.value.isLoading = true
+            useCase.dbQuotes()
+                .catch { e -> e.printStackTrace() }
                 .collect { quotes ->
-                    _state.value =
-                        _state.value.copy(favoriteQuotes = quotes.map { it.toDomainModel() })
-                    _state.value = _state.value.copy(
-                        quotes = getQuoteUseCase.execute().map { quote ->
-                            if (state.value.favoriteQuotes.any { it.id == quote.id }) {
-                                quote.isFavorite = true
-                            } else {
-                                quote.isFavorite = false
-                            }
-                            quote
-                        },
-                        randomQuote = getQuoteUseCase.execute().randomOrNull()
-                    )
+                    when(val result = useCase.result()) {
+                        is ResponseResult.Success -> {
+                            _state.value = _state.value.copy(
+                                favoriteQuotes = quotes,
+                                quotes = result.data.results.map { quote ->
+                                    quote.isFavorite = quotes.any { it.id == quote.id }
+                                    quote
+                                },
+                                isLoading = false
+                            )
+                        }
+                        is ResponseResult.Error -> {
+                            _state.value = _state.value.copy(
+                                favoriteQuotes = quotes,
+                                isLoading = false
+                            )
+                            _uiActionEvent.emit(
+                                UiActionEvent.ShowToast(result.exception.message.toString())
+                            )
+                        }
+                    }
                 }
         }
     }
@@ -43,15 +60,13 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
         viewModelScope.launch {
             when (event) {
                 is MainEvent.AddFavorite -> {
-                    (application as QuotifyApp).quoteDb.favoriteQuoteDao()
-                        .insertFavoriteQuote(event.quote.toEntity())
+                    useCase.addFavoriteQuote(event.quote)
                     _state.value = _state.value.copy(
                         favoriteQuotes = _state.value.favoriteQuotes + event.quote
                     )
                 }
                 is MainEvent.RemoveFavorite -> {
-                    (application as QuotifyApp).quoteDb.favoriteQuoteDao()
-                        .deleteFavoriteQuote(event.quote.toEntity())
+                    useCase.removeFavoriteQuote(event.quote)
                     _state.value = _state.value.copy(
                         favoriteQuotes = _state.value.favoriteQuotes - event.quote
                     )
@@ -60,11 +75,12 @@ class MainViewModel(private val application: Application) : AndroidViewModel(app
                     val randomQuote = _state.value.quotes.randomOrNull()
                     _state.value = _state.value.copy(randomQuote = randomQuote)
                 }
+                is MainEvent.CopyText -> _uiActionEvent.emit(UiActionEvent.CopyText(event.quote))
+
+                is MainEvent.ShareClick -> _uiActionEvent.emit(UiActionEvent.ShareClick(event.quote))
+
+                is MainEvent.ShowToast -> _uiActionEvent.emit(UiActionEvent.ShowToast(event.message))
             }
         }
     }
-
-    private fun FavoriteQuoteEntity.toDomainModel() = Quote(id, text, author, true)
-
-    private fun Quote.toEntity() = FavoriteQuoteEntity(id = id, text = text, author = author ?: "")
 }

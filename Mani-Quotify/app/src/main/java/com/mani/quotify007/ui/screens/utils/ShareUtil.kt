@@ -7,7 +7,7 @@ import com.mani.quotify007.domain.model.Quote
 fun shareQuote(context: Context, quote: Quote) {
     val shareIntent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "${quote.text} - ${quote.author}")
+        putExtra(Intent.EXTRA_TEXT, "${quote.content} - ${quote.author}")
         type = "text/plain"
     }
     context.startActivity(Intent.createChooser(shareIntent, null))
