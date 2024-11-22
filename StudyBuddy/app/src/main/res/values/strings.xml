@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Study Buddy</string>
+    <string name="accessibility_service_description">Service to block certain apps</string>
+</resources>
