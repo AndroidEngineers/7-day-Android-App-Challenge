@@ -14,10 +14,7 @@ const val API_KEY_VALUE = "7a36c50e0e72420eb8515d694a2b2af4" // Currently placin
 
 const val DATASTORE_NAME = "meal_data_store"
 const val USERNAME = "username"
-const val PASSWORD = "password"
-const val HASH = "hash"
 const val IS_LOGGED_IN = "isLoggedIn"
-const val EMAIL = "email"
 
 const val MIN_CARBS_KEY = "minCarbs"
 const val MAX_CARBS_KEY = "maxCarbs"
@@ -29,3 +26,5 @@ const val SEARCH_BY_NUTRIENTS = "recipes/findByNutrients"
 const val SEARCH_BY_INGREDIENTS = "recipes/findByIngredients"
 const val RECIPE_INFO_BY_ID = "recipes/{id}/information"
 const val REGISTER_API = "users/connect"
+
+const val USER_DATABASE_NAME = "meal_user_database"

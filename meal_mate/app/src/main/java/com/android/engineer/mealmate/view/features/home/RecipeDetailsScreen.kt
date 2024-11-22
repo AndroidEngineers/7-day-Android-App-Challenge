@@ -43,7 +43,7 @@ fun RecipeDetailsScreen(recipeId: Int, navHostController: NavHostController) {
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            MealLottieAnimation(rawResId = R.raw.api_progress, imageSize = 200.dp)
+            MealLottieAnimation(rawResId = R.raw.loading_animation, imageSize = 200.dp)
         }
     } else {
         Scaffold(

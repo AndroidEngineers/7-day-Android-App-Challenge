@@ -5,7 +5,7 @@ import com.android.engineer.mealmate.data.remote.model.response.IngredientsRespo
 import com.android.engineer.mealmate.data.remote.model.response.NutrientsResponseItem
 import com.android.engineer.mealmate.data.remote.model.response.RecipeInfoByIdResponse
 import com.android.engineer.mealmate.data.utils.API_KEY_VALUE
-import com.android.engineer.mealmate.domain.repository.RecipeSearchRepository
+import com.android.engineer.mealmate.repository.remote.RecipeSearchRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

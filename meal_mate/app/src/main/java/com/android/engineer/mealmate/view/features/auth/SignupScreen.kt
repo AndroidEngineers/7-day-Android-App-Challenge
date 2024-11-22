@@ -1,5 +1,6 @@
 package com.android.engineer.mealmate.view.features.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +42,6 @@ import com.android.engineer.mealmate.ui.theme.OrangeOnPrimary
 import com.android.engineer.mealmate.view.features.auth.state.VisitingRegisterUiState
 import com.android.engineer.mealmate.view.utils.UtilConst
 import com.android.engineer.mealmate.view.utils.constants.nav.AuthScreen
-import com.android.engineer.mealmate.view.utils.constants.nav.graph.DASHBOARD
 import com.android.engineer.mealmate.view.utils.custom_views.MealFilledButton
 import com.android.engineer.mealmate.view.utils.custom_views.MealLottieAnimation
 import com.android.engineer.mealmate.view.utils.custom_views.MealText
@@ -54,6 +55,7 @@ fun SignupScreen(navHostController: NavHostController) {
     val firstName = viewModel.firstName.collectAsState()
     val lastName = viewModel.lastName.collectAsState()
     val email = viewModel.email.collectAsState()
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier
@@ -68,7 +70,7 @@ fun SignupScreen(navHostController: NavHostController) {
                 contentAlignment = Alignment.Center
             ) {
                 if (viewModel.isScreenLoading.value) {
-                    MealLottieAnimation(rawResId = R.raw.api_progress, imageSize = 200.dp)
+                    MealLottieAnimation(rawResId = R.raw.loading_animation, imageSize = 200.dp)
                 } else {
                     Card(
                         modifier = Modifier
@@ -104,7 +106,7 @@ fun SignupScreen(navHostController: NavHostController) {
                             MealTextField(
                                 value = userName.value,
                                 onValueChange = {
-                                    viewModel.onValueChanged(UtilConst.SignUpEnum.USERNAME, it)
+                                    viewModel.onValueChanged(UtilConst.AuthEnum.USERNAME, it)
                                 },
                                 label = stringResource(id = R.string.username),
                                 icon = Icons.Filled.Person,
@@ -115,7 +117,7 @@ fun SignupScreen(navHostController: NavHostController) {
                             MealTextField(
                                 value = firstName.value,
                                 onValueChange = {
-                                    viewModel.onValueChanged(UtilConst.SignUpEnum.FIRSTNAME, it)
+                                    viewModel.onValueChanged(UtilConst.AuthEnum.FIRSTNAME, it)
                                 },
                                 label = stringResource(id = R.string.first_name),
                                 icon = Icons.Filled.PersonOutline,
@@ -126,7 +128,7 @@ fun SignupScreen(navHostController: NavHostController) {
                             MealTextField(
                                 value = lastName.value,
                                 onValueChange = {
-                                    viewModel.onValueChanged(UtilConst.SignUpEnum.LASTNAME, it)
+                                    viewModel.onValueChanged(UtilConst.AuthEnum.LASTNAME, it)
                                 },
                                 label = stringResource(id = R.string.last_name),
                                 icon = Icons.Filled.PersonOutline,
@@ -137,7 +139,7 @@ fun SignupScreen(navHostController: NavHostController) {
                             MealTextField(
                                 value = email.value,
                                 onValueChange = {
-                                    viewModel.onValueChanged(UtilConst.SignUpEnum.EMAIL, it)
+                                    viewModel.onValueChanged(UtilConst.AuthEnum.EMAIL, it)
                                 },
                                 label = stringResource(id = R.string.email),
                                 icon = Icons.Filled.Email,
@@ -151,7 +153,11 @@ fun SignupScreen(navHostController: NavHostController) {
                                         onCallBack = {
                                             when (it) {
                                                 is VisitingRegisterUiState.Error -> {
-
+                                                    Toast.makeText(
+                                                       context,
+                                                        "",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
                                                 }
 
                                                 VisitingRegisterUiState.Loading -> {
@@ -159,7 +165,7 @@ fun SignupScreen(navHostController: NavHostController) {
                                                 }
 
                                                 is VisitingRegisterUiState.Success -> {
-                                                    navHostController.navigate(route = DASHBOARD)
+                                                    navHostController.navigate(AuthScreen.Login.route)
                                                 }
                                             }
                                         }

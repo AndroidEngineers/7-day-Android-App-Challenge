@@ -49,7 +49,7 @@ fun HomeScreen(navHostController: NavHostController, paddingValues: PaddingValue
     ) {
 
         if (viewModel.isScreenLoading.value) {
-            MealLottieAnimation(rawResId = R.raw.api_progress, imageSize = 200.dp)
+            MealLottieAnimation(rawResId = R.raw.loading_animation, imageSize = 200.dp)
         } else {
             ShowTopView(userName = loggedInUserName)
             Spacer(modifier = Modifier
@@ -76,7 +76,7 @@ fun ShowTopView(userName: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        MealText(text = stringResource(id = R.string.hello).plus(", ").plus(userName), fontSize = 30.sp)
+        MealText(text = stringResource(id = R.string.hello).plus(" ").plus(userName).plus(","), fontSize = 30.sp)
         // This feature is disabled.
         /*MealIconButton(
             onClick = {},

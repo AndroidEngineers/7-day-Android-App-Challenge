@@ -1,4 +1,4 @@
-package com.android.engineer.mealmate.domain.repository
+package com.android.engineer.mealmate.repository.remote
 
 import com.android.engineer.mealmate.data.remote.model.request.RegisterRequest
 import com.android.engineer.mealmate.data.remote.model.response.RegisterResponse

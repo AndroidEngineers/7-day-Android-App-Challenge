@@ -73,6 +73,8 @@ fun MealTextFieldPreview() {
         value = usernameState.value,
         onValueChange = { usernameState.value = it },
         label = "Username",
-        icon = Icons.Filled.Person
+        icon = Icons.Filled.Person,
+        isError = true,
+        errorMsg = "error!"
     )
 }
