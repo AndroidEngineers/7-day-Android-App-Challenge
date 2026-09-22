@@ -1,7 +1,11 @@
+import java.util.Locale
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinSerialization)
+    jacoco
 }
 
 android {
@@ -22,6 +26,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -63,6 +71,11 @@ dependencies {
     implementation(libs.androidx.ui.navigation)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.ktx.sxn.json)
+    implementation(libs.ktx.sxn.converter)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -71,4 +84,65 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlin.test.junit)
+}
+
+val exclusions = listOf(
+    "**/R.class",
+    "**/R\$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/*Test*.*",
+    "**/com/mani/quotify007/data/*",
+    "**/com/mani/quotify007/domain/*",
+    "**/com/mani/quotify007/ui/screens/*"
+)
+
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*", "sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo")
+    }
+}
+
+android {
+    applicationVariants.all {
+        val variant = name.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }
+
+        val unitTests = "test${variant}UnitTest"
+        val androidTests = "connected${variant}AndroidTest"
+
+        tasks.register<JacocoReport>("Jacoco${variant}CodeCoverage") {
+            dependsOn(listOf(unitTests, androidTests))
+            group = "Reporting"
+            description = "Execute ui and unit tests, generate and combine Jacoco coverage report"
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+            }
+            sourceDirectories.setFrom(
+                files(
+                    "src/main/java",
+                    "src/$variant/java"
+                )
+            )
+            classDirectories.setFrom(files(
+                fileTree(layout.buildDirectory.dir("intermediates/javac/")) {
+                    exclude(exclusions)
+                },
+                fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/")) {
+                    exclude(exclusions)
+                }
+            ))
+            executionData.setFrom(files(
+                fileTree(layout.buildDirectory) { include(listOf("**/*.exec", "**/*.ec")) }
+            ))
+        }
+    }
 }
