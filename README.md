@@ -1,10 +1,34 @@
-# 7-day-Android-App-Challenge
+# 7-day Android App Challenge
 
-## Season 1
-| Project  | Author                           | Screenshots                      | Tech Stack                |
-|----------|--------------------------------|----------------------|---------------------------------------------------------------------------|
-| Anime X  | [Abhijith Sreekar](@nasreekar)   | <img src="https://github.com/user-attachments/assets/033079e5-4c3a-483d-ac88-74c3c616ad48" width="125" height="125" /><br><img src="https://github.com/user-attachments/assets/4b5f8d00-cdb1-4c84-aa0d-4d41c1f61e75" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/8364a81a-1625-40ae-8fb3-add3fd9a67fa" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/bba0d8a5-f98f-480f-8b7b-cae5fce7abb8" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/e0d45f88-ddce-45ba-9732-b4ae98339328" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/2bfb54b6-37eb-4af7-940f-ce7849a24f94" width="250" height="500" /> | - Jetpack Compose + Kotlin<br>- MVVM + Clean Arch (data, domain (usecases) and UI)<br>- Kotlin flows + coroutines<br>- Compose Navigation<br>- Hilt<br>- Retrofit<br>- UI testing |
-| Recipe - Meal Mate  | <a href="https://github.com/Siduchels"> Sindhu S </a>, <a href="https://github.com/aliarbaaz"> Mohammed Arbaaz Ali </a>, <a href="https://github.com/ZSank"> Sanket Zade </a> | <img src="./meal_mate/readme/launcher_icon.png" width="50" height="100"  alt="Launcher Icon"/> <img src="./meal_mate/readme/splash.png" width="50" height="100" alt="Splash Screen" /> <img src="./meal_mate/readme/start.png" width="50" height="100" alt="Start Screen" /> <br> <img src="./meal_mate/readme/login.png" width="50" height="100" alt="Login Screen" /> <img src="./meal_mate/readme/signup.png" width="50" height="100" alt="Signup Screen" /> <img src="./meal_mate/readme/home_screen.png" width="50" height="100" alt="Home Screen" /> <br> <img src="./meal_mate/readme/food_prefs_nutrients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/searched_by_nutrients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/ingredients.png" width="50" height="100" alt="Recipe Detail Screen"/> <br> <img src="./meal_mate/readme/searched_by_ingredients.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/home_details_web_view.png" width="50" height="100" alt="Recipe Detail Screen"/> <img src="./meal_mate/readme/meal_plan.png" width="50" height="100" alt="Recipe Detail Screen"/> <br> <img src="./meal_mate/readme/profile_tab.png" width="50" height="100" alt="Recipe Detail Screen"/>    | - <b>Programming Language:</b> Kotlin <br> - <b>UI Development:</b> Jetpack Compose <br> - <b>Architecture:</b> MVVM (Model-View-ViewModel) <br> - <b>Dependency Injection:</b> Hilt <br> - <b>Networking:</b> Retrofit <br> - <b>Design Principles:</b> SOLID principles, Design Patterns |
-| Task Ninja 2.0  | <a href="https://github.com/theadityatiwari"> Aditya Tiwari </a> | <img src="AdityaTiwari/TaskNinja20/images/splash_light.jpeg" width="50" height="100"  alt="Splash Icon"/> <img src="AdityaTiwari/TaskNinja20/images/dashboard_dark.jpeg" width="50" height="100"  alt="Dashboard Screen"/> <img src="AdityaTiwari/TaskNinja20/images/dashboard_light.jpeg" width="50" height="100"  alt="Dashboard Screen"/> <br> <img src="AdityaTiwari/TaskNinja20/images/alltask_light.jpeg" width="50" height="100"  alt="All Task Screen"/> <img src="AdityaTiwari/TaskNinja20/images/alltask_dark.jpeg" width="50" height="100"  alt="All Task Screen"/> <img src="AdityaTiwari/TaskNinja20/images/addtask_light.jpeg" width="50" height="100"  alt="Add Task Screen"/> <br> <img src="AdityaTiwari/TaskNinja20/images/addtask_dark.jpeg" width="50" height="100"  alt="Add Task Screen"/> | - <b>Programming Language:</b> Kotlin <br> - <b>UI Development:</b> Jetpack Compose <br> - <b>Architecture:</b> MVVM (Model-View-ViewModel) <br> - <b>Dependency Injection:</b> Hilt <br> - <b>Networking:</b> Retrofit <br> - <b>Design Principles:</b> SOLID principles, Design Patterns |
-| Recipe Roulette | [Sachin Singh Dighan](@sachinsinghd11) | <img src="https://github.com/user-attachments/assets/e2354ad1-1fbd-424e-88a4-abe7fbbedccc" width="125" height="125" /><br><img src="https://github.com/user-attachments/assets/c5607d01-089b-45c9-a876-9aeaf1059922" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/5b4d72c5-47d7-425f-bbf3-01a0a342c428" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/c1e69c33-6d2e-408e-9eb1-73135708a069" width="250" height="500" /><br><img src="https://github.com/user-attachments/assets/ac1cb6ad-867a-499e-8bbd-10cb9e9c00b2" width="250" height="500" /><br> | - Jetpack Compose + Kotlin<br>- MVVM + Clean Arch (data, domain (usecases) and Presentation(UI + Viewmodel))<br>- Kotlin flows + coroutines<br>- Compose Navigation<br>- Dagger<br>- Retrofit<br> |
-| AniFetch  | <a href="abhinavcodedev"> Abhinav Kumar </a> | <img src="AniFetch/screenshots/SplashScreen.png" width="100" height="200"  alt="Splash Icon"/> <img src="AniFetch/Screenshot_20240821_143126.png" width="100" height="200"  alt="Main Screen"/> <img src="AniFetch/screenshots/Screenshot2.png" width="100" height="200"  alt="Detail Screen"/> <br>  | - <b>Programming Language:</b> Kotlin <br> - <b>UI Development:</b> Jetpack Compose <br> - <b>Architecture:</b> MVVM (Model-View-ViewModel) <br> - <b>Dependency Injection:</b> Hilt <br> - <b>Networking:</b> Retrofit <br> - <b>Design Principles:</b> SOLID principles, Design Patterns |
+Explore Android apps built by community members during the challenge. Each submission is an independent project with its own configuration, dependencies, and learning goals.
+
+## Explore Season 1
+
+| Project | Contributors | Source |
+| --- | --- | --- |
+| Anime X | [Abhijith Sreekar](https://github.com/nasreekar) | [Abhi-AnimeX](Abhi-AnimeX/) |
+| Recipe – Meal Mate | [Sindhu S](https://github.com/Siduchels), [Mohammed Arbaaz Ali](https://github.com/aliarbaaz), [Sanket Zade](https://github.com/ZSank) | [meal_mate](meal_mate/) |
+| Task Ninja 2.0 | [Aditya Tiwari](https://github.com/theadityatiwari) | [TaskNinja20](AdityaTiwari/TaskNinja20/) |
+| Recipe Roulette | [Sachin Singh Dighan](https://github.com/sachinsinghd11) | [RecipeRoulette](SachinSinghDighan/RecipeRoulette/) |
+| AniFetch | [Abhinav Kumar](https://github.com/abhinavcodedev) | [AniFetch](AniFetch/) |
+
+[View the original Season 1 screenshots and technology descriptions](docs/seasons/season-1.md). Additional submissions are available in [JuileeBhombe](JuileeBhombe/) and [Mani-Quotify](Mani-Quotify/). Original author credits and project files are preserved.
+
+## Run a submission
+
+1. Choose a project directory and read its own README, where available.
+2. Locate that project's `settings.gradle` or `settings.gradle.kts` and open that directory in Android Studio.
+3. Check its Gradle wrapper, version catalog/build files, SDK requirements, and any API configuration before syncing.
+4. Follow its run instructions. There is no shared root build, and older submissions may need dependency or service updates.
+
+These submissions have not been rebuilt as part of the repository documentation update. If one fails, report the project path, commit, environment, command, and first meaningful error.
+
+## Try your own seven-day build
+
+Use the [self-paced challenge guide](docs/seasons/self-paced-guide.md) to scope, build, test, and explain a small app. This guide does not announce a new scheduled cohort or deadline.
+
+For foundations and structured lessons, [start at Android Engineers Academy](https://www.androidengineers.in/roadmap?utm_source=github&utm_medium=repository&utm_campaign=7-day-Android-App-Challenge).
+
+## Contribute
+
+Improve a project's instructions, fix a reproducible issue, or propose a new submission in a pull request. Include author credits, screenshots/demo, setup steps, checks performed, and one engineering tradeoff. Keep each app in its own directory. Check the individual project's licensing before reuse.
